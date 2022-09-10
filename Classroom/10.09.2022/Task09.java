@@ -1,4 +1,4 @@
-public class Task9 {
+public class Task09 {
 	public static void main(String[] args) {
 		int k = Integer.parseInt(args[0]);
 
