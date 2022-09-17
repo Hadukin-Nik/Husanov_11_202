@@ -1,11 +1,11 @@
 public class Sqrt {
 	public static void main (String[] args) {
-		double n = Double.parse(args[0]);
+		double n = Double.parseDouble(args[0]);
 
-		double eps = 0.0000001;
+		final double EPS = 1e-4; //0.0001;
 		double finder = n;
-		while ((finder * finder) - n >= eps) {
-			finder -= eps;
+		while ((finder * finder) - n >= EPS) {
+			finder -= EPS;
 		}
 
 		System.out.println(finder);
