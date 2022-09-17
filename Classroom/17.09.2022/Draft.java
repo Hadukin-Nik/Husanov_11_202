@@ -6,7 +6,7 @@ public class Draft {
 		double lastInUseX = 1.0;
 		double eps = 0.000001;
 
-		double ans = 0.0;
+		double ans = 1.0;
 
 		for (int k = 1; lastInUseX / lastInUseK >= eps; k++) {
 			lastInUseK *= k;
