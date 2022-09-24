@@ -26,6 +26,6 @@ public class Task002 {
 			}
 		}
 
-		System.out.println((ans ? "A equal B" : "A not equals B"));
+		System.out.println((ans ? "A equals B" : "A not equals B"));
 	}
 }
