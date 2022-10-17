@@ -1,8 +1,19 @@
-public class Warrior implements Entity{
-	private int hp = 100;
+import java.util.Scanner;
 
-	public Warrior (int hp) {
+public class Warrior implements Entity{
+	private GameServices gameService;
+	private Scanner scanner;
+
+	private int hp = 100;
+	private int maxDamage;
+
+	public Warrior (GameServices gameService, int hp, int maxDamage) {
+		this.gameService = gameService;
+
 		this.hp = hp;
+		this.maxDamage = maxDamage;
+
+		scanner = new Scanner(System.in);
 	}
 
 	public boolean IsKilled() {
@@ -25,7 +36,7 @@ public class Warrior implements Entity{
 		//check
 		if (enemy >= warriors.length) {
 			System.out.println("Wrong enemy input! try again");
-			TurnOfEntity();
+			this.TurnOfEntity(warriors);
 		}
 
 
@@ -33,12 +44,12 @@ public class Warrior implements Entity{
 		int damage = scanner.nextInt();
 
 		//check
-		if (enemy >= maxDamage) {
-			System.out.println("Wrong damage input! try again");
-			TurnOfEntity();
+		if (damage > maxDamage) {
+			System.out.println("Wrong damage input! try again" + damage + " " + maxDamage);
+			this.TurnOfEntity(warriors);
 		}
 
-		damage = damageCalculation(damage);
+		damage = gameService.DamageCalculation(damage);
 		warriors[enemy].Damage(damage);
 
 		if(warriors[enemy].IsKilled()) {

@@ -1,24 +1,24 @@
 //import java.Random;
-import java.util.Scanner;
-import java.util.Random;
+
 
 public class GameSystem {
-	private Random random;
-	private Scanner scanner;
+	private GameServices gameService;
 
 	private Entity[] warriors;	
 
 	private int dice;
-	private double maxDamage;
+	private int countOfPlayers;
+	private int maxDamage;
 
-	public GameSystem(int countOfPlayers, int countOfBots, int countOfDifficults, int commonHealth, int dice, double maxDamage) {
-		random = new Random();
-		scanner = new Scanner(System.in);
+	public GameSystem(int countOfPlayers, int countOfBots, int countOfDifficults, int commonHealth, int dice, int maxDamage) {
+		this.countOfPlayers = countOfPlayers;
+		this.maxDamage = maxDamage;
+		gameService = new GameServices(dice, maxDamage);
 
 		warriors = new Entity[countOfPlayers + countOfBots];
 
 		for (int i = 0; i < countOfPlayers; i++) {
-			warriors[i] = new Warrior(commonHealth);
+			warriors[i] = new Warrior(gameService, commonHealth, maxDamage);
 		}
 
 
@@ -31,15 +31,14 @@ public class GameSystem {
 				countOfDifficults --;
 			}
 
-			warriors[i] = new Bot(new Warrior(commonHealth), botSet);
+			warriors[i] = new Bot(gameService, commonHealth, countOfPlayers, maxDamage, botSet);
 		}
 
 		this.dice = dice;
-		this.maxDamage = maxDamage;
 	}
 
 	public boolean NextTurn() {
-		for (int i = 0; i < warriors.length(); i++) {
+		for (int i = 0; i < warriors.length; i++) {
 			if (warriors[i].IsKilled()) {
 				continue;
 			}
@@ -47,51 +46,32 @@ public class GameSystem {
 			
 			System.out.println(i + 1 + ": ");
 
-			warriors[i].TurnOfEntity();
-			if (!isGamePossible) {
+			warriors[i].TurnOfEntity(warriors);
+			if (!isGamePossible()) {
 				return false;
+			}
+
+			if (i >= countOfPlayers) {
+				System.out.println("Turn of the BOT");
 			}
 		}
 		for (int i = 0; i < warriors.length; i++) {
-			System.out.println(i + 1 + ": " + warriors[i].HP());
+			System.out.println(i + 1 + ": " + warriors[i].GetHP());
 		}
 		return isGamePossible();
 	}
 
 	public boolean isGamePossible() {
-		int countDead = 0;
+		int countAlive = 0;
 
-		for (int i = 0; i < warriors.length; i++) {
-			if (warriors[i].IsKilled()) {
-				countDead ++;
+		for (int i = 0; i < countOfPlayers; i++) {
+			if (!warriors[i].IsKilled()) {
+				countAlive ++;
 			}
 		}
 
-		return (countDead < warriors.length - 1);
+		return (countAlive < 2);
 	}
 
-	private int damageCalculation(int damage) {
-		int cubeNumber = random.nextInt(dice + 1);
-		int returnDamage = 0;
-
-		if (damage < maxDamage / 3) {
-			if (cubeNumber < dice * 1.0 / 100 * 90) {
-				returnDamage = damage;
-			}
-		} else if (damage < maxDamage / 3 * 2) {
-			if (cubeNumber < dice * 1.0 / 100 * 70) {
-				returnDamage = damage;
-			}
-		} else {
-			if (cubeNumber < dice * 1.0 / 100 * 35) {
-				returnDamage = damage;
-			}
-		}
-
-		if (cubeNumber < dice * 1.0 / 100 * 5) {
-			returnDamage += maxDamage / 10 + damage * 2;
-		}
-
-		return returnDamage;
-	}
+	
 }

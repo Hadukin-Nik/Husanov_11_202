@@ -1,7 +1,19 @@
-public class GameServices() {
+import java.util.Random;
+
+public class GameServices {
+	private Random random;
+
 	private int dice;
 	private int maxDamage;
-	private int damageCalculation(int damage) {
+
+	public GameServices(int dice, int maxDamage) {
+		this.dice = dice;
+		this.maxDamage = maxDamage;
+
+		random = new Random();
+	}
+
+	public int DamageCalculation(int damage) {
 		int cubeNumber = random.nextInt(dice + 1);
 		int returnDamage = 0;
 
