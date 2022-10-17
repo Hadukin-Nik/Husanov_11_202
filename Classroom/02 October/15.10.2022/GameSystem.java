@@ -8,12 +8,15 @@ public class GameSystem {
 
 	private int dice;
 	private int countOfPlayers;
+	private int countOfDifficults;
 	private int maxDamage;
 
 	public GameSystem(int countOfPlayers, int countOfBots, int countOfDifficults, int commonHealth, int dice, int maxDamage) {
 		this.countOfPlayers = countOfPlayers;
 		this.maxDamage = maxDamage;
+		this.countOfDifficults = countOfDifficults;
 		gameService = new GameServices(dice, maxDamage);
+
 
 		warriors = new Entity[countOfPlayers + countOfBots];
 
@@ -58,6 +61,18 @@ public class GameSystem {
 		for (int i = 0; i < warriors.length; i++) {
 			System.out.println(i + 1 + ": " + warriors[i].GetHP());
 		}
+
+		for (int i = 0; i < warriors.length; i++) {
+			System.out.print(i + 1 + ": ");
+			if (i < countOfPlayers) {
+				System.out.println("Player");
+			} else {
+				System.out.print("Bot ");
+				System.out.println((i < countOfPlayers + countOfDifficults? "Hard" : "Easy"));
+			}
+		}
+
+
 		return isGamePossible();
 	}
 
