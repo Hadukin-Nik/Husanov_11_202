@@ -19,7 +19,7 @@ public class Matrix2by2 {
 
 
 
-	double det () {
+	double defenition () {
 		return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
 	}
 
@@ -31,6 +31,24 @@ public class Matrix2by2 {
 			for (int j = 0; j < 2; j++) {
 				ansMatrix[i][j] = this.matrix[i][j] + another.matrix[i][j];	
 			}
+		}
+
+		return new Matrix2by2(ansMatrix);
+	}
+
+	Matrix2by2 multiply (Matrix2by2 b) {
+		Matrix2by2 ans;
+		double[][] ansMatrix = new double[2][2];
+
+		for (int i = 0; i < 2; i++) {	
+			for (int e = 0; e < 2; e++) {
+				double a = 0;
+				for (int j = 0; j < 2; j++) {
+					a += this.matrix[i][j] * another.matrix[e][j];	
+				}
+				ansMatrix[i][e] = a;
+			}
+			
 		}
 
 		return new Matrix2by2(ansMatrix);
