@@ -24,12 +24,12 @@ public class ComplexNumber {
 	}
 
 	public ComplexNumber multiply(ComplexNumber another) {
-		ComplexNumber ans = new ComplexNumber(this.b * another.getB() + this.a * another.getA, this.a * another.getB() + another.getA() * this.b);
+		ComplexNumber ans = new ComplexNumber(-this.b * another.getB() + this.a * another.getA, this.a * another.getB() + another.getA() * this.b);
 
 		return ans;
 	}
 
-	
+
 
 	public double getA() {
 		return a;
