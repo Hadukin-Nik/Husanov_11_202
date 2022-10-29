@@ -139,6 +139,7 @@ public class RationalFraction {
 
 	@Override
 	public String toString() {
-		System.out.println(a + " / " + b);
+		String c = "" + a + " / " + b;
+		return c;
 	}
 }
