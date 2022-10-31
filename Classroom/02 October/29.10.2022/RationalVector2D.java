@@ -51,7 +51,7 @@ public class RationalVector2D {
 	}
 
 	public double scalarProduct(RationalVector2D a) {
-		return x.mult(a.x) + y.mult(a.y);
+		return x.mult(a.x).add(y.mult(a.y));
 	}
 
 	public boolean equals(RationalVector2D other) {
