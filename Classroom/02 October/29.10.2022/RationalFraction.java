@@ -130,7 +130,7 @@ public class RationalFraction {
 	}
 
 	public boolean equals(RationalFraction c) {
-		return ((a * c.b) / (b * c.a) == 1);
+		return ((a * c.b) == (b * c.a));
 	}
 
 	public int numberPart() {
@@ -142,4 +142,6 @@ public class RationalFraction {
 		String c = "" + a + " / " + b;
 		return c;
 	}
+
+
 }

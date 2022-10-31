@@ -24,8 +24,8 @@ public class Matrix2x2 {
 	}
 
 	public Matrix2x2(double a, double b, double c, double d) {
-		super();
-
+		this(); 
+		
 		matrix[0][0] = a;
 		matrix[0][1] = b;
 		matrix[1][0] = c;
