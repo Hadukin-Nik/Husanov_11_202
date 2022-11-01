@@ -20,7 +20,11 @@ public class Matrix2x2 {
 			System.out.print("ERROR!");
 		}
 
-		this.matrix = matrix;
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 2; j++) {
+				this.matrix[i][j] = matrix[i][j];
+			}
+		}
 	}
 
 	public Matrix2x2(double a, double b, double c, double d) {
@@ -71,21 +75,20 @@ public class Matrix2x2 {
 	}
 
 	public Matrix2x2 multiply(Matrix2x2 b) {
-		Matrix2x2 ans;
 		double[][] ansMatrix = new double[2][2];
 
 		for (int i = 0; i < 2; i++) {	
 			for (int e = 0; e < 2; e++) {
 				double a = 0;
+
 				for (int j = 0; j < 2; j++) {
-					a += this.matrix[i][j] * another.matrix[e][j];	
+					a += this.matrix[i][j] * b.matrix[e][j];	
 				}
 				ansMatrix[i][e] = a;
 			}
-			
 		}
 
-		return new Matrix2x2(ansMatrix);
+		return (new Matrix2x2(ansMatrix));
 	}
 
 	public void multiplySelf(Matrix2x2 b) {
@@ -109,16 +112,16 @@ public class Matrix2x2 {
 		matrix = multiplyOnNumber(b).matrix;
 	}
 
-	public void transpon() {
+	public double[][] transpon() {
 		double[][] b = new double[2][2];
 
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 2; j++) {
-				b[j][i] = matrix[i][j]
+				b[j][i] = matrix[i][j];
 			}
 		}
 
-		matrix = b;
+		return b;
 	}
 
 	public Matrix2x2 inverseMatrix() {
@@ -158,12 +161,26 @@ public class Matrix2x2 {
 	}
 
 	public Vector2D multVector(Vector2D a) {
-		int b = a.getX() * matrix[0][0] + a.getY() * matrix[0][1];
-		int c = a.getX() * matrix[1][0] + a.getY() * matrix[1][1];
+		double b = a.getX() * matrix[0][0] + a.getY() * matrix[0][1];
+		double c = a.getX() * matrix[1][0] + a.getY() * matrix[1][1];
 		
 
 		Vector2D ans = new Vector2D(b, c);
 
 		return ans;
+	}
+
+	@Override
+	public String toString() {
+		String a = new String();
+
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 2; j++ ){
+				a += matrix[i][j] + " ";
+			}
+
+			a  += "\n";
+		}
+		return a;
 	}
 }

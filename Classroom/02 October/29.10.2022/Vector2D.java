@@ -13,7 +13,7 @@ public class Vector2D {
 	}
 
 	public Vector2D add (Vector2D another) {
-		return new Vector2D(another.x + this.x, another.y + this.y)
+		return new Vector2D(another.x + this.x, another.y + this.y);
 	}
 
 	public void addToThis(Vector2D another) {
@@ -22,7 +22,7 @@ public class Vector2D {
 	}
 
 	public Vector2D sub (Vector2D another) {
-		return new Vector2D(another.x + this.x, another.y + this.y)
+		return new Vector2D(another.x + this.x, another.y + this.y);
 	}
 
 	public void subFromThis(Vector2D another) {
@@ -34,7 +34,7 @@ public class Vector2D {
 		return new Vector2D(this.x * number, this.y * number);
 	}
 
-	public void multThis mult (double number) {
+	public void multThis (double number) {
 		this.x *= number;
 		this.y *= number;
 	}
@@ -84,16 +84,16 @@ public class Vector2D {
 
 	@Override
 	public String toString() {
-		System.out.println("X: " + x + " Y: " + y);
+		return ("X: " + x + " Y: " + y);
 	}
 
 
 
-	public getX() {
+	public double getX() {
 		return x;
 	}
 
-	public getY() {
+	public double getY() {
 		return y;
 	}
 }
