@@ -74,7 +74,7 @@ public class Matrix2x2 {
 		matrix = add(other).matrix;
 	}
 
-	public Matrix2x2 multiply(Matrix2x2 b) {
+	public Matrix2x2 mult(Matrix2x2 b) {
 		double[][] ansMatrix = new double[2][2];
 
 		for (int i = 0; i < 2; i++) {	
@@ -91,11 +91,11 @@ public class Matrix2x2 {
 		return (new Matrix2x2(ansMatrix));
 	}
 
-	public void multiplySelf(Matrix2x2 b) {
+	public void multToSelf(Matrix2x2 b) {
 		matrix = multiply(b).matrix;
 	}
 
-	public Matrix2x2 multiplyOnNumber(double b) {
+	public Matrix2x2 multOnNumber(double b) {
 		Matrix2x2 ans;
 		double[][] ansMatrix = new double[2][2];
 
@@ -108,7 +108,7 @@ public class Matrix2x2 {
 		return new Matrix2x2(ansMatrix);
 	}
 
-	public void multiplyOnNumberSelf(double b) {
+	public void multOnNumberSelf(double b) {
 		matrix = multiplyOnNumber(b).matrix;
 	}
 

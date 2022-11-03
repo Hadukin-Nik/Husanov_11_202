@@ -69,6 +69,14 @@ public class RationalFraction {
 	}
 
 	public RationalFraction add(RationalFraction c) {
+		if (c.a == 0) {
+			return new RationalFraction(a, b);
+		} 
+
+		if (a == 0) {
+			return new RationalFraction(c.a, c.b);
+		}
+
 		RationalFraction m = new RationalFraction(c.a * b + c.b * b, c.b * b);
 		m.reduce();
 
@@ -83,6 +91,15 @@ public class RationalFraction {
 	}	
 
 	public RationalFraction sub(RationalFraction c) {
+		if (c.a == 0) {
+			return new RationalFraction(a, b);
+		} 
+
+		if (a == 0) {
+			return new RationalFraction(-c.a, -c.b);
+		}
+
+
 		RationalFraction m = new RationalFraction(c.a * b - c.b * b, c.b * b);
 		m.reduce();
 

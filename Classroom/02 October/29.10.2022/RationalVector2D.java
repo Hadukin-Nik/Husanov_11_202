@@ -58,4 +58,12 @@ public class RationalVector2D {
 		return (x.equals(other.x) && y.equals(other.y));
 	}
 
+
+	public RationalFraction getX() {
+		return x;
+	}
+
+	public RationalFraction getY() {
+		return y;
+	}
 }
