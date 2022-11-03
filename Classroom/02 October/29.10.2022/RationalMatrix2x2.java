@@ -10,7 +10,7 @@ public class RationalMatrix2x2 {
 
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 2; j++) {
-				matrix[i][j] = a;
+				matrix[i][j] = new RationalFraction(a.getA(), a.getB());
 			}
 		}
 	}
@@ -33,7 +33,7 @@ public class RationalMatrix2x2 {
 
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 2; j++) {
-				buffer = other[i][j].add(matrix[i][j]);
+				buffer[i][j] = other[i][j].add(matrix[i][j]);
 			}
 		}
 
@@ -50,7 +50,7 @@ public class RationalMatrix2x2 {
 				RationalFraction a = new RationalFraction();
 
 				for (int j = 0; j < 2; j++) {
-					a.add(this.matrix[i][j].mult(b.matrix[e][j]) );	
+					a.addToSelf(this.matrix[i][j].mult(b.matrix[e][j]) );	
 				}
 				ansMatrix[i][e] = a;
 			}
@@ -59,7 +59,7 @@ public class RationalMatrix2x2 {
 		return (new Matrix2x2(ansMatrix));
 	}
 
-	public double defenition () {
+	public RationalFraction defenition () {
 		return (matrix[0][0].mult(matrix[1][1])).sub(matrix[0][1].mult(matrix[1][0]);
 	}
 

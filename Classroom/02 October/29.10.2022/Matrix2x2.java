@@ -41,7 +41,6 @@ public class Matrix2x2 {
 	}
 
 	public Matrix2x2 add (Matrix2x2 another) {
-		Matrix2x2 ans;
 		double[][] ansMatrix = new double[2][2];
 
 		for (int i = 0; i < 2; i++) {

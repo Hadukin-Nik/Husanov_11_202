@@ -115,4 +115,12 @@ public class ComplexNumber {
 	public String toString() {
 		return real + "" + (imaginable < 0 ? "" : "+") + b + "i";
 	}
+
+	public double getRe() {
+		return real;
+	}
+
+	public double getIm() {
+		return imaginable;
+	}
 }

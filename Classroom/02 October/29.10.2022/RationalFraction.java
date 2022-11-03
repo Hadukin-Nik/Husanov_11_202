@@ -160,5 +160,11 @@ public class RationalFraction {
 		return c;
 	}
 
+	public int getA() {
+		return a;
+	}
 
+	public int getB() {
+		return b;
+	}
 }
