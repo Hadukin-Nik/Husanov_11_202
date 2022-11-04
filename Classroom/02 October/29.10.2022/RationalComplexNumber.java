@@ -43,4 +43,8 @@ public class RationalComplexNumber {
 	public RationalFraction getIm() {
 		return imaginable;
 	}
+
+	public RationalComplexNumber copy() {
+		return new RationalComplexNumber(real.copy(), imaginable.copy());
+	}
 }

@@ -167,4 +167,8 @@ public class RationalFraction {
 	public int getB() {
 		return b;
 	}
+
+	public RationalFraction copy() {
+		return new RationalFraction(a, b);
+	}
 }

@@ -24,4 +24,12 @@ public class RationalComplexVector2D {
 	public RationalComplexNumber scalarProduct(RationalComplexVector2D a) {
 		return x.mult(a.x).addToSelf(y.mult(a.y));
 	}
+
+	public RationalComplexNumber getX() {
+		return x;
+	}
+
+	public RationalComplexNumber getY() {
+		return y;
+	}
 }

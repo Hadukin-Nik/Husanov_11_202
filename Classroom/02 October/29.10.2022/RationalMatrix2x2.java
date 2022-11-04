@@ -56,7 +56,7 @@ public class RationalMatrix2x2 {
 			}
 		}
 
-		return (new Matrix2x2(ansMatrix));
+		return (new RationalMatrix2x2(ansMatrix));
 	}
 
 	public RationalFraction defenition () {
