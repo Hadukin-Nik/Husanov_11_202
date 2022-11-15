@@ -3,19 +3,20 @@ import java.util.Random;
 public class GameServices {
 	private Random random;
 
-	private int dice;
-	private int maxDamage;
+	private double maxDamage;
 
-	public GameServices(int dice, int maxDamage) {
+	private int dice;
+
+	public GameServices(double maxDamage, int dice) {
 		this.dice = dice;
 		this.maxDamage = maxDamage;
 
 		random = new Random();
 	}
 
-	public int DamageCalculation(int damage) {
+	public double DamageCalculation(double damage) {
 		int cubeNumber = random.nextInt(dice + 1);
-		int returnDamage = 0;
+		double returnDamage = 0;
 
 		if (damage < maxDamage / 3) {
 			if (cubeNumber < dice * 1.0 / 100 * 90) {
@@ -38,7 +39,15 @@ public class GameServices {
 		return returnDamage;
 	}
 
-	public int getMaxDamage() {
-		 return maxDamage;
+	public double getMaxDamage() {
+		return maxDamage;
+	}
+
+	public double setMaxDamage(double newMaxDamage) {
+		if (newMaxDamage < 0) {
+			maxDamage = 0;
+		} else {
+			maxDamage = newMaxDamage;
+		}
 	}
 }

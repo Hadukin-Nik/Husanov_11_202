@@ -1,16 +1,24 @@
 public class Entity {
-	private int hp;
+	private double hp;
 	private int numberTeam;
 
-	public Entity(int hp, int numberTeam) {
+	public Entity(double hp, int numberTeam) {
 		this.hp = hp;
 		this.numberTeam = numberTeam;
 	}
 
 
 
-	public int getHP() {
+	public double getHP() {
 		return hp;
+	}
+
+	public double setHP(double hp) {
+		if (hp < 0) {
+			this.hp = 0;
+		} else {
+			this.hp = hp;
+		}
 	}
 
 	public boolean isAlive() {
@@ -18,7 +26,7 @@ public class Entity {
 	}
 
 	public void damage(int damage) {
-		hp -= numberTeam;
+		hp -= damage;
 	}
 
 	public int getNumberTeam() {
