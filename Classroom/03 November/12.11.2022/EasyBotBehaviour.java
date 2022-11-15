@@ -8,7 +8,8 @@ public class EasyBotBehaviour implements IBotBehaviour {
 	}
 
 
-	public void kick(GameService gameService, IReadGameDataBase dataBaseRead, ISetGameDataBase dataBaseSet, int numberOfTeam, int countOfEntities) {
+	public void kick(GameService gameService, IReadGameDataBase dataBaseRead, ISetGameDataBase dataBaseSet, int numberOfTeam) {
+		int countOfEntities = dataBaseRead.getNumberOfEntities();
 		int choosedEnemy = 0;
 		while (!dataBaseRead.isAlive(choosedEnemy) || dataBaseRead.getNumberOfTeam(choosedEnemy) == numberOfTeam) {
 			choosedEnemy = random.nextInt(countOfEntities);

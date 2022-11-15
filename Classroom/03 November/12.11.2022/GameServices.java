@@ -37,4 +37,8 @@ public class GameServices {
 
 		return returnDamage;
 	}
+
+	public int getMaxDamage() {
+		 return maxDamage;
+	}
 }

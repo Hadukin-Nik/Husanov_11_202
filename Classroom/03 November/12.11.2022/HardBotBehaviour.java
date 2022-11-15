@@ -13,7 +13,9 @@ public class HardBotBehaviour implements IBotBehaviour {
 		choosedEnemy = 0;
 	}
 	
-	public void kick(GameService gameService, IReadGameDataBase dataBaseRead, ISetGameDataBase dataBaseSet, int numberOfTeam, int countOfEntities) {
+	public void kick(GameService gameService, IReadGameDataBase dataBaseRead, ISetGameDataBase dataBaseSet, int numberOfTeam) {
+		int countOfEntities = dataBaseRead.getNumberOfEntities();
+
 		while (!dataBaseRead.isAlive(choosedEnemy) || dataBaseRead.getNumberOfTeam(choosedEnemy) == numberOfTeam) {
 			choosedEnemy = random.nextInt(countOfEntities);
 		}
