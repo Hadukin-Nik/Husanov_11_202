@@ -1,4 +1,4 @@
-public class EntityState implements IHealthChange, IDamageChange, IHealthState, IDamageState {
+public class EntityState implements IHealthChange, IDamageChange {
 	Entity entity;
 	GameService gameService;
 
@@ -22,7 +22,7 @@ public class EntityState implements IHealthChange, IDamageChange, IHealthState, 
 		return entity.getNumberTeam();
 	}
 
-	public double getCurrentHP() {
+	public double getHP() {
 		return entity.getHP();
 	}
 

@@ -1,16 +1,19 @@
 public class GameDataBase implements IReadGameDataBase, ISetGameDataBase {
 	private EntityState[] entitiesStatets;
+	private IEntityBehaviour[] entitiesTurn;
 
 	private int currentCountOfEntities;
 
 	public GameDataBase() {
 		currentCountOfEntities = 0;
+
 	}
 
 	public GameDataBase(int maxCountOfEntities) {
 		super();
 
 		entitiesStatets = new EntityState[maxCountOfEntities];
+		entitiesTurn = new IEntityBehaviour[maxCountOfEntities];
 	}
 
 	public void damage(int idOfEnemy, int damage) {
@@ -32,10 +35,22 @@ public class GameDataBase implements IReadGameDataBase, ISetGameDataBase {
 		} 
 	}
 
-	public EntityTurn enityTurn(int id) {
-		
+	public EntityTurn entityTurn(int id) {
+		if (id >= currentCountOfEntities) {
+			throw new Exception("id is out of range");
+		} else {
+			entitiesTurn[id].makeTurn(damage);
+		} 
 	}
-	public IUpdate getIUpdate(int id);
+	public IUpdate getIUpdate(int id) {
+		//not realized yet
+	}
 
-	public boolean isAlive(int id);
+	public boolean isAlive(int id) {
+		if (id >= currentCountOfEntities) {
+			throw new Exception("id is out of range");
+		} else {
+			return entitiesStatets[id].getHP(damage) <= 0;
+		} 
+	}
 }
