@@ -4,6 +4,13 @@ public class EntityState implements IHealthChange, IDamageChange, IHealthState, 
 
 	double maxHP;
 
+	public EntityState () {
+		this.entity = new Entity();
+		this.gameService = new GameService();
+
+		this.maxHP = 0;
+	}
+
 	public EntityState (Entity entity, GameService gameService, double maxHP) {
 		this.entity = entity;
 		this.gameService = gameService;
@@ -11,6 +18,9 @@ public class EntityState implements IHealthChange, IDamageChange, IHealthState, 
 		this.maxHP = maxHP;
 	}
 
+	public int getNumberOfTeam() {
+		return entity.getNumberTeam();
+	}
 
 	public double getCurrentHP() {
 		return entity.getHP();
@@ -42,7 +52,7 @@ public class EntityState implements IHealthChange, IDamageChange, IHealthState, 
 			entity.setHP(newHP);
 		}
 	}
-	
+
 	public void decHP(double decreasable) {
 		double newHP = entity.getHP() - decreasable;
 

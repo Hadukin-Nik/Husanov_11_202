@@ -7,6 +7,13 @@ public class GameServices {
 
 	private int dice;
 
+	public GameServices() {
+		this.dice = 0;
+		this.maxDamage = 0;
+
+		random = new Random();
+	}
+
 	public GameServices(double maxDamage, int dice) {
 		this.dice = dice;
 		this.maxDamage = maxDamage;
