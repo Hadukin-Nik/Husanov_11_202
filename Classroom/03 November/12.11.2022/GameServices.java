@@ -21,7 +21,7 @@ public class GameServices {
 		random = new Random();
 	}
 
-	public double DamageCalculation(double damage) {
+	public double damageCalculation(double damage) {
 		int cubeNumber = random.nextInt(dice + 1);
 		double returnDamage = 0;
 
@@ -50,7 +50,7 @@ public class GameServices {
 		return maxDamage;
 	}
 
-	public double setMaxDamage(double newMaxDamage) {
+	public void setMaxDamage(double newMaxDamage) {
 		if (newMaxDamage < 0) {
 			maxDamage = 0;
 		} else {

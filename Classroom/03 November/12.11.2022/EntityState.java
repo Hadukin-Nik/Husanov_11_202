@@ -1,17 +1,17 @@
-public class EntityState implements IHealthChange, IDamageChange {
+public class EntityState implements IHealthChange, IDamageChange, IHealthEntityState {
 	Entity entity;
-	GameService gameService;
+	GameServices gameService;
 
 	double maxHP;
 
 	public EntityState () {
 		this.entity = new Entity();
-		this.gameService = new GameService();
+		this.gameService = new GameServices();
 
 		this.maxHP = 0;
 	}
 
-	public EntityState (Entity entity, GameService gameService, double maxHP) {
+	public EntityState (Entity entity, GameServices gameService, double maxHP) {
 		this.entity = entity;
 		this.gameService = gameService;
 
@@ -22,7 +22,7 @@ public class EntityState implements IHealthChange, IDamageChange {
 		return entity.getNumberTeam();
 	}
 
-	public double getHP() {
+	public double getHPState() {
 		return entity.getHP();
 	}
 
@@ -69,7 +69,7 @@ public class EntityState implements IHealthChange, IDamageChange {
 
 	public void setMaxDamage(double maxDamage) {
 		if (maxDamage < 0) {
-			gameService.setMaxDamage(0)
+			gameService.setMaxDamage(0);
 		} else {
 			gameService.setMaxDamage(maxDamage);
 		}

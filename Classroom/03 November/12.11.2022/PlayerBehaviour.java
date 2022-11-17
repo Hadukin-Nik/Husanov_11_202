@@ -2,22 +2,26 @@ import java.util.Scanner;
 
 
 public class PlayerBehaviour implements IEntityBehaviour {
-	private GameService gameService;
-	private IReadGameDataBase dataBase;
+	private GameServices gameService;
+	private IReadGameDataBase dataBaseRead;
 	private ISetGameDataBase dataBaseSet;
 
 
 	private IPlayerBehaviour playerBehaviour;
 
-	public PlayerBehaviour (GameService gameService, IReadGameDataBase dataBaseRead, ISetGameDataBase dataBaseSet) {
+	private Scanner scanner;
+
+	public PlayerBehaviour (GameServices gameService, IReadGameDataBase dataBaseRead, ISetGameDataBase dataBaseSet) {
 		this.gameService = gameService;
 		this.dataBaseRead = dataBaseRead;
 		this.dataBaseSet = dataBaseSet;
 
 		this.playerBehaviour = playerBehaviour;
+
+		scanner = new Scanner(System.in);
 	}
 
-	public void makeTurn() {
+	public void makeTurn() throws Exception{
 		int countOfEntities = dataBaseRead.getNumberOfEntities();
 
 		System.out.println("Choose your enemy!"); 
@@ -32,7 +36,7 @@ public class PlayerBehaviour implements IEntityBehaviour {
 
 
 		System.out.println("Input your damage!");
-		int damage = scanner.nextInt();
+		double damage = scanner.nextDouble();
 
 		//check
 		if (damage > gameService.getMaxDamage()) {
@@ -40,10 +44,10 @@ public class PlayerBehaviour implements IEntityBehaviour {
 			this.makeTurn();
 		}
 
-		damage = gameService.DamageCalculation(damage);
+		damage = gameService.damageCalculation(damage);
 		dataBaseSet.damage(enemy, damage);
 
-		if(dataBaseRead.isAlive(enemy)) {
+		if(!dataBaseRead.isAlive(enemy)) {
 			System.out.println("Minus one!");
 		}
 	}

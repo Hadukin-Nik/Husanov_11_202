@@ -17,7 +17,7 @@ public class Entity {
 		return hp;
 	}
 
-	public double setHP(double hp) {
+	public void setHP(double hp) {
 		if (hp < 0) {
 			this.hp = 0;
 		} else {

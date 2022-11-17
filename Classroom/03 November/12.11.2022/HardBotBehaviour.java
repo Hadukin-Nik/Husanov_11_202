@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class HardBotBehaviour implements IBotBehaviour { 
+public class HardBotBehaviour implements IBotBehaviour  { 
 	private Random random;
 
 	private int choosedEnemy; 
@@ -13,16 +13,20 @@ public class HardBotBehaviour implements IBotBehaviour {
 		choosedEnemy = 0;
 	}
 	
-	public void kick(GameService gameService, IReadGameDataBase dataBaseRead, ISetGameDataBase dataBaseSet, int numberOfTeam) {
+
+	public void kick(GameServices gameService, IReadGameDataBase dataBaseRead, ISetGameDataBase dataBaseSet, int numberOfTeam) throws Exception{
 		int countOfEntities = dataBaseRead.getNumberOfEntities();
 
 		while (!dataBaseRead.isAlive(choosedEnemy) || dataBaseRead.getNumberOfTeam(choosedEnemy) == numberOfTeam) {
 			choosedEnemy = random.nextInt(countOfEntities);
 		}
-		int maxDamage = gameService.getMaxDamage();
-		int damage = random.nextInt(maxDamage / 3 + 1) + maxDamage / 3 * state;
 
-		damage = gameService.DamageCalculation(damage);
+		System.out.println("Choosed Enemy of bot:" + choosedEnemy);
+
+		double maxDamage = gameService.getMaxDamage();
+		double damage = (double)random.nextInt((int)maxDamage / 3 + 1) + maxDamage / 3 * state;
+
+		damage = gameService.damageCalculation(damage);
 
 		if (damage == 0 && state > 0) {
 			state --;
@@ -30,6 +34,6 @@ public class HardBotBehaviour implements IBotBehaviour {
 			state ++;
 		}
 
-		dataBaseSet.Damage(choosedEnemy, damage);
+		dataBaseSet.damage(choosedEnemy, damage);
 	}
 }

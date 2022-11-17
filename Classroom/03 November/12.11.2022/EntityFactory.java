@@ -1,8 +1,17 @@
-public class BotFabric {
-	public static void createBot (GameDataBase gameDataBase, GameService gameService, int hp, int groupNumber, boolean isDifficult) {
-		Entity bot = new Entity(hp, groupNumber);
+public class EntityFactory {
+	private static void createEntity (GameDataBase gameDataBase, GameServices gameService, int hp, int groupNumber) throws Exception{
+		Entity entity = new Entity(hp, groupNumber);
 
-		BotBehaviour turnBehaviour;
+		EntityState entityState = new EntityState(entity, gameService, hp);
+
+		gameDataBase.addEntityState(entityState);
+	}
+
+
+	public static void createBot (GameDataBase gameDataBase, GameServices gameService, int hp, int groupNumber, boolean isDifficult) throws Exception{
+		createEntity(gameDataBase, gameService, hp, groupNumber);
+
+		BotBehaviour turnBehaviour = new BotBehaviour();
 		
 		if (isDifficult) {
 			turnBehaviour = new BotBehaviour(gameService, gameDataBase, gameDataBase, new HardBotBehaviour(), groupNumber);
@@ -10,14 +19,14 @@ public class BotFabric {
 			turnBehaviour = new BotBehaviour(gameService, gameDataBase, gameDataBase, new EasyBotBehaviour(), groupNumber);	
 		}
 
-		gameDataBase.add(bot, turnBehaviour);
+		gameDataBase.addEntityBehaviour(turnBehaviour);
 	}
 
-	public static void createPlayer(GameDataBase gameDataBase, GameService gameService, int hp, int groupNumber) {
-		Entity player = new Entity(hp, groupNumber);
+	public static void createPlayer(GameDataBase gameDataBase, GameServices gameService, int hp, int groupNumber) throws Exception{
+		createEntity(gameDataBase, gameService, hp, groupNumber);
 
 		PlayerBehaviour turnBehaviour = new PlayerBehaviour(gameService, gameDataBase, gameDataBase);
 		
-		gameDataBase.add(player, turnBehaviour);
+		gameDataBase.addEntityBehaviour(turnBehaviour);
 	}
 }

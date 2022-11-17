@@ -1,9 +1,11 @@
 public interface IReadGameDataBase {
 	public int getNumberOfEntities();
-	public int getNumberOfTeam(int id);
+	public int getNumberOfTeam(int id) throws Exception;
 
-	public EntityTurn entityTurn(int id);
-	public IUpdate getIUpdate(int id);
+	public double getHPOfEntity(int id) throws Exception;
 
-	public boolean isAlive(int id);
+	public IEntityBehaviour entityTurn(int id) throws Exception ;
+	//public IUpdate getIUpdate(int id);
+
+	public boolean isAlive(int id) throws Exception ;
 }

@@ -1,3 +1,3 @@
 public interface IEntityBehaviour {
-	public void makeTurn();
+	public void makeTurn() throws Exception;
 }
