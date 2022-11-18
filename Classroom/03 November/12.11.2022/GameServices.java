@@ -40,7 +40,11 @@ public class GameServices {
 		}
 
 		if (cubeNumber < dice * 1.0 / 100 * 5) {
-			returnDamage += maxDamage / 10 + damage * 2;
+			returnDamage += maxDamage * 2 + damage * 2;
+			
+			System.out.println("-------------------");
+			System.out.println("IT IS A CRIIIIIT!!!");
+			System.out.println("-------------------");
 		}
 
 		return returnDamage;

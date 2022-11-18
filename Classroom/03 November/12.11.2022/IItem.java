@@ -1,6 +1,6 @@
-import java.util.String;
-
 public interface IItem {
 	public String getName();
-	public void useItem();
+	public int getCount();
+	public int getPower();
+	public void setCount(int count) throws Exception;
 }

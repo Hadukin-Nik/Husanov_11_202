@@ -21,8 +21,6 @@ public class HardBotBehaviour implements IBotBehaviour  {
 			choosedEnemy = random.nextInt(countOfEntities);
 		}
 
-		System.out.println("Choosed Enemy of bot:" + choosedEnemy);
-
 		double maxDamage = gameService.getMaxDamage();
 		double damage = (double)random.nextInt((int)maxDamage / 3 + 1) + maxDamage / 3 * state;
 

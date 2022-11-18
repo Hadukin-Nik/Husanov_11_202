@@ -1,7 +1,7 @@
 public class Entity {
 	private double hp;
 	private int numberTeam;
-
+	private int myID;
 
 	public Entity() {
 		this.hp = 0;

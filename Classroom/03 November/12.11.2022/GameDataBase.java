@@ -1,15 +1,18 @@
 public class GameDataBase implements IReadGameDataBase, ISetGameDataBase {
 	private EntityState[] entitiesStatets;
 	private IEntityBehaviour[] entitiesTurn;
+	private IInventory[] inventories;
 
 	private int maxCountOfEntities;
 
 	private int currentCountOfEntitiesStates;
 	private int currentCountOfEntitiesBehaviours;
+	private int currentCountOfInventories;
 
 	public GameDataBase() {
 		currentCountOfEntitiesStates = 0;
 		currentCountOfEntitiesBehaviours = 0;
+		currentCountOfInventories = 0;
 	}
 
 	public GameDataBase(int maxCountOfEntities) {
@@ -19,8 +22,17 @@ public class GameDataBase implements IReadGameDataBase, ISetGameDataBase {
 
 		entitiesStatets = new EntityState[maxCountOfEntities];
 		entitiesTurn = new IEntityBehaviour[maxCountOfEntities];
-
+		inventories = new IInventory[maxCountOfEntities];
 	}
+
+	public void heal(int id, double healCount) throws Exception {
+		if (id >= currentCountOfEntitiesStates) {
+			throw new Exception("id of entity for healing is out of range");
+		} else {
+			entitiesStatets[id].addHP(healCount);
+		}
+	}
+ 
 
 	public void damage(int idOfEnemy, double damage) throws Exception {
 		if (idOfEnemy >= currentCountOfEntitiesStates) {
@@ -67,7 +79,6 @@ public class GameDataBase implements IReadGameDataBase, ISetGameDataBase {
 			throw new Exception("id is out of range");
 		} else {
 			return entitiesStatets[id].getHPState() > 0;
-		
 		} 
 	}
 
@@ -87,5 +98,22 @@ public class GameDataBase implements IReadGameDataBase, ISetGameDataBase {
 
 		entitiesTurn[currentCountOfEntitiesBehaviours] = entityBehaviour;
 		currentCountOfEntitiesBehaviours++;
+	}
+
+	public void addEntityInventory(IInventory entityInventory) throws Exception {
+		if (currentCountOfInventories > maxCountOfEntities) {
+			throw new Exception("too many entities");
+		}
+
+		inventories[currentCountOfInventories] = entityInventory;
+		currentCountOfInventories++;
+	}
+
+	public IInventory getInventoryInterface(int id) throws Exception {
+		if (id >= currentCountOfEntitiesStates) {
+			throw new Exception("id of inventory is out of range");
+		} else {
+			return inventories[id];
+		} 
 	}
 }

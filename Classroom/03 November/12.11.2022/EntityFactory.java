@@ -1,15 +1,16 @@
 public class EntityFactory {
-	private static void createEntity (GameDataBase gameDataBase, GameServices gameService, int hp, int groupNumber) throws Exception{
+	private static void createEntity (GameDataBase gameDataBase, GameServices gameService, IInventory inventory, int hp, int groupNumber) throws Exception{
 		Entity entity = new Entity(hp, groupNumber);
 
 		EntityState entityState = new EntityState(entity, gameService, hp);
 
 		gameDataBase.addEntityState(entityState);
+		gameDataBase.addEntityInventory(inventory);
 	}
 
 
-	public static void createBot (GameDataBase gameDataBase, GameServices gameService, int hp, int groupNumber, boolean isDifficult) throws Exception{
-		createEntity(gameDataBase, gameService, hp, groupNumber);
+	public static void createBot (GameDataBase gameDataBase, GameServices gameService, IInventory inventory, int hp, int groupNumber, boolean isDifficult) throws Exception{
+		createEntity(gameDataBase, gameService, inventory, hp, groupNumber);
 
 		BotBehaviour turnBehaviour = new BotBehaviour();
 		
@@ -22,10 +23,10 @@ public class EntityFactory {
 		gameDataBase.addEntityBehaviour(turnBehaviour);
 	}
 
-	public static void createPlayer(GameDataBase gameDataBase, GameServices gameService, int hp, int groupNumber) throws Exception{
-		createEntity(gameDataBase, gameService, hp, groupNumber);
+	public static void createPlayer(GameDataBase gameDataBase, GameServices gameService, IInventory inventory, int hp, int groupNumber) throws Exception{
+		createEntity(gameDataBase, gameService, inventory, hp, groupNumber);
 
-		PlayerBehaviour turnBehaviour = new PlayerBehaviour(gameService, gameDataBase, gameDataBase);
+		PlayerBehaviour turnBehaviour = new PlayerBehaviour(gameService, gameDataBase, gameDataBase, inventory);
 		
 		gameDataBase.addEntityBehaviour(turnBehaviour);
 	}
