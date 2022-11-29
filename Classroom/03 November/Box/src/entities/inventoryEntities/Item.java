@@ -1,4 +1,4 @@
-package enitities.inventoryEntities;
+package entities.inventoryEntities;
 
 
 public class Item implements IItem {

@@ -1,4 +1,4 @@
-package enitities.inventoryEntities;
+package entities.inventoryEntities;
 
 public interface IItem {
 	public String getName();

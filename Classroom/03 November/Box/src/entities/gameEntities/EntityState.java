@@ -1,4 +1,4 @@
-package enitities.gameEntities;
+package entities.gameEntities;
 import gameServices.*;
 
 public class EntityState implements IHealthChange, IDamageChange, IHealthEntityState {

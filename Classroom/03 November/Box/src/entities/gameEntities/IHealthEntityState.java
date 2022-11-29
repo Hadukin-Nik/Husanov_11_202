@@ -1,4 +1,4 @@
-package enitities.gameEntities;
+package entities.gameEntities;
 
 public interface IHealthEntityState {
 	public double getHPState();
