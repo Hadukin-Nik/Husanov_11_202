@@ -1,6 +1,8 @@
 import gameServices.*;
-import entities.*;
+import gameServices.gameDataBase.*;
 
+import entities.gameEntities.*;
+import entities.inventoryEntities.*;
 public class GameStarter {
 	public static void main (String[] args) throws Exception  {
 		GameServices gameServices = new GameServices(5, 20);

@@ -1,7 +1,7 @@
 package gameServices.gameDataBase;
 
-import entities.*;
-
+import entities.gameEntities.*;
+import entities.inventoryEntities.*;
 
 public class GameDataBase implements IReadGameDataBase, ISetGameDataBase {
 	private EntityState[] entitiesStatets;

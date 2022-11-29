@@ -1,6 +1,7 @@
 package gameServices.gameDataBase;
 
-import entities.*;
+import entities.gameEntities.*;
+import entities.inventoryEntities.*;
 
 
 public interface IReadGameDataBase {
