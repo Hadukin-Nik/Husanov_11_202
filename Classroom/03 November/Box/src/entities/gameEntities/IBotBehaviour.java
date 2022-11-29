@@ -1,5 +1,6 @@
 package entities.gameEntities;
 
+import gameServices.gameDataBase.*;
 import gameServices.*;
 
 public interface IBotBehaviour {

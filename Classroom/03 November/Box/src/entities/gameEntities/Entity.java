@@ -1,4 +1,4 @@
-package enitities.gameEntities;
+package entities.gameEntities;
 
 
 public class Entity {

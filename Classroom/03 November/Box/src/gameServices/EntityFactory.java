@@ -1,6 +1,9 @@
 package gameServices;
 
 import entities.gameEntities.*;
+import entities.inventoryEntities.*;
+
+import gameServices.gameDataBase.*;
 
 public class EntityFactory {
 	private static void createEntity (GameDataBase gameDataBase, GameServices gameService, IInventory inventory, int hp, int groupNumber) throws Exception{
