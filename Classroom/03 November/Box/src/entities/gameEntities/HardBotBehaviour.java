@@ -2,6 +2,8 @@ package entities.gameEntities;
 
 
 import java.util.Random;
+
+import gameServices.gameDataBase.*;
 import gameServices.*;
 
 public class HardBotBehaviour implements IBotBehaviour  { 

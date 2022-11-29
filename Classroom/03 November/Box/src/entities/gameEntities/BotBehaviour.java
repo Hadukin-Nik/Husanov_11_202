@@ -1,7 +1,7 @@
 package entities.gameEntities;
 
 import java.util.Random;
-import gameServices.*;
+import gameServices.gameDataBase.*;
 
 public class BotBehaviour implements IEntityBehaviour {
 	private GameServices gameService;

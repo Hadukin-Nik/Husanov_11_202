@@ -2,6 +2,7 @@ package entities.gameEntities;
 
 import java.util.Scanner;
 
+import gameServices.gameDataBase.*;
 import gameServices.*;
 
 public class PlayerBehaviour implements IEntityBehaviour {

@@ -1,4 +1,6 @@
 package entities.gameEntities;
+
+import gameServices.gameDataBase.*;
 import gameServices.*;
 
 public class EntityState implements IHealthChange, IDamageChange, IHealthEntityState {
