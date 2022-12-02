@@ -8,7 +8,7 @@ public class Number {
 	private int sign;
 
 	public Number() {
-		longNum = new int[MAX_SIZE];
+		longNum = new int[1];
 
 		sign = 1;
 	}
@@ -63,7 +63,7 @@ public class Number {
 
 		int[] buffer = new int[max_size];
 
-		for (int i = 0; i < max_size; i++) {
+		for (int i = 0; i < max_size - 1; i++) {
 			if (i < min_size) {
 				buffer[i] = source[i] + addable[i];
 			} else {
@@ -110,21 +110,19 @@ public class Number {
 
 			int[] buffer = source;
 			source = addable;
-			addable = source;
+			addable = buffer;
 		}
-		System.out.println(source + " " + addable);
-		
+
 		int max_size = source.length;
 		int min_size = addable.length;
 
 		int[] preBuffer = source;
 
 		source = new int[max_size];
-		for (int i =0; i < max_size; i++) {
+		for (int i = 0; i < max_size; i++) {
 			source[i] = preBuffer[i];
 		}
 
-		min_size = addable.length;
 
 		int[] buffer = new int[max_size];
 
@@ -134,10 +132,10 @@ public class Number {
 			} else {
 				int j = i + 1;
 				while (j < max_size) {
-					if (source[i] > 0) {
-						source[i] --;
+					if (source[j] > 0) {
+						source[j] --;
 
-						j -= 2;
+						j --;
 						break;
 					}
 					j++;
@@ -156,11 +154,64 @@ public class Number {
 		}
 		return new Number(buffer, ansSign);
 	}
+	public Number mult (int other) {
+		if (other * other > 100) {
+			return null;
+		}
+
+		int[] source = longNum;
+
+		int[] buf = new int[source.length + 1];
+
+		for (int i = 0; i < source.length; i++) {
+			if (source[i] * other >= 10) {
+				buf[i + 1] += source[i] * other / 10;
+			}
+
+			buf[i] += source[i] * other % 10;
+		}
+
+		int[] ans = buf;
+
+		if (buf[buf.length - 1] == 0) {
+			ans = new int[source.length];
+			for (int i = 0; i < source.length; i++) {
+				ans[i] = buf[i];
+			}
+		}
+
+		return new Number(ans, 1);
+	}
+	public Number mult (Number other) {
+		int[] source = longNum;
+		int[] addable = other.getNum();
+
+		int ansSign = this.sign * other.sign;
+
+		Number ans = new Number(new int[] {0}, ansSign);
+
+
+
+		for (int i = 0; i < addable.length; i++) {
+			Number buf = this.mult(addable[i]);
+
+			int j = i;
+			while (j > 0) {
+				buf = buf.mult(10);
+
+				j--;
+			}
+
+			ans = ans.add(buf);
+		}
+
+		return ans;
+	}
 
 	public boolean isBigger(Number other) {
-		if (longNum.length > other.getNum().length) {
+		if (longNum.length > other.getNum().length && longNum[longNum.length - 1] != 0) {
 			return true;
-		} else if (longNum.length < other.getNum().length) {
+		} else if (longNum.length < other.getNum().length && other.getNum()[other.getNum().length - 1] != 0) {
 			return false;
 		} else {
 			for (int i = longNum.length - 1; i >= 0; i--) {
@@ -178,7 +229,17 @@ public class Number {
 	public String toString() {
 		String a = new String();
 
-		for (int i = longNum.length - 1; i >= 0; i--) {
+		if (sign == -1) {
+			a += "-";
+		}
+
+		int i = longNum.length - 1;
+
+		while (i >= 0 && longNum[i] == 0) {
+			i--;
+		}
+
+		for (; i >= 0; i--) {
 			a = a + longNum[i];
 		}
 
