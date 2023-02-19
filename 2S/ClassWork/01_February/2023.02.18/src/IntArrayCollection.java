@@ -2,12 +2,12 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class IntArrayCollection implements Collection<Integer> {
-    private final double LOAD_FACTOR = 0.75;
+    protected final double LOAD_FACTOR = 0.75;
 
-    private int[] array;
-    private int size;
+    protected int[] array;
+    protected int size;
 
-    private int capacity;
+    protected int capacity;
 
     public IntArrayCollection(int capacity) {
         array = new int[capacity];
@@ -84,7 +84,7 @@ public class IntArrayCollection implements Collection<Integer> {
         return -1;
     }
 
-    private void resize() {
+    protected void resize() {
         capacity = (int)(capacity / LOAD_FACTOR);
         int[] arrNew = new int[capacity];
 

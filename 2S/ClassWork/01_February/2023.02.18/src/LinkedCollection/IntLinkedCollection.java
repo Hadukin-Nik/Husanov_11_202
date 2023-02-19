@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class IntLinkedCollection implements Collection<Integer> {
-    private Elem head;
-    private int size;
+    protected Elem head;
+    protected int size;
 
     public IntLinkedCollection(Elem head) {
         this.head = head;
