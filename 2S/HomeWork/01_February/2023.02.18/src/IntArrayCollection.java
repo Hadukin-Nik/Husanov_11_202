@@ -34,7 +34,7 @@ public class IntArrayCollection implements Collection<Integer> {
 
     @Override
     public boolean contains(Object o) {
-        return(findAndReturn(o) == -1);
+        return(findAndReturn(o) != -1);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class IntArrayCollection implements Collection<Integer> {
         array[size] = integer;
         size++;
 
-        return false;
+        return true;
     }
 
     @Override
@@ -86,6 +86,9 @@ public class IntArrayCollection implements Collection<Integer> {
 
     protected void resize() {
         capacity = (int)(capacity / LOAD_FACTOR);
+        if(capacity == (int)(capacity / LOAD_FACTOR)) {
+            capacity ++;
+        }
         int[] arrNew = new int[capacity];
 
         for (int i = 0; i < array.length; i++) {
@@ -116,8 +119,8 @@ public class IntArrayCollection implements Collection<Integer> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        for (int i = 0; i < size(); i++) {
-            if(!c.contains(array[i])) {
+        for (int i = size() - 1; i >= 0; i--) {
+            if(c.contains(array[i])) {
                 this.remove(array[i]);
             }
         }
@@ -127,8 +130,8 @@ public class IntArrayCollection implements Collection<Integer> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        for (int i = 0; i < size(); i++) {
-            if(c.contains(array[i])) {
+        for (int i = size() - 1; i >= 0; i--) {
+            if(!c.contains(array[i])) {
                 this.remove(array[i]);
             }
         }
@@ -149,15 +152,15 @@ public class IntArrayCollection implements Collection<Integer> {
 
     @Override
     public Object[] toArray() {
-        int[] ans = new int[size];
+        Object[] ans = new Object[size];
 
         for (int i = 0; i < size; i++) {
             ans[i] = array[i];
         }
 
-        return new int[][]{ans};
+        return ans;
     }
-
+    //Implementation?
     @Override
     public <T> T[] toArray(T[] a) {
         return null;
