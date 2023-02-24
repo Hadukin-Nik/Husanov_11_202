@@ -24,4 +24,8 @@ class Elem {
     public void setNext(Elem next) {
         this.next = next;
     }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
 }
