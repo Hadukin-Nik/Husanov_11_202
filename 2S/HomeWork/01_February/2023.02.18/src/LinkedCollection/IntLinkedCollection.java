@@ -95,8 +95,6 @@ public class IntLinkedCollection implements Collection<Integer> {
         return -1;
     }
 
-    //---------- not implemented
-
 
     @Override
     public boolean containsAll(Collection<?> c) {
