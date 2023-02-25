@@ -3,24 +3,24 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class IntArrayList extends IntArrayCollection implements List<Integer>{
+    public IntArrayList() {
+        super();
+    }
+
 
     @Override
     public boolean addAll(int index, Collection<? extends Integer> c) {
         indexOfBoundExceptionCheck(index);
+        int[] tail = new int[size - index];
 
-        if(c.size() + size > capacity * LOAD_FACTOR) {
+        while (c.size() + Math.max(size, index) > capacity * LOAD_FACTOR) {
             resize();
         }
 
-        int[] tail = new int[size - index];
-
-        for(int i = index; i <= size; i++) {
+        for(int i = index; i < size; i++) {
             tail[i] = array[i];
         }
 
-        for (int i = index; i - index < c.size(); i++) {
-
-        }
         int j = index;
         for (Object o : c) {
             array[j] = (Integer)o;
@@ -31,6 +31,7 @@ public class IntArrayList extends IntArrayCollection implements List<Integer>{
         for (int i = index + c.size(); i - index - c.size() < tail.length; i++) {
             array[i] = tail[i - index - c.size()];
         }
+        size += c.size();
 
         return true;
     }
@@ -57,17 +58,16 @@ public class IntArrayList extends IntArrayCollection implements List<Integer>{
     public void add(int index, Integer element) {
         indexOfBoundExceptionCheck(index);
 
-
-        if (index + 1 > capacity) {
+        if (size + 1 > capacity) {
             this.resize();
         }
+        size++;
 
-        for (int i = size - 1; i >= index; i--) {
+        for (int i = size - 2; i >= index && i >= 0; i--) {
             array[i + 1] = array[i];
         }
 
         array[index] = element;
-        size ++;
     }
 
     @Override
