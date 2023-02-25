@@ -2,16 +2,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
-public class IntArrayList extends IntArrayCollection implements List<Integer>{
+public class IntArrayList<T> extends IntArrayCollection<T> implements List<T>{
     public IntArrayList() {
         super();
     }
 
 
     @Override
-    public boolean addAll(int index, Collection<? extends Integer> c) {
+    public boolean addAll(int index, Collection<? extends T> c) {
         indexOfBoundExceptionCheck(index);
-        int[] tail = new int[size - index];
+        T[] tail = (T[])new Object[size - index];
 
         while (c.size() + Math.max(size, index) > capacity * LOAD_FACTOR) {
             resize();
@@ -23,7 +23,7 @@ public class IntArrayList extends IntArrayCollection implements List<Integer>{
 
         int j = index;
         for (Object o : c) {
-            array[j] = (Integer)o;
+            array[j] = (T)o;
 
             j++;
         }
@@ -37,17 +37,17 @@ public class IntArrayList extends IntArrayCollection implements List<Integer>{
     }
 
     @Override
-    public Integer get(int index) {
+    public T get(int index) {
         indexOfBoundExceptionCheck(index);
 
         return array[index];
     }
 
     @Override
-    public Integer set(int index, Integer element) {
+    public T set(int index, T element) {
         indexOfBoundExceptionCheck(index);
 
-        int ans = array[index];
+        T ans = array[index];
 
         array[index] = element;
 
@@ -55,7 +55,7 @@ public class IntArrayList extends IntArrayCollection implements List<Integer>{
     }
 
     @Override
-    public void add(int index, Integer element) {
+    public void add(int index, T element) {
         indexOfBoundExceptionCheck(index);
 
         if (size + 1 > capacity) {
@@ -71,10 +71,10 @@ public class IntArrayList extends IntArrayCollection implements List<Integer>{
     }
 
     @Override
-    public Integer remove(int index) {
+    public T remove(int index) {
         indexOfBoundExceptionCheck(index);
 
-        int ans = array[index];
+        T ans = array[index];
 
         for (int i = index; i < size - 1; i++) {
             array[i] = array[i + 1];
@@ -98,28 +98,29 @@ public class IntArrayList extends IntArrayCollection implements List<Integer>{
 
     @Override
     public int lastIndexOf(Object o) {
+        int l = -1;
         for (int i = size - 1; i >= 0; i--) {
             if((Integer) o == array[i]) {
-                return i;
+                l = i;
             }
         }
 
-        return -1;
+        return l;
     }
 
     @Override
-    public ListIterator<Integer> listIterator() {
+    public ListIterator<T> listIterator() {
         return null;
     }
 
     @Override
-    public ListIterator<Integer> listIterator(int index) {
+    public ListIterator<T> listIterator(int index) {
         return null;
     }
 
     @Override
-    public List<Integer> subList(int fromIndex, int toIndex) {
-        List<Integer> ans = new IntArrayList();
+    public List<T> subList(int fromIndex, int toIndex) {
+        List<T> ans = new IntArrayList<T>();
         indexOfBoundExceptionCheck(fromIndex);
         indexOfBoundExceptionCheck(toIndex - 1);
 

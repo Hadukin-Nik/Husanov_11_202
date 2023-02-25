@@ -3,7 +3,7 @@ package LinkedCollection;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class IntLinkedCollection implements Collection<Integer> {
+public class IntLinkedCollection<T> implements Collection<T> {
     protected Elem head;
     protected int size;
 
@@ -32,7 +32,7 @@ public class IntLinkedCollection implements Collection<Integer> {
     }
 
     @Override
-    public boolean add(Integer integer) {
+    public boolean add(T integer) {
         head = new Elem(integer,head);
 
         size++;
@@ -85,7 +85,7 @@ public class IntLinkedCollection implements Collection<Integer> {
         }
         Elem iter = head;
         for (int i = 0; i < size; i++) {
-            if(iter.getValue() == f) {
+            if(iter.getValue().equals(f)) {
                 return i;
             }
 
@@ -108,9 +108,9 @@ public class IntLinkedCollection implements Collection<Integer> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends Integer> c) {
+    public boolean addAll(Collection<? extends T> c) {
         for(Object f : c) {
-            add((Integer) f);
+            add((T) f);
         }
 
         return true;
@@ -154,13 +154,13 @@ public class IntLinkedCollection implements Collection<Integer> {
 
 
     @Override
-    public Iterator<Integer> iterator() {
+    public Iterator<T> iterator() {
         return null;
     }
 
     @Override
     public Object[] toArray() {
-        int[] ans = new int[size];
+        Object[] ans = new Object[size];
         Elem iter = head;
 
         for (int i = 0; i < size; i++) {
@@ -168,7 +168,7 @@ public class IntLinkedCollection implements Collection<Integer> {
             iter = iter.getNext();
         }
 
-        return new int[][]{ans};
+        return ans;
     }
 
     @Override

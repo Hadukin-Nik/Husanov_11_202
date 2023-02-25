@@ -2,9 +2,9 @@ package LinkedCollection;
 
 import java.util.*;
 
-public class IntLinkedList extends  IntLinkedCollection implements List<Integer> {
+public class IntLinkedList<T> extends  IntLinkedCollection<T> implements List<T> {
     @Override
-    public boolean addAll(int index, Collection<? extends Integer> c) {
+    public boolean addAll(int index, Collection<? extends T> c) {
         indexOfBoundExceptionCheck(index);
 
         Elem it = getElem(index);
@@ -26,31 +26,30 @@ public class IntLinkedList extends  IntLinkedCollection implements List<Integer>
 
 
     @Override
-    public Integer get(int index) {
-
+    public T get(int index) {
         return get(index);
     }
 
     @Override
-    public Integer set(int index, Integer element) {
+    public T set(int index, T element) {
         indexOfBoundExceptionCheck(index);
         Elem buf = getElem(index);
-        int ans = buf.getValue();
+        T ans = (T) buf.getValue();
 
         buf.setValue(element);
         return ans;
     }
 
     @Override
-    public void add(int index, Integer element) {
+    public void add(int index, T element) {
         indexOfBoundExceptionCheck(index);
 
         Elem buf = getElem(index);
-        buf.setNext(new Elem(element, buf.getNext()));
+        buf.setNext(new Elem<T>(element, buf.getNext()));
     }
 
     @Override
-    public Integer remove(int index) {
+    public T remove(int index) {
         indexOfBoundExceptionCheck(index);
 
         Elem buf = getElem(index);
@@ -65,7 +64,7 @@ public class IntLinkedList extends  IntLinkedCollection implements List<Integer>
 
         buf.setNext(null);
 
-        return buf.getValue();
+        return (T)buf.getValue();
     }
 
     @Override
@@ -100,7 +99,7 @@ public class IntLinkedList extends  IntLinkedCollection implements List<Integer>
     }
 
     @Override
-    public List<Integer> subList(int fromIndex, int toIndex) {
+    public List<T> subList(int fromIndex, int toIndex) {
         indexOfBoundExceptionCheck(fromIndex);
         indexOfBoundExceptionCheck(toIndex);
 
@@ -114,16 +113,16 @@ public class IntLinkedList extends  IntLinkedCollection implements List<Integer>
             return Arrays.asList(get(toIndex));
         }
 
-        List<Integer> ans = new ArrayList<>();
+        List<T> ans = new ArrayList<>();
 
         Elem iter = getElem(fromIndex);
         for(int i = fromIndex; i <= toIndex; i++) {
             if(iter == null) {
-                ans.add(0);
+                ans.add(null);
                 continue;
             }
 
-            ans.add(iter.getValue());
+            ans.add((T)iter.getValue());
 
             iter = iter.getNext();
         }
@@ -154,12 +153,12 @@ public class IntLinkedList extends  IntLinkedCollection implements List<Integer>
     //HERE IS NO IMPLEMENTATION FOR NOW !!!
     @Override
 
-    public ListIterator<Integer> listIterator() {
+    public ListIterator<T> listIterator() {
         return null;
     }
 
     @Override
-    public ListIterator<Integer> listIterator(int index) {
+    public ListIterator<T> listIterator(int index) {
         return null;
     }
 }

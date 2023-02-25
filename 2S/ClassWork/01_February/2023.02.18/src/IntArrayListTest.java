@@ -9,7 +9,7 @@ class IntArrayListTest {
 
     @Test
     void addAll() {
-        IntArrayList arr1 = new IntArrayList();
+        IntArrayList<Integer> arr1 = new IntArrayList<>();
 
         arr1.addAll(0, Arrays.asList(123, 123, 123));
         Assertions.assertEquals(Arrays.asList(123, 123, 123), Arrays.asList(arr1.toArray()));
@@ -17,7 +17,7 @@ class IntArrayListTest {
 
     @Test
     void get() {
-        IntArrayList arr = new IntArrayList();
+        IntArrayList<Integer> arr = new IntArrayList<>();
 
         arr.add(5);
         Assertions.assertEquals(5, arr.get(0));
@@ -25,7 +25,7 @@ class IntArrayListTest {
 
     @Test
     void set() {
-        IntArrayList arr = new IntArrayList();
+        IntArrayList<Integer> arr = new IntArrayList<>();
 
         arr.add(5);
         arr.set(0, 78);
@@ -35,7 +35,7 @@ class IntArrayListTest {
 
     @Test
     void add() {
-        IntArrayList arr = new IntArrayList();
+        IntArrayList<Integer> arr = new IntArrayList<>();
 
         arr.add(5);
         arr.add(0, 6);
@@ -45,7 +45,7 @@ class IntArrayListTest {
 
     @Test
     void remove() {
-        IntArrayList arr = new IntArrayList();
+        IntArrayList<Integer> arr = new IntArrayList<>();
 
         arr.add(5);
         arr.remove(0);
@@ -58,7 +58,7 @@ class IntArrayListTest {
 
     @Test
     void indexOf() {
-        IntArrayList arr = new IntArrayList();
+        IntArrayList<Integer> arr = new IntArrayList<>();
 
         arr.addAll(Arrays.asList(1,2,4,5,3));
 
@@ -68,7 +68,7 @@ class IntArrayListTest {
 
     @Test
     void lastIndexOf() {
-        IntArrayList arr = new IntArrayList();
+        IntArrayList<Integer> arr = new IntArrayList<>();
 
         arr.addAll(Arrays.asList(2,1,1,2,4,5,3));
 
@@ -78,7 +78,7 @@ class IntArrayListTest {
 
     @Test
     void subList() {
-        IntArrayList arr = new IntArrayList();
+        IntArrayList<Integer> arr = new IntArrayList<>();
 
         arr.addAll(Arrays.asList(2,1,1,2,4,5,3));
         Assertions.assertEquals(Arrays.asList(2,1,1,2), Arrays.asList(arr.subList(0, 4).toArray()));

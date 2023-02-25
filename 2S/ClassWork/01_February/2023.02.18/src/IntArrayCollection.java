@@ -1,23 +1,23 @@
 import java.util.Collection;
 import java.util.Iterator;
 
-public class IntArrayCollection implements Collection<Integer> {
+public class IntArrayCollection<T> implements Collection<T> {
     protected final double LOAD_FACTOR = 0.75;
 
-    protected int[] array;
+    protected T[] array;
     protected int size;
 
     protected int capacity;
 
     public IntArrayCollection(int capacity) {
-        array = new int[capacity];
+        array = (T[]) new Object[capacity];
         this.capacity = capacity;
 
         this.size = 0;
     }
 
     public IntArrayCollection() {
-        array = new int[0];
+        array = (T[]) new Object[0];
         this.capacity = 0;
 
         this.size = 0;
@@ -38,12 +38,12 @@ public class IntArrayCollection implements Collection<Integer> {
     }
 
     @Override
-    public boolean add(Integer integer) {
+    public boolean add(T object) {
         if (size > array.length - 1) {
             resize();
         }
 
-        array[size] = integer;
+        array[size] = object;
         size++;
 
         return true;
@@ -53,15 +53,20 @@ public class IntArrayCollection implements Collection<Integer> {
     public boolean remove(Object o) {
         int i = findAndReturn(o);
 
+        if(size < 1) {
+            return false;
+        }
+
         if (i != -1) {
-            array[i] = 0;
+            array[i] = null;
 
             for(int j = i + 1; j < size; j++) {
                 array[j - 1] = array[j];
 
-                array[j] = 0;
+                array[j] = null;
             }
 
+            size--;
             return true;
         }
 
@@ -69,14 +74,8 @@ public class IntArrayCollection implements Collection<Integer> {
     }
 
     private int findAndReturn(Object o) {
-        int f = 0;
-
-        if (o instanceof  Integer) {
-            f = (Integer)o;
-        }
-
         for (int i = 0; i < size; i++) {
-            if(array[i] == f) {
+            if(array[i].equals(o)) {
                 return i;
             }
         }
@@ -89,7 +88,7 @@ public class IntArrayCollection implements Collection<Integer> {
         if(capacity == (int)(capacity / LOAD_FACTOR)) {
             capacity ++;
         }
-        int[] arrNew = new int[capacity];
+        T[] arrNew = (T[])new Object[capacity];
 
         for (int i = 0; i < array.length; i++) {
             arrNew[i] = array[i];
@@ -109,9 +108,9 @@ public class IntArrayCollection implements Collection<Integer> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends Integer> c) {
+    public boolean addAll(Collection<? extends T> c) {
         for(Object f : c) {
-            add((Integer) f);
+            add((T) f);
         }
 
         return true;
@@ -146,7 +145,7 @@ public class IntArrayCollection implements Collection<Integer> {
 
 
     @Override
-    public Iterator<Integer> iterator() {
+    public Iterator<T> iterator() {
         return null;
     }
 
