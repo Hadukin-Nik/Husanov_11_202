@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -83,5 +84,20 @@ class ArrayListTest {
         arr.addAll(Arrays.asList(2,1,1,2,4,5,3));
         Assertions.assertEquals(Arrays.asList(2,1,1,2), Arrays.asList(arr.subList(0, 4).toArray()));
         Assertions.assertNotEquals(Arrays.asList(2,1,1,2), Arrays.asList(arr.subList(1, 5).toArray()));
+    }
+
+    @Test
+    void iterate() {
+        ArrayList<Integer> arr = new ArrayList<>();
+
+        arr.addAll(Arrays.asList(2,1,1,2,4,5,3));
+
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        for(Integer a : arr) {
+            ans.add(a);
+        }
+
+        Assertions.assertEquals(Arrays.asList(2,1,1,2,4,5,3), Arrays.asList(ans.toArray()));
     }
 }
