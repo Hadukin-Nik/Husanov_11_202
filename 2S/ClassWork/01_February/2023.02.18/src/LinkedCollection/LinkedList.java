@@ -2,7 +2,7 @@ package LinkedCollection;
 
 import java.util.*;
 
-public class IntLinkedList<T> extends  IntLinkedCollection<T> implements List<T> {
+public class LinkedList<T> extends LinkedCollection<T> implements List<T> {
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
         indexOfBoundExceptionCheck(index);

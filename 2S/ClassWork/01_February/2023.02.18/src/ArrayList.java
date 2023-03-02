@@ -2,8 +2,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
-public class IntArrayList<T> extends IntArrayCollection<T> implements List<T>{
-    public IntArrayList() {
+public class ArrayList<T> extends ArrayCollection<T> implements List<T>{
+    public ArrayList() {
         super();
     }
 
@@ -120,7 +120,7 @@ public class IntArrayList<T> extends IntArrayCollection<T> implements List<T>{
 
     @Override
     public List<T> subList(int fromIndex, int toIndex) {
-        List<T> ans = new IntArrayList<T>();
+        List<T> ans = new ArrayList<T>();
         indexOfBoundExceptionCheck(fromIndex);
         indexOfBoundExceptionCheck(toIndex - 1);
 

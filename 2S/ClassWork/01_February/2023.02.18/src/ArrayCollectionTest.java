@@ -1,16 +1,15 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class IntArrayCollectionTest {
+class ArrayCollectionTest {
     @Test
     public void containsAndAddCheck() {
-        IntArrayCollection<Integer> arr = new IntArrayCollection<>();
+        ArrayCollection<Integer> arr = new ArrayCollection<>();
 
         arr.add(5);
 
@@ -18,7 +17,7 @@ class IntArrayCollectionTest {
     }
     @Test
     public void sizeTest() {
-        IntArrayCollection<Integer> arr = new IntArrayCollection<>();
+        ArrayCollection<Integer> arr = new ArrayCollection<>();
         arr.add(5);
 
         Assertions.assertEquals(1, arr.size());
@@ -26,7 +25,7 @@ class IntArrayCollectionTest {
 
     @Test
     public void removeTest() {
-        IntArrayCollection<Integer> arr = new IntArrayCollection<>();
+        ArrayCollection<Integer> arr = new ArrayCollection<>();
         arr.add(5);
 
         arr.remove(5);
@@ -35,7 +34,7 @@ class IntArrayCollectionTest {
 
     @Test
     public void addOverCapacity() {
-        IntArrayCollection<Integer> arr = new IntArrayCollection<>();
+        ArrayCollection<Integer> arr = new ArrayCollection<>();
         arr.add(5);
 
         for (int i = 0; i < 100; i++) {
@@ -47,7 +46,7 @@ class IntArrayCollectionTest {
 
     @Test
     public void containsAllCheck() {
-        IntArrayCollection<Integer> arr = new IntArrayCollection<>();
+        ArrayCollection<Integer> arr = new ArrayCollection<>();
         List<Integer> checkerFalse = Arrays.asList(123, 123, 123, 123, 123);
         List<Integer> checkerTrue = Arrays.asList(5, 101);
 
@@ -62,7 +61,7 @@ class IntArrayCollectionTest {
 
     @Test
     public void addAllCheck() {
-        IntArrayCollection<Integer> arr = new IntArrayCollection<>();
+        ArrayCollection<Integer> arr = new ArrayCollection<>();
         List<Integer> checkerFalse = Arrays.asList(123, 123, 123, 123, 123);
         List<Integer> checkerTrue = Arrays.asList(5, 101);
 
@@ -74,7 +73,7 @@ class IntArrayCollectionTest {
 
     @Test
     public void removeAllCheck() {
-        IntArrayCollection<Integer> arr = new IntArrayCollection<>();
+        ArrayCollection<Integer> arr = new ArrayCollection<>();
         List<Integer> checkerFalse = Arrays.asList(123, 123, 123, 123, 123);
 
         arr.addAll(Arrays.asList(123,123,333,123));
@@ -84,7 +83,7 @@ class IntArrayCollectionTest {
 
     @Test
     public void retainAllCheck() {
-        IntArrayCollection<Integer> arr = new IntArrayCollection<>();
+        ArrayCollection<Integer> arr = new ArrayCollection<>();
         List<Integer> checkerFalse = Arrays.asList(123, 123, 123, 123, 123);
         List<Integer> checkerTrue = Arrays.asList(5, 101);
 
@@ -96,10 +95,10 @@ class IntArrayCollectionTest {
 
     @Test
     public void toArrayObjectsCheck() {
-        IntArrayCollection<Integer> arr = new IntArrayCollection<>();
+        ArrayCollection<Integer> arr = new ArrayCollection<>();
         List<Integer> checkerFalse = Arrays.asList(123, 123, 123, 123, 123);
         arr.addAll(Arrays.asList(123,123,123));
-        Assertions.assertNotEquals(Arrays.asList(arr.toArray()), checkerFalse);
+        Assertions.assertNotEquals(checkerFalse, Arrays.asList( arr.toArray()));
         Assertions.assertEquals(Arrays.asList(arr.toArray()), Arrays.asList(123,123,123));
     }
 }

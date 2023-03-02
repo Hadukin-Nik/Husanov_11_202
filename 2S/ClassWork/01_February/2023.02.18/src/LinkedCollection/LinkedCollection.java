@@ -3,17 +3,17 @@ package LinkedCollection;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class IntLinkedCollection<T> implements Collection<T> {
+public class LinkedCollection<T> implements Collection<T> {
     protected Elem head;
     protected int size;
 
-    public IntLinkedCollection(Elem head) {
+    public LinkedCollection(Elem head) {
         this.head = head;
 
         this.size = 1;
     }
 
-    public IntLinkedCollection() {
+    public LinkedCollection() {
         this.size = 0;
     }
     @Override

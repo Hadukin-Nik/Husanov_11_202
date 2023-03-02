@@ -1,7 +1,7 @@
 import java.util.Collection;
 import java.util.Iterator;
 
-public class IntArrayCollection<T> implements Collection<T> {
+public class ArrayCollection<T> implements Collection<T> {
     protected final double LOAD_FACTOR = 0.75;
 
     protected T[] array;
@@ -9,14 +9,14 @@ public class IntArrayCollection<T> implements Collection<T> {
 
     protected int capacity;
 
-    public IntArrayCollection(int capacity) {
+    public ArrayCollection(int capacity) {
         array = (T[]) new Object[capacity];
         this.capacity = capacity;
 
         this.size = 0;
     }
 
-    public IntArrayCollection() {
+    public ArrayCollection() {
         array = (T[]) new Object[0];
         this.capacity = 0;
 
