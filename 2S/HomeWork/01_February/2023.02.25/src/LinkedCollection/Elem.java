@@ -1,15 +1,15 @@
 package LinkedCollection;
 
-class Elem {
-    private int value;
+class Elem<T> {
+    private T value;
     private Elem next;
 
-    Elem(int value, Elem next) {
+    Elem(T value, Elem next) {
         this.value = value;
         this.next = next;
     }
 
-    Elem(int value) {
+    Elem(T value) {
         this.value = value;
     }
 
@@ -17,7 +17,7 @@ class Elem {
         return next;
     }
 
-    public int getValue() {
+    public T getValue() {
         return value;
     }
 
@@ -25,7 +25,15 @@ class Elem {
         this.next = next;
     }
 
-    public void setValue(int value) {
+    public void setValue(T value) {
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Elem) {
+            return ((Elem<?>) obj).getValue().equals(value);
+        }
+        return false;
     }
 }
