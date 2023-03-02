@@ -1,7 +1,7 @@
 import java.util.Collection;
 import java.util.Iterator;
 
-public class ArrayCollection<T> implements Collection<T> {
+public class ArrayCollection<T> implements Collection<T>, Iterable<T> {
     protected final double LOAD_FACTOR = 0.75;
 
     protected T[] array;
@@ -146,7 +146,7 @@ public class ArrayCollection<T> implements Collection<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new ArrayCollectionIterator();
     }
 
     @Override
@@ -164,5 +164,23 @@ public class ArrayCollection<T> implements Collection<T> {
     public <T> T[] toArray(T[] a) {
         return null;
     }
+    class ArrayCollectionIterator implements Iterator<T> {
+        private int index;
 
+        ArrayCollectionIterator() {
+            index = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        @Override
+        public T next() {
+            T element = array[index];
+            index ++;
+            return element;
+        }
+    }
 }
