@@ -3,7 +3,7 @@ package LinkedCollection;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class LinkedCollection<T> implements Collection<T> {
+public class LinkedCollection<T> implements Collection<T>, Iterable<T> {
     protected Elem head;
     protected int size;
 
@@ -155,7 +155,7 @@ public class LinkedCollection<T> implements Collection<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new LinkedCollectionIterator();
     }
 
     @Override
@@ -174,5 +174,33 @@ public class LinkedCollection<T> implements Collection<T> {
     @Override
     public <T> T[] toArray(T[] a) {
         return null;
+    }
+
+    public class LinkedCollectionIterator implements Iterator<T> {
+        private int index;
+        private Elem<T> headIterator;
+
+        LinkedCollectionIterator() {
+            index = 0;
+            headIterator = head;
+        }
+
+
+        @Override
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        @Override
+        public T next() {
+            if(headIterator == null || headIterator.getNext() == null) {
+                throw new IndexOutOfBoundsException();
+            }
+
+            index ++;
+
+            headIterator = headIterator.getNext();
+            return headIterator.getValue();
+        }
     }
 }
