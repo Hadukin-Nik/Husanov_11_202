@@ -67,7 +67,7 @@ public class ComparatorsTest {
 
         Collections.sort(a2, new Comparator03());
 
-        Assertions.assertEquals(Arrays.asList("aaad", "abad", "abdf", "avcg"), a2)
+        Assertions.assertEquals(Arrays.asList("aaad", "abad", "abdf", "avcg"), a2);
     }
 
     @Test
@@ -89,7 +89,7 @@ public class ComparatorsTest {
 
         Collections.sort(a2, new Comparator04());
 
-        Assertions.assertEquals(Arrays.asList(01, 1000, 10), a2);
+        Assertions.assertEquals(Arrays.asList(1, 10, 1000), a2);
     }
 
     @Test
