@@ -39,7 +39,7 @@ public class VectorCode {
     }
 
     public void insert(int k, int pos) {
-        if(k == 0 || pos < 0 || pos >= len) throw new RuntimeException();
+        if(k == 0 || pos < 0 || pos >= len) throw new RuntimeException("Invalid Elem to add");
 
         Elem p = head;
 
@@ -72,7 +72,7 @@ public class VectorCode {
     }
 
     public void delete(int pos) {
-        if(pos < 0 || pos >= len) throw new RuntimeException();
+        if(pos < 0 || pos >= len) throw new RuntimeException("Invalid item to delete");
 
         Elem p = head;
         Elem c = null;
@@ -149,7 +149,7 @@ public class VectorCode {
             p = p.getNext();
         }
 
-        while(c != null && c.getIndex() > p.getIndex()) {
+        while(c != null) {
             ansB.add(c.getIndex(), c.getNumber());
             c = c.getNext();
         }
