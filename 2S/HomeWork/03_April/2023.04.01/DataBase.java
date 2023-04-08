@@ -38,11 +38,13 @@ public class DataBase {
         Scanner sc = new Scanner(groupsAddress);
         while(sc.hasNext()) {
             String[] buf = sc.next().split(" ");
-            groups.add(new Group(Integer.parseInt(buf[0]), (buf[1])));
+            groups.add(new Group(Integer.parseInt(buf[0]), (buf[1]), buf[2]));
         }
 
         return groups;
     }
+
+
 
     public User getUserById(int id) {
         return getUsers().stream().filter(user -> {return user.getId() == id;}).findFirst().get();
