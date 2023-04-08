@@ -1,8 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AnalyticsService {
     DataBase dataBase;
+
+    private Map<Integer, Group> groupById;
 
     public AnalyticsService(DataBase dataBase) {
         this.dataBase = dataBase;
@@ -23,6 +26,27 @@ public class AnalyticsService {
     }
 
     public List<User> getUsers(int group) {
-        if(dataBase.g)
+        List<Subscribe> subrs = dataBase.getSubscibtionsGroups();
+
+        List<User> users = subrs.stream().map(Subscribe::getWho).toList();
+
+        return users;
+    }
+
+    public Integer getCountUsers(int group) {
+        return getUsers(group).size();
+    }
+
+    public double procentOfUsersOfSameCityAsGroup(int groupId) {
+        List<User> usersOfGroup = getUsers(groupId);
+
+        Group group = dataBase.getGroupById(groupId);
+
+        return usersOfGroup.stream().filter(user -> {return user.getCity().equals(group.getCity());}).count() * 1.0
+                / usersOfGroup.size() * 100;
+    }
+
+    public double procentOfUsersFriendship(int groupId) {
+
     }
 }

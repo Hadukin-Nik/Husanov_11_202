@@ -6,12 +6,16 @@ public class Group {
     private int groupID;
 
     private String name;
+
+    public String city;
     private List<User> members;
 
-    public Group(int groupID, String name) {
+    public Group(int groupID, String name, String city) {
         this.groupID = groupID;
 
         this.name = name;
+        this.city = city;
+
     }
 
     public void setMembers(User[] members) {
@@ -31,6 +35,8 @@ public class Group {
     public int getGroupID() {
         return groupID;
     }
+
+    public String getCity() {return city;};
 
     public List<User> getMembers() {
         return members;
