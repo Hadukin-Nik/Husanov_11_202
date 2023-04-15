@@ -1,3 +1,5 @@
+package testBase;
+
 public class Main {
     public static void main(String[] args) {
         BinarySearchTree<Integer> bt = new BinarySearchTree<>(new Node(16));

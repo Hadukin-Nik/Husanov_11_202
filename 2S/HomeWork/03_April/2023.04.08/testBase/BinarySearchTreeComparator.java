@@ -1,16 +1,23 @@
-import java.security.KeyPair;
+package testBase;
+
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BinarySearchTree <T extends Comparable<T>> {
+public class BinarySearchTreeComparator <T extends Comparable<T>, SearchBy> {
     private Node<T> root;
-    public BinarySearchTree () {
+    private Comparator<T> comp;
+
+    public BinarySearchTreeComparator(Comparator<T> comp) {
         root = null;
+
+        this.comp = comp;
     }
 
-    public BinarySearchTree (Node<T> root) {
+    public BinarySearchTreeComparator(Node<T> root, Comparator<T> comp) {
         this.root = root;
+
+        this.comp = comp;
     }
 
     public void add(T x) {
@@ -24,7 +31,7 @@ public class BinarySearchTree <T extends Comparable<T>> {
         }
 
         while(next != null) {
-            if(x.compareTo((T) next.getValue()) > 0) {
+            if(comp.compare(x, (T) next.getValue()) > 0) {
                 if (next.getRight() == null) {
                     next.setRight(new Node<T>(x));
                     break;
@@ -45,7 +52,7 @@ public class BinarySearchTree <T extends Comparable<T>> {
         Node<T> iter = root;
 
         while(iter != null || !iter.getValue().equals(x)) {
-            if (iter.getValue().compareTo(x) < 0) {
+            if (comp.compare((T) iter.getValue(), x) < 0) {
                 iter = iter.getLeft();
             } else {
                 iter = iter.getRight();
@@ -67,7 +74,7 @@ public class BinarySearchTree <T extends Comparable<T>> {
         }
 
         while(iter != null && !iter.getValue().equals(x)) {
-            if(x.compareTo((T) iter.getValue()) >= 0) {
+            if(comp.compare((T) iter.getValue(), x) < 0) {
                 if(iter.getRight() != null && iter.getRight().getValue().equals(x)) {
                     moveRightUp(iter, iter.getRight());
 
@@ -99,6 +106,34 @@ public class BinarySearchTree <T extends Comparable<T>> {
         } else {
             from.setRight(null);
         }
+    }
+
+    public T search(SearchBy findBy) {
+        if(root == null) return null;
+
+        Node iter = root;
+
+        if(iter.getValue().equals(findBy)) {
+            return (T) iter.getValue();
+        }
+
+        while(iter != null && !iter.getValue().equals(findBy)) {
+            if(comp.compare((T) iter.getValue(), (T) findBy) < 0) {
+                if(iter.getRight() != null && iter.getRight().getValue().equals(findBy)) {
+                    return (T) iter.getRight().getValue();
+                } else {
+                    iter = iter.getRight();
+                }
+            } else {
+                if(iter.getLeft() != null && iter.getLeft().getValue().equals(findBy)) {
+                    return (T) iter.getLeft().getValue();
+                } else {
+                    iter = iter.getLeft();
+                }
+            }
+        }
+
+        return null;
     }
 
     public void printTree() {
