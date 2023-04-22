@@ -16,7 +16,7 @@ public class ByteWorker {
     public void add(Byte ch, int len) {
         int two = 256;
         for(int i = 0; i < len; i++) {
-            ready.add((byte) (ready.get(i / len) | (ch & two)));
+            ready.add((byte) (ready.get(i / len) << 1 | (ch & two >> (8 - i))));
             cell ++;
             two /= 2;
             if(cell % 8 == 0) {
