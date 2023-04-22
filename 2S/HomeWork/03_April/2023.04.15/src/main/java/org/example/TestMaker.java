@@ -11,19 +11,19 @@ public class TestMaker {
     private long time;
 
     private byte user;
-    public List<Integer> correctAnswer;
+    private List<Integer> correctAnswer;
 
 
     public void mapAnswer(String filePath) {
         try {
-            FileWriter fw = new FileWriter(filePath);
+            DataOutputStream fw = new DataOutputStream(new FileOutputStream(filePath));
 
-            fw.write(user);
+            fw.writeByte(user);
             for(int i = 0; i < ans.length; i++) {
-                fw.write(ans[i]);
+                fw.writeByte(ans[i]);
             }
 
-            fw.write((int) time);
+            fw.writeInt((int) time);
 
             fw.flush();
             fw.close();
@@ -94,5 +94,9 @@ public class TestMaker {
         }
 
         this.time = System.currentTimeMillis() - time;
+    }
+
+    public List<Integer> getCorrectAnswer() {
+        return correctAnswer;
     }
 }

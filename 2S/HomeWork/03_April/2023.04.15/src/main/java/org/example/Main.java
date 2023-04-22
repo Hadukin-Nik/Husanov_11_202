@@ -9,13 +9,13 @@ public class Main {
     public static void main(String[] args) {
         TestMaker testMaker = new TestMaker();
 
-        //testMaker.pushQuestions("src/main/java/answers.tsv", 48);
+        testMaker.pushQuestions("src/main/java/answers.tsv", 48);
 
-        //testMaker.start();
+        testMaker.start();
 
-        //testMaker.mapAnswer("src/main/java/out.data");
+        testMaker.mapAnswer("src/main/java/out.data");
 
-        try {
+        /*try {
             FileReader fl = new FileReader("src/main/java/out.data");
             Scanner sc = new Scanner(fl);
             int id = fl.read();
@@ -31,6 +31,7 @@ public class Main {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }*/
+
     }
 }
