@@ -40,7 +40,7 @@ public class TestAnalyzer {
 
             Test test = new Test();
             test.loadData(filepathAndNameOfFile + toadd + ".data", answers);
-            tests.add(new Test());
+            tests.add(test);
             boolean isStudentGood = test.getScore() >= boundOfGoodStundent;
             isStudentStrong.put(test.getId(), isStudentGood);
 
@@ -115,11 +115,11 @@ public class TestAnalyzer {
     }
 
     public int fastestSolution() {
-        int minTime = tests.get(0).getScore();
+        int minTime = tests.get(0).getTime();
 
         for(int i = 1; i < countOfAllStudents; i++) {
             if(minTime > tests.get(i).getTime()) {
-                minTime = tests.get(i).getScore();
+                minTime = tests.get(i).getTime();
             }
         }
 
@@ -127,11 +127,11 @@ public class TestAnalyzer {
     }
 
     public int slowestSolution() {
-        int maxTime = tests.get(0).getScore();
+        int maxTime = tests.get(0).getTime();
 
         for(int i = 1; i < countOfAllStudents; i++) {
             if(maxTime < tests.get(i).getTime()) {
-                maxTime = tests.get(i).getScore();
+                maxTime = tests.get(i).getTime();
             }
         }
 

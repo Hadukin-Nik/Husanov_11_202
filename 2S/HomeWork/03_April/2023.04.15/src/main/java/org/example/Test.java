@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Test {
@@ -18,6 +19,7 @@ public class Test {
     }
 
     public void loadData(String filePathUsedTest, List<Integer> answers) {
+        isCorrect = new ArrayList<>();
         try {
             DataInputStream dataInputStream = new DataInputStream(new FileInputStream(filePathUsedTest));
             id = dataInputStream.readByte();
@@ -26,7 +28,7 @@ public class Test {
                 byte buf = dataInputStream.readByte();
 
                 for(int j = 0; j < 4; j++) {
-                    int index = i * 4 + j;
+                    int index = i + j;
 
                     int ans = (buf>>2*(4 - (j + 1))) & ((1 << 2) - 1);
                     isCorrect.add((ans == answers.get(index)));
