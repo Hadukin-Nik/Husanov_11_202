@@ -3,9 +3,12 @@ package org.example;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FileWorker {
     public FileWorker() {}
@@ -71,17 +74,24 @@ public class FileWorker {
     public void downloadFile(String imageUrl, String to) {
         try {
             URL url = new URL(imageUrl);
-            DataInputStream in = new DataInputStream(url.openStream());
-            DataOutputStream out = new DataOutputStream(new FileOutputStream(to));
 
+            InputStream in = new BufferedInputStream(url.openStream());
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-            int i = in.readByte();
-            while(i != -1) {
-                out.writeByte(i);
-                i = in.read();
+            byte[] buf = new byte[1024];
+            int n = 0;
+            while (-1!=(n=in.read(buf)))
+            {
+                out.write(buf, 0, n);
             }
-            in.close();
             out.close();
+            in.close();
+            byte[] b = out.toByteArray();
+            FileOutputStream fs = new FileOutputStream(to);
+
+            fs.write(b);
+
+            fs.close();
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -110,7 +120,51 @@ public class FileWorker {
         }
     }
 
-    public void downloadAllPhotos(String pageURL, String pathAndFileName) {
-        ...
+    public void downloadAllPhotos(String pageURL, String path) {
+        try {
+            URL url = new URL(pageURL);
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            //DataOutputStream out = new DataOutputStream(new FileOutputStream(to));
+            StringBuilder dataBuf = new StringBuilder();
+
+            String line;
+            while ((line = in.readLine()) != null) {
+                dataBuf.append(line);
+            }
+            in.close();
+
+
+            String data = dataBuf.toString();
+
+            String regexpPNG =  "https?:\\/\\/([^\\s])*\\.png";
+            String regexpJPEG = "https?:\\/\\/([^\\s])*\\.jpeg";
+            String regexpJPG = "https?:\\/\\/([^\\s])*\\.jpg";
+
+            downloadDataTypeOf(data, regexpJPG, path, ".jpg");
+            downloadDataTypeOf(data, regexpPNG, path, ".png");
+            downloadDataTypeOf(data, regexpJPEG, path, ".jpeg");
+
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void downloadDataTypeOf(String data, String pattern, String downloadTo, String typeOfPhoto) {
+        List<String> photoURLs = new ArrayList<>();
+
+        Pattern patternPhoto = Pattern.compile(pattern);
+        Matcher matcherPhoto = patternPhoto.matcher(data);
+
+        while (matcherPhoto.find()) {
+            photoURLs.add(data.substring(matcherPhoto.start(), matcherPhoto.end()));
+        }
+
+        int i = 0;
+        for(String imgURL : photoURLs) {
+            downloadFile(imgURL, downloadTo + "photo" + (i < 10 ? "0" + i : i) + typeOfPhoto);
+            i++;
+        }
     }
 }
