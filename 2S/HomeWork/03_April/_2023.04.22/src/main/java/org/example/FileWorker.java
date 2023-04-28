@@ -136,14 +136,11 @@ public class FileWorker {
 
             String data = dataBuf.toString();
 
-            String regexpPNG =  "https?:\\/\\/([^\\s])*\\.png";
-            String regexpJPEG = "https?:\\/\\/([^\\s])*\\.jpeg";
-            String regexpJPG = "https?:\\/\\/([^\\s])*\\.jpg";
+            String regexp = "https?:\\/\\/([^\\s & ^\\@ & ^\\*])*";
 
-            downloadDataTypeOf(data, regexpJPG, path, ".jpg");
-            downloadDataTypeOf(data, regexpPNG, path, ".png");
-            downloadDataTypeOf(data, regexpJPEG, path, ".jpeg");
-
+            downloadDataTypeOf(data, regexp, path, ".jpg");
+            downloadDataTypeOf(data, regexp, path, ".png");
+            downloadDataTypeOf(data, regexp, path, ".jpeg");
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -153,7 +150,7 @@ public class FileWorker {
 
     private void downloadDataTypeOf(String data, String pattern, String downloadTo, String typeOfPhoto) {
         List<String> photoURLs = new ArrayList<>();
-
+        pattern += typeOfPhoto;
         Pattern patternPhoto = Pattern.compile(pattern);
         Matcher matcherPhoto = patternPhoto.matcher(data);
 
