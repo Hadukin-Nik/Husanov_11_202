@@ -3,6 +3,8 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
+//Class for 2" task
+
 public class EasyThreadGenerator {
     private int m;
 

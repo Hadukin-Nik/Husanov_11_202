@@ -6,8 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FinderURLsThread extends Thread{
-    LinksForThreadQueue product;
-    String data, pattern, downloadTo, typeOfPhoto;
+    private LinksForThreadQueue product;
+    private String data, pattern, downloadTo, typeOfPhoto;
     public FinderURLsThread(LinksForThreadQueue product, String data, String pattern, String downloadTo, String typeOfPhoto) {
         this.product = product;
 
@@ -21,14 +21,13 @@ public class FinderURLsThread extends Thread{
     public void run() {
         Pattern patternPhoto = Pattern.compile(pattern);
         Matcher matcherPhoto = patternPhoto.matcher(data);
+        synchronized (product) {
+            int i = 0;
 
-        int i = 0;
-
-        while(matcherPhoto.find()) {
-            synchronized (product) {
+            while(matcherPhoto.find()) {
                 while(!product.isEmpty()) {
                     try {
-                        product.wait();
+                        product.wait(100);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -36,11 +35,11 @@ public class FinderURLsThread extends Thread{
                 product.add(new ImageProduct(data.substring(matcherPhoto.start(), matcherPhoto.end()), downloadTo + "photo" + (i < 10 ? "0" + i : i) + typeOfPhoto));
 
                 i++;
-
-                product.notify();
+                product.notifyAll();
             }
-        }
 
-        product.deleteOne();
+            product.deleteOne();
+            product.notifyAll();
+        }
     }
 }

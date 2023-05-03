@@ -35,17 +35,16 @@ public class FileWorker {
             String regexpJPEG = regexp + ".jpeg";
             String regexpJPG = regexp + ".jpg";
 
-            LinksForThreadQueue queue = new LinksForThreadQueue(1);
+            LinksForThreadQueue queue = new LinksForThreadQueue(3);
 
             FinderURLsThread f1 = new FinderURLsThread(queue, data, regexpJPEG, path, ".jpeg");
             FinderURLsThread f2 = new FinderURLsThread(queue, data, regexpPNG, path, ".png");
             FinderURLsThread f3 = new FinderURLsThread(queue, data, regexpJPG, path, ".jpg");
+            DownloadURLsThread d1 = new DownloadURLsThread(queue);
 
             f1.start();
             f2.start();
             f3.start();
-
-            DownloadURLsThread d1 = new DownloadURLsThread(queue);
 
             d1.start();
         } catch (MalformedURLException e) {

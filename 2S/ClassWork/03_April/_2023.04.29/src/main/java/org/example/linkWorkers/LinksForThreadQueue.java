@@ -6,7 +6,7 @@ import java.util.Queue;
 public class LinksForThreadQueue {
     private Queue<ImageProduct> images;
 
-    int countOfFindersInWork;
+    private int countOfFindersInWork;
 
     public LinksForThreadQueue(int countOfFindersInWork) {
         images = new LinkedList<>();
@@ -28,5 +28,9 @@ public class LinksForThreadQueue {
 
     public ImageProduct get() {
         return images.poll();
+    }
+
+    public int getCountOfFindersInWork() {
+        return countOfFindersInWork;
     }
 }

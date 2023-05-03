@@ -31,8 +31,8 @@ public class DownloadImageThread extends Thread{
             FileOutputStream fs = new FileOutputStream(downloadTo);
 
             fs.write(b);
-
             fs.close();
+
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
