@@ -3,6 +3,8 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
+//Task for 2'
+
 public class EasyThreadSumGenerator {
     private int sum;
 
