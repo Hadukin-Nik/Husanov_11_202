@@ -1,4 +1,4 @@
-package org.example.linkWorkers;
+package org.example.linkWorkers.easy;
 
 import java.io.*;
 import java.net.MalformedURLException;

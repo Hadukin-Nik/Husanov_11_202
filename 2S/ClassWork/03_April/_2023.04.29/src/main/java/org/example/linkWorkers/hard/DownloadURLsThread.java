@@ -1,4 +1,4 @@
-package org.example.linkWorkers;
+package org.example.linkWorkers.hard;
 
 public class DownloadURLsThread extends Thread{
     private LinksForThreadQueue queue;

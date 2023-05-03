@@ -1,9 +1,4 @@
-package org.example.linkWorkers;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+package org.example.linkWorkers.hard;
 
 public class Main {
     public static void main(String[] args) {

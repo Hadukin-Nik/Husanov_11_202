@@ -1,4 +1,4 @@
-package org.example.linkWorkers;
+package org.example.linkWorkers.hard;
 
 import java.util.LinkedList;
 import java.util.Queue;
