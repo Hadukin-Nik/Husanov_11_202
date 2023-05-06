@@ -34,7 +34,7 @@ public class TestCompiler {
                     } catch (InvocationTargetException e) {
                         if (e.getCause().getClass().isInstance(neededMethod.getAnnotation(Test.class).expected().getClass())) {
                             try {
-                                throw (Throwable) Class.forName(neededMethod.getAnnotation(Test.class).expected().getClass().getName()).newInstance();
+                                throw e.getCause();
                             } catch (Throwable ex) {
                                 throw new RuntimeException(ex);
                             }
