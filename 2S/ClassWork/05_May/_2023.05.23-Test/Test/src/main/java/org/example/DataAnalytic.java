@@ -113,7 +113,7 @@ public class DataAnalytic {
 
             boolean isMale = ((a >> 1 & 1) == 1);
             boolean isMarried = ((a & (1)) == 1);
-            time = a >> 2 & 127;
+            time = a >> 2;
             ans.add(new BirthData(isMale, isMarried, time));
         }
 
