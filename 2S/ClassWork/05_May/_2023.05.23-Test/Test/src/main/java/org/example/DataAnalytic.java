@@ -84,7 +84,6 @@ public class DataAnalytic {
             byte b = (byte) ((((i.isMale() ? 1 : 0) << 1) | (i.isMarried() ? 1 : 0) << 1) | i.getTimeOfPregnancy());
             try {
                 dos.writeByte(b);
-                dos.writeInt(i.getTimeOfPregnancy());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
