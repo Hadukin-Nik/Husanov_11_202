@@ -111,7 +111,7 @@ public class DataAnalytic {
                 throw new RuntimeException(e);
             }
 
-            boolean isMale = ((a >> 1 & 1) == 2);
+            boolean isMale = ((a >> 1 & 1) == 1);
             boolean isMarried = ((a & (1)) == 1);
             time = a >> 2 & 127;
             ans.add(new BirthData(isMale, isMarried, time));
