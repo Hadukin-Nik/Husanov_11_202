@@ -81,7 +81,7 @@ public class DataAnalytic {
         }
 
         for(var i : dataList) {
-            byte b = (byte) ((byte) ((i.isMale() ? 1 : 0) << 1) | (i.isMarried() ? 1 : 0));
+            byte b = (byte) ((((i.isMale() ? 1 : 0) << 1) | (i.isMarried() ? 1 : 0) << 1) | i.getTimeOfPregnancy());
             try {
                 dos.writeByte(b);
                 dos.writeInt(i.getTimeOfPregnancy());
@@ -108,14 +108,13 @@ public class DataAnalytic {
             int time;
             try {
                 a = dis.readByte();
-                time = dis.readInt();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            boolean isMale = ((a >> 1) == 1);
+            boolean isMale = ((a >> 1 & 1) == 1);
             boolean isMarried = ((a & (1)) == 1);
-
+            time = a >> 2 & 127;
             ans.add(new BirthData(isMale, isMarried, time));
         }
 
