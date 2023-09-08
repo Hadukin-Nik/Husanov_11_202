@@ -1,0 +1,32 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    font-size: 18px;
+    width: 100%;
+    min-height: 200vh;
+}
+
+.container {
+    width: 100%;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+}
+
+[class^="box-"] {
+    background-color: skyblue;
+
+    display: grid;
+    place-items: center;
+}
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
