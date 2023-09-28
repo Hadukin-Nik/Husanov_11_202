@@ -8,7 +8,7 @@ public class ParadoxOfBirthDay {
     }
 
     public float calculateString(int people, int countOfLetter) {
-        float ans = 0;
+        float ans = 1;
         for(float i = 1; i <= people; i++) {
             ans*=(1 - i / countOfLetter);
         }
