@@ -1,7 +1,14 @@
 package com.example._20230923;
 
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+
 import java.io.*;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -20,34 +27,34 @@ public class HelloServlet extends HttpServlet {
         response.setContentType("text/html");
 
         out.println("<html><body>");
-        // Hello
 
-        out.println("<form  method=\"Post\" action=\"\">\n" +
-                    "<input name = \"login\" value=\"\">\n" +
-                    "<input name = \"password\" value=\"\">\n" +
-                    "<input type=\"submit\" value=\"enter\">" +
 
-                "</form>");
-        out.println("<h1>----------------------</h1>");
+        Template temp = TemplatesLoader.getConfiguration().getTemplate("hello.ftl");
 
-        out.println("<a href=\"register\">Register</a>");
+        try {
+            temp.process(null, out);
+        } catch (TemplateException e) {
+            throw new RuntimeException(e);
+        }
 
-        out.println("</body></html>");
+
+
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if((request.getParameter("login") != null && request.getParameter("password")!=null) && UsersContainer.checkUser(request.getParameter("login"), request.getParameter("password"))) {
-            RequestDispatcher dispatcher = getServletContext()
-                    .getRequestDispatcher("/vote");
-            try {
-                dispatcher.forward(request, response);
-            } catch (ServletException e) {
-                throw new RuntimeException(e);
-            }
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+
+        if(login != null && password != null && UsersContainer.checkUser(login, password)) {
+            response.addCookie(new Cookie("authorized", "true"));
+
+            response.sendRedirect(request.getContextPath() + "/vote");
         } else {
             doGet(request, response);
         }
     }
+
+
 
     public void destroy() {
     }

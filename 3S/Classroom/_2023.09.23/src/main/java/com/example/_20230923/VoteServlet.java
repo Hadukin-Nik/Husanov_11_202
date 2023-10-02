@@ -1,5 +1,8 @@
 package com.example._20230923;
 
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -23,30 +26,41 @@ public class VoteServlet extends HttpServlet {
 * */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
+        Cookie[] cookies = request.getCookies();
 
-        boolean isVoted = Arrays.stream(request.getCookies()).filter(c -> {return c.getName().equals("voted");}).count() > 0;
+
+        if(!isAuthorised(cookies)) {
+            response.sendError(403);
+
+            return;
+        }
+
+        boolean isVoted = Arrays.stream(cookies).anyMatch(c -> c.getName().equals("voted"));
 
         if(isVoted) {
             response.sendRedirect(request.getContextPath() + "/exit");
-        } else if(request.getParameter("option1") != null) {
-            response.addCookie(new Cookie("voted", "fuck"));
         }
 
         PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        // Hello
 
-        out.println("<form name=\"VoteForm\" method=\"Post\" action=\"exit\">\n" +
-                    "<input type=radio name=\"option1\" value=\"like\">I like it !<br>\n" +
-                    "<input type=radio name=\"option1\" value=\"dislike\">I hate it !<br>\n" +
-                    "<input type=\"submit\" value=\"Vote\">\n" +
+        Template temp = TemplatesLoader.getConfiguration().getTemplate("vote.ftl");
 
-                "</form>");
-        out.println("<a href=\"\">Send</a>");
-        out.println("</body></html>");
+        try {
+            temp.process(null, out);
+        } catch (TemplateException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.addCookie(new Cookie("voted", "fuck"));
 
+        response.sendRedirect(request.getContextPath() + "/exit");
+    }
+
+    private boolean isAuthorised(Cookie[] cookies) {
+        if(cookies == null) return false;
+        return Arrays.stream(cookies).anyMatch(c -> c.getName().equals("authorized"));
     }
 }
