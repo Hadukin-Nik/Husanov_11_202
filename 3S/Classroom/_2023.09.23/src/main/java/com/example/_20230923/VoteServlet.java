@@ -5,10 +5,7 @@ import freemarker.template.TemplateException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
@@ -28,6 +25,10 @@ public class VoteServlet extends HttpServlet {
         response.setContentType("text/html");
         Cookie[] cookies = request.getCookies();
 
+        //Part d = request.getPart("asd");
+        //file name
+        //save directory
+        //file name save to
 
         if(!isAuthorised(cookies)) {
             response.sendError(403);
