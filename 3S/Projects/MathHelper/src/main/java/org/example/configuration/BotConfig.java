@@ -1,7 +1,6 @@
 package org.example.configuration;
 
 import lombok.Data;
-import lombok.Value;
 
 @Data
 public class BotConfig {
