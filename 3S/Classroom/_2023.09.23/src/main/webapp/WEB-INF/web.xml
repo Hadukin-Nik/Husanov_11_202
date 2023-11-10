@@ -15,10 +15,7 @@
         <servlet-name>exit</servlet-name>
         <servlet-class>com.example._20230923.ExitScreen</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>register</servlet-name>
-        <servlet-class>com.example._20230923.RegisterServlet</servlet-class>
-    </servlet>
+
     <servlet>
         <servlet-name>freemarker</servlet-name>
         <servlet-class>freemarker.ext.servlet.FreemarkerServlet</servlet-class>
