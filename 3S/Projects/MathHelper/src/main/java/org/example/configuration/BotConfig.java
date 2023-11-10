@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class BotConfig {
-    String botName = "MarhHelper_bot";
-    String token = "6802520833:AAH_CzagxF5h9gfSstnsrvGCC5D7jJp6uls";
+    String botName = "MathHelper_Bot";
+    String token = "6573238637:AAF6iBuUZd_Vij12AObmvX_DbodkSz9yQLI";
 }
