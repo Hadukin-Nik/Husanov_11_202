@@ -3,6 +3,7 @@ package org.example;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class Server {
@@ -23,24 +24,62 @@ public class Server {
                 try {
                     in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                     out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-
-                    while(true) {
+                    boolean isDone = true;
+                    while(isDone) {
                         String word = in.readLine();
 
-                        if(word.equals("exit")) break;
+                        if(word.equals("exit")) {
+                            isDone = false;
+                            break;
+                        }
 
+                        int number = -1;
 
                         boolean isNumber = Pattern.matches("[0-9]+", word);
                         if(isNumber) {
-                             int number = Integer.parseInt(word);
+                            Random rand = new Random();
 
-                            out.write(number * number + "\n");
-
+                            number = rand.nextInt(Integer.parseInt(word));
+                            out.write("checked!"+ "\n");
                         } else {
                             out.write("Not a number" + "\n");
 
+                            continue;
                         }
+
                         out.flush();
+                        System.out.println("In game!");
+                        while (isDone) {
+                            word = in.readLine();
+                            if(word.equals("exit")) {
+                                isDone = false;
+                                break;
+                            }
+                            System.out.println("Next turn!");
+
+                            isNumber = Pattern.matches("[0-9]+", word);
+                            if(isNumber) {
+                                System.out.println("We are on checking!");
+                                int user_number = Integer.parseInt(word);
+                                if(user_number < number){
+                                    out.write('<' + "\n");
+                                } else if (user_number > number) {
+                                    out.write('>' + "\n");
+                                } else {
+                                    out.write("You are right!" + "\n");
+                                    System.out.println("end of this party!");
+
+                                    out.flush();
+                                    break;
+                                }
+                            } else {
+                                out.write("Not a number" + "\n");
+                            }
+                            System.out.println("End turn!");
+
+                            out.flush();
+                        }
+
                     }
                     out.flush();
 

@@ -25,7 +25,7 @@ public class Client {
                     String word = reader.readLine();
 
                     if(word.equals("exit")) {
-                        out.write(word);
+                        out.write(word + "\n");
                         break;
                     }
 
@@ -33,6 +33,11 @@ public class Client {
                     out.flush();
                     String serverWord = in.readLine();
                     System.out.println(serverWord);
+
+                    if(serverWord.equals("You are right!")) {
+                        System.out.println("Please write a new bound!");
+                    }
+                    out.flush();
                 }
                 out.flush();
 
