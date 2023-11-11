@@ -21,7 +21,7 @@ public class Client {
                 out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 
                 while(true) {
-                    System.out.println("Please write a number!");
+                    System.out.println("I am saying:");
                     String word = reader.readLine();
 
                     if(word.equals("exit")) {
@@ -31,13 +31,12 @@ public class Client {
 
                     out.write(word + "\n");
                     out.flush();
-                    String serverWord = in.readLine();
-                    System.out.println(serverWord);
 
-                    if(serverWord.equals("You are right!")) {
-                        System.out.println("Please write a new bound!");
+                    String ans = in.readLine();
+                    System.out.println("He is saying:\n" + ans);
+                    if(ans.equals("exit")) {
+                        break;
                     }
-                    out.flush();
                 }
                 out.flush();
 
