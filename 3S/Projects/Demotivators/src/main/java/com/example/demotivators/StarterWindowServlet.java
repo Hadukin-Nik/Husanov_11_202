@@ -23,6 +23,8 @@ public class StarterWindowServlet extends HttpServlet {
         root.put("toAccount", request.getContextPath() + "/pc");
         root.put("toScroll", request.getContextPath() + "/scroll");
         root.put("toUsers", request.getContextPath() + "/users");
+        root.put("toMemUpload", request.getContextPath() + "/mem_upload");
+
         root.put("x", Arrays.stream(request.getCookies()).filter(t -> t.getName().equals("admin")).count());
 
         Template temp = TemplatesLoader.getConfiguration().getTemplate("/starterWindow.ftl");

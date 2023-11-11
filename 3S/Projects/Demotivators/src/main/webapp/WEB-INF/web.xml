@@ -19,7 +19,10 @@
         <servlet-name>usersTable</servlet-name>
         <servlet-class>com.example.demotivators.UsersServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>memUpload</servlet-name>
+        <servlet-class>com.example.demotivators.MemUpload</servlet-class>
+    </servlet>
 
 
     <servlet-mapping>
@@ -38,4 +41,10 @@
         <servlet-name>usersTable</servlet-name>
         <url-pattern>/users</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>memUpload</servlet-name>
+        <url-pattern>/mem_upload</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
