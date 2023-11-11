@@ -15,6 +15,11 @@
         <servlet-name>menu</servlet-name>
         <servlet-class>com.example.demotivators.StarterWindowServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>usersTable</servlet-name>
+        <servlet-class>com.example.demotivators.UsersServlet</servlet-class>
+    </servlet>
+
 
 
     <servlet-mapping>
@@ -28,5 +33,9 @@
     <servlet-mapping>
         <servlet-name>menu</servlet-name>
         <url-pattern>/menu</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>usersTable</servlet-name>
+        <url-pattern>/users</url-pattern>
     </servlet-mapping>
 </web-app>

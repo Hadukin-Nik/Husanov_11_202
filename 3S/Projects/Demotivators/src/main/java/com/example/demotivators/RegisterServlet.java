@@ -32,7 +32,7 @@ public class RegisterServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        if(login != null && password != null && !UsersContainer.checkUser(login, password)) {
+        if(login != null && password != null && (UsersContainer.checkUser(login, password) < 0)) {
             try {
                 UsersContainer.addUser(login, password);
                 response.sendRedirect(request.getContextPath());

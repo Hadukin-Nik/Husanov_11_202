@@ -30,9 +30,10 @@ public class HelloServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        if(login != null && password != null && UsersContainer.checkUser(login, password)) {
+        if(login != null && password != null && UsersContainer.checkUser(login, password) >= 0) {
             try {
-                response.sendRedirect(request.getContextPath());
+                response.addCookie(new Cookie("admin", "true"));
+                response.sendRedirect(request.getContextPath() + "/menu");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
