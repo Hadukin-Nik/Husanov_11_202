@@ -30,9 +30,19 @@ public class HelloServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        if(login != null && password != null && UsersContainer.checkUser(login, password) >= 0) {
+        User user = UsersContainer.checkUser(login, password);
+
+        if(login != null && password != null && user != null) {
             try {
-                response.addCookie(new Cookie("admin", "true"));
+                if (user.getRole() == User.Role.SuperAdmin || user.getRole() == User.Role.Admin)
+                    response.addCookie(new Cookie("admin", "true"));
+
+                response.addCookie(new Cookie("name", user.getName()));
+                response.addCookie(new Cookie("nick_name", user.getNickname()));
+
+                response.addCookie(new Cookie("user_id", ""+user.getUserId()));
+
+
                 response.sendRedirect(request.getContextPath() + "/menu");
             } catch (IOException e) {
                 throw new RuntimeException(e);

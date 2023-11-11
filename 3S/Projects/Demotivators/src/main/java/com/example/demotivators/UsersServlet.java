@@ -24,9 +24,9 @@ public class UsersServlet extends HttpServlet {
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
             Statement st = conn.createStatement();
             ResultSet resultSet = st.executeQuery("SELECT  * FROM users");
-resultSet.next();
+            resultSet.next();
             do {
-                users.add(new User(resultSet.getString(1), resultSet.getString(4)));
+                users.add(new User(resultSet.getString(1), resultSet.getString(2), resultSet.getLong(3), resultSet.getString(4), resultSet.getInt(5), resultSet.getInt(8)));
             } while(resultSet.next());
         } catch (SQLException e) {
             throw new RuntimeException(e);

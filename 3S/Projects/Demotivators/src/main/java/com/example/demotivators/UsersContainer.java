@@ -15,7 +15,7 @@ public class UsersContainer {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
             Statement st = conn.createStatement();
-            ResultSet resultSet = st.executeQuery("SELECT  * FROM users WHERE Login = '" + login + "' " + " AND Password = '" + password + "'");
+            ResultSet resultSet = st.executeQuery("SELECT  * FROM users WHERE \"Login\" = '" + login + "' " + " AND \"Password\" = '" + password + "'");
             if(resultSet != null) {
                 return false;
             } else {
@@ -27,7 +27,7 @@ public class UsersContainer {
         }
     }
 
-    public static int checkUser(String login, String password) {
+    public static User checkUser(String login, String password) {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
             Statement st = conn.createStatement();
@@ -35,9 +35,9 @@ public class UsersContainer {
 
             resultSet.next();
             if(resultSet != null) {
-                return resultSet.getInt(5);
+                return new User(resultSet.getString(1), resultSet.getString(2), resultSet.getLong(3), resultSet.getString(4), resultSet.getInt(5), resultSet.getInt(8));
             } else {
-                return -1;
+                return null;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

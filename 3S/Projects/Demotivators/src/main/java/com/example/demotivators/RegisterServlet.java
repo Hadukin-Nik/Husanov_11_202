@@ -31,11 +31,16 @@ public class RegisterServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-
+        try {
+            response.sendRedirect(request.getContextPath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        /*
         if(login != null && password != null && (UsersContainer.checkUser(login, password) < 0)) {
             try {
                 UsersContainer.addUser(login, password);
-                response.sendRedirect(request.getContextPath());
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -45,6 +50,6 @@ public class RegisterServlet extends HttpServlet {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
+        }*/
     }
 }
