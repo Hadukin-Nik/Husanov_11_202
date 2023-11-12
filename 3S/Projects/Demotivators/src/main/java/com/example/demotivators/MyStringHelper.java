@@ -1,0 +1,56 @@
+package com.example.demotivators;
+
+public class MyStringHelper {
+    public static String getAStringBeforePattern(String root_buf, String scheme) {
+        StringBuilder sb = new StringBuilder();
+
+        String root = "";
+        for(int i = 0; i < root_buf.length(); i++) {
+
+            int j = 0;
+            boolean ok = true;
+            while(j < scheme.length() && j + i < root_buf.length()) {
+                if(root_buf.charAt(j + i) != scheme.charAt(j)) break;
+                if(j + 1 == scheme.length()) ok = false;
+
+                j++;
+            }
+
+            if(!ok) {
+                root = sb.toString();
+            } else {
+                sb.append(root_buf.charAt(i));
+            }
+        }
+
+        return root;
+    }
+
+    public static String getAStringAfterPattern(String root_buf, String scheme) {
+        StringBuilder sb = new StringBuilder();
+
+        String root = "";
+        for(int i = 0; i < root_buf.length(); i++) {
+            int j = 0;
+            boolean ok = true;
+
+            while(j < scheme.length() && i + j < root_buf.length()) {
+                if(root_buf.charAt(j + i) != scheme.charAt(j)) break;
+                if(j + 1 == scheme.length()) ok = false;
+
+                j++;
+            }
+
+            if(!ok) {
+                while(i + j < root_buf.length()) {
+                    sb.append(root_buf.charAt(i + j));
+                    j++;
+                }
+
+                return sb.toString();
+            }
+        }
+
+        return root;
+    }
+}

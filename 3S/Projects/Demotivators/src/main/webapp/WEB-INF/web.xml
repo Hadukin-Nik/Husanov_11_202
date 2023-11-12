@@ -5,26 +5,34 @@
          version="5.0">
     <servlet>
         <servlet-name>hello</servlet-name>
-        <servlet-class>com.example.demotivators.HelloServlet</servlet-class>
+        <servlet-class>com.example.demotivators.pages.HelloServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>register</servlet-name>
-        <servlet-class>com.example.demotivators.RegisterServlet</servlet-class>
+        <servlet-class>com.example.demotivators.pages.RegisterServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>menu</servlet-name>
-        <servlet-class>com.example.demotivators.StarterWindowServlet</servlet-class>
+        <servlet-class>com.example.demotivators.pages.StarterWindowServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>usersTable</servlet-name>
-        <servlet-class>com.example.demotivators.UsersServlet</servlet-class>
+        <servlet-class>com.example.demotivators.pages.UsersServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>memUpload</servlet-name>
-        <servlet-class>com.example.demotivators.MemUpload</servlet-class>
+        <servlet-class>com.example.demotivators.pages.MemUpload</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayImage</servlet-name>
+        <servlet-class>com.example.demotivators.pages.DisplayImage</servlet-class>
     </servlet>
 
 
+    <servlet-mapping>
+        <servlet-name>DisplayImage</servlet-name>
+        <url-pattern>/images/*</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
