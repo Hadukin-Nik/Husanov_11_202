@@ -23,7 +23,7 @@ public class UsersDAO {
             int numberOfUsers = howManyUsers("users");
 
             st.executeQuery("INSERT INTO public.users(" +
-                    "\"Name\", \"Nickname\", \"Telephone_number\", \"Registration_date\", \"Role\", \"Login\", \"Password\", \"User_id\")\n" +
+                    "\"Name\", \"Nickname\", \"Telephone\", \"RegistrationDate\", \"Role\", \"Login\", \"Password\", \"User_id\")\n" +
                     "VALUES (\'"+user.getName()+"\', \'"+user.getNickname()+"\', \'"+
                     user.getTelephone_number()+"\', \'"+
                     (new java.sql.Date(user.getDate_registration().getTime())) +"\', \'"+
@@ -39,12 +39,15 @@ public class UsersDAO {
     public static User checkUser(String login, String password) {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
-            Statement st = conn.createStatement();
+            if(howManyUsers("users") <= 0) return null;
+
+
+                Statement st = conn.createStatement();
             ResultSet resultSet = st.executeQuery("SELECT  * FROM users WHERE \"Login\" = '" + login + "' " + " AND \"Password\" = '" + hashString(password) + "'");
 
             resultSet.next();
             if(resultSet != null) {
-                return new User(resultSet.getString(1), resultSet.getString(2), resultSet.getLong(3), resultSet.getString(4), resultSet.getInt(5), resultSet.getInt(8));
+                return new User(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getDate(5), resultSet.getInt(6), resultSet.getInt(1));
             } else {
                 return null;
             }

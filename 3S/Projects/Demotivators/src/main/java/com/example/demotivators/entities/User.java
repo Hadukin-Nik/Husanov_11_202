@@ -38,23 +38,20 @@ public class User {
     private String name;
     private String nickname;
 
+    private String telephone_number;
+
+
     private Date date_registration;
 
     private Role role;
 
-    private long telephone_number;
     private long userId;
 
-    public User(String name, String nickname, long telephoneNumber, String dateRegistration, int role, long userId) {
+    public User(String name, String nickname, String telephoneNumber, Date dateRegistration, int role, long userId) {
         this.name = name;
         this.nickname = nickname;
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.mm.yyyy", Locale.ENGLISH);
-        try {
-            date_registration = formatter.parse(dateRegistration);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        this.date_registration = dateRegistration;
 
         this.role = fromInteger(role);
         telephone_number = telephoneNumber;
@@ -78,7 +75,7 @@ public class User {
         return role;
     }
 
-    public long getTelephone_number() {
+    public String getTelephone_number() {
         return telephone_number;
     }
 

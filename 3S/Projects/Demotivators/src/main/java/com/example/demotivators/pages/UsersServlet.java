@@ -28,7 +28,7 @@ public class UsersServlet extends HttpServlet {
             ResultSet resultSet = st.executeQuery("SELECT  * FROM users");
             resultSet.next();
             do {
-                users.add(new User(resultSet.getString(1), resultSet.getString(2), resultSet.getLong(3), resultSet.getString(4), resultSet.getInt(5), resultSet.getInt(8)));
+                users.add(new User(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getDate(5), resultSet.getInt(6), resultSet.getInt(1)));
             } while(resultSet.next());
         } catch (SQLException e) {
             throw new RuntimeException(e);
