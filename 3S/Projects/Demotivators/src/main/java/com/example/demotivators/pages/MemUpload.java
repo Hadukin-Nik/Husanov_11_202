@@ -35,7 +35,7 @@ public class MemUpload extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws  IOException{
         String root_buf = getServletContext().getRealPath("/");
 
-        String filePath = MyStringHelper.getAStringBeforePattern(root_buf, "target") + "src\\main\\resources\\images";
+        String filePath = MyStringHelper.getAStringBeforePattern(root_buf, "target") + "src\\main\\resources\\images\\";
 
         Part filePart = null;
         String fileName = String.valueOf(System.currentTimeMillis());

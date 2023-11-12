@@ -20,7 +20,7 @@ public class DisplayImage extends HttpServlet {
         if(URLAfterWebDomain.contains("/images/") == false)
             return;
 
-        String relativeImagePath = MyStringHelper.getAStringAfterPattern(URLAfterWebDomain, "images");
+        String relativeImagePath = MyStringHelper.getAStringAfterPattern(URLAfterWebDomain, "images/");
 
         System.out.println("\nFetching image from "+imagesBase+relativeImagePath);
         response.setContentType("image/jpeg");
