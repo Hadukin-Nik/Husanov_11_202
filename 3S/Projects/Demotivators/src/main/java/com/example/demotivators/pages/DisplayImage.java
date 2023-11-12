@@ -1,6 +1,7 @@
 package com.example.demotivators.pages;
 
-import com.example.demotivators.MyStringHelper;
+import com.example.demotivators.Config;
+import com.example.demotivators.helper_s.MyHelper;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -12,22 +13,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class DisplayImage extends HttpServlet {
-    public final String imagesBase = "C:\\Users\\husan\\Desktop\\Husanov_11_202\\3S\\Projects\\Demotivators\\src\\main\\resources\\images\\";
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String URLAfterWebDomain = request.getRequestURI();
 
         if(URLAfterWebDomain.contains("/images/") == false)
             return;
 
-        String relativeImagePath = MyStringHelper.getAStringAfterPattern(URLAfterWebDomain, "images/");
+        String relativeImagePath = MyHelper.getAStringAfterPattern(URLAfterWebDomain, "images/");
 
-        System.out.println("\nFetching image from "+imagesBase+relativeImagePath);
+        System.out.println("\nFetching image from " + Config.sourceImagePath + relativeImagePath);
         response.setContentType("image/jpeg");
 
         ServletOutputStream outStream;
         outStream = response.getOutputStream();
-        FileInputStream fin = new FileInputStream(imagesBase+relativeImagePath);
+        FileInputStream fin = new FileInputStream(Config.sourceImagePath + relativeImagePath);
 
         BufferedInputStream bin = new BufferedInputStream(fin);
         BufferedOutputStream bout = new BufferedOutputStream(outStream);
@@ -40,4 +39,6 @@ public class DisplayImage extends HttpServlet {
         bout.close();
         outStream.close();
     }
+
+
 }

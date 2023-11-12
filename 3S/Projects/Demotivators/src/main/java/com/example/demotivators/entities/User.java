@@ -1,11 +1,11 @@
-package com.example.demotivators;
+package com.example.demotivators.entities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.example.demotivators.User.Role.fromInteger;
+import static com.example.demotivators.entities.User.Role.fromInteger;
 
 public class User {
     public enum Role{
@@ -20,6 +20,18 @@ public class User {
                     return SuperAdmin;
             }
             return null;
+        }
+
+        public static Integer toInt(Role x) {
+            switch (x){
+                case Commoner:
+                    return 0;
+                case Admin:
+                    return 1;
+                case SuperAdmin:
+                    return 2;
+            }
+            return -1;
         }
     }
 

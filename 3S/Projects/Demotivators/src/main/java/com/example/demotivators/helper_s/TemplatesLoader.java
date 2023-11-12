@@ -1,4 +1,4 @@
-package com.example.demotivators;
+package com.example.demotivators.helper_s;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;

@@ -1,6 +1,6 @@
 package com.example.demotivators.pages;
 
-import com.example.demotivators.TemplatesLoader;
+import com.example.demotivators.helper_s.TemplatesLoader;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 

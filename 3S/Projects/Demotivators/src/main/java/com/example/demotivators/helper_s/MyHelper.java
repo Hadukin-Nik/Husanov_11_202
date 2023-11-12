@@ -1,6 +1,18 @@
-package com.example.demotivators;
+package com.example.demotivators.helper_s;
 
-public class MyStringHelper {
+import javax.servlet.http.Cookie;
+
+public class MyHelper {
+    public static Cookie getSpecificCookie(Cookie[] cookies, String name) {
+        for (int i = 0; i < cookies.length; i++) {
+            if (cookies[i].getName().equals(name))
+                return cookies[i];
+
+        }
+
+        return(null);
+    }
+
     public static String getAStringBeforePattern(String root_buf, String scheme) {
         StringBuilder sb = new StringBuilder();
 

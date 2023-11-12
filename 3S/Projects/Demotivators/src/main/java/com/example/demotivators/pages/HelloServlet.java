@@ -1,7 +1,7 @@
 package com.example.demotivators.pages;
-import com.example.demotivators.TemplatesLoader;
-import com.example.demotivators.User;
-import com.example.demotivators.UsersContainer;
+import com.example.demotivators.helper_s.TemplatesLoader;
+import com.example.demotivators.entities.User;
+import com.example.demotivators.dao_s.UsersDAO;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import javax.servlet.http.*;
@@ -33,7 +33,7 @@ public class HelloServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        User user = UsersContainer.checkUser(login, password);
+        User user = UsersDAO.checkUser(login, password);
 
         if(login != null && password != null && user != null) {
             try {
