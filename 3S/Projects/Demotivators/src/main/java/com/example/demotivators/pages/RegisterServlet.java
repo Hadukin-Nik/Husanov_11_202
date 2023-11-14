@@ -1,5 +1,7 @@
 package com.example.demotivators.pages;
 
+import com.example.demotivators.dao_s.UsersDAO;
+import com.example.demotivators.entities.User;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -32,6 +34,17 @@ public class RegisterServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+
+        String name = request.getParameter("name");
+        String nickname = request.getParameter("nickname");
+        String phone = request.getParameter("phone");
+
+        if(name != null && nickname != null && phone != null && login != null && password != null) {
+            User user = new User(name, nickname, phone);
+
+            UsersDAO.addUser(user, login, password);
+        }
+
         try {
             response.sendRedirect(request.getContextPath());
         } catch (IOException e) {

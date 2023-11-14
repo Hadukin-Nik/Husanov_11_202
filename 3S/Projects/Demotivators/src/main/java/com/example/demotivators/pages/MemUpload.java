@@ -42,10 +42,13 @@ public class MemUpload extends HttpServlet {
 
         Part filePart = null;
         String fileName = UUID.randomUUID().toString();
+        String extension;
 
         try {
             filePart = request.getPart("file");
-            filePart.write(Config.sourceImagePath + fileName + ".jpg");
+
+            extension = "." + MyHelper.getAStringAfterPattern(filePart.getContentType(), "image/");
+            filePart.write(Config.sourceImagePath + fileName + extension);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         }
@@ -55,7 +58,7 @@ public class MemUpload extends HttpServlet {
         response.setContentType("text/html");
 
         Map<String, Object> vars = new HashMap<>();
-        vars.put("img_src", "images/" + fileName + ".jpg");
+        vars.put("img_src", "images/" + fileName + extension);
 
         Template temp = TemplatesLoader.getConfiguration().getTemplate("afterMemUpload.ftl");
 
@@ -69,7 +72,7 @@ public class MemUpload extends HttpServlet {
         int user_id = Integer.parseInt(MyHelper.getSpecificCookie(cookies, "user_id").getValue());
 
 
-        MemesDAO.InsertMem(new Mem(user_id, fileName + ".jpg", description, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), isCommentsAllowed));
+        MemesDAO.InsertMem(new Mem(user_id, fileName + extension, description, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), isCommentsAllowed));
     }
 
 

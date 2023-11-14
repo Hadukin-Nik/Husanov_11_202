@@ -35,4 +35,27 @@ public class HelperForDAO_s {
 
         return new String(hashbytes, StandardCharsets.UTF_8);
     }
+
+    public static int sizeoOfResultSet(String executeQuerry) {
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
+            Statement st = conn.createStatement();
+
+            ResultSet resultSet = st.executeQuery(executeQuerry);
+
+            int rowCount = 0;
+            try {
+                while (resultSet.next()) {
+                    rowCount++;
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            return rowCount;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

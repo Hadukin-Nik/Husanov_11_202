@@ -1,6 +1,8 @@
 package com.example.demotivators.dao_s;
 
 import com.example.demotivators.entities.User;
+import com.example.demotivators.helper_s.HelperForDAO_s;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -42,8 +44,15 @@ public class UsersDAO {
             if(howManyUsers("users") <= 0) return null;
 
 
-                Statement st = conn.createStatement();
-            ResultSet resultSet = st.executeQuery("SELECT  * FROM users WHERE \"Login\" = '" + login + "' " + " AND \"Password\" = '" + hashString(password) + "'");
+            Statement st = conn.createStatement();
+
+            String execute = "SELECT  * FROM users WHERE \"Login\" = '" + login + "' " + " AND \"Password\" = '" + hashString(password) + "'";
+
+            ResultSet resultSet = st.executeQuery(execute);
+
+            if(HelperForDAO_s.sizeoOfResultSet(execute) == 0) return null;
+
+            resultSet = st.executeQuery(execute);
 
             resultSet.next();
             if(resultSet != null) {

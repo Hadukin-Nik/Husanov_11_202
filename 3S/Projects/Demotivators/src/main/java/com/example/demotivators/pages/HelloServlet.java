@@ -38,14 +38,7 @@ public class HelloServlet extends HttpServlet {
 
         if(login != null && password != null && user != null) {
             try {
-                if (user.getRole() == User.Role.SuperAdmin || user.getRole() == User.Role.Admin)
-                    response.addCookie(new Cookie("admin", "true"));
-
-                response.addCookie(new Cookie("name", user.getName()));
-                response.addCookie(new Cookie("nick_name", user.getNickname()));
-
-                response.addCookie(new Cookie("user_id", ""+user.getUserId()));
-
+                initUser(user, response);
 
                 response.sendRedirect(request.getContextPath() + "/menu");
             } catch (IOException e) {
@@ -58,5 +51,15 @@ public class HelloServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    private void initUser(User user,HttpServletResponse response) {
+
+        if (user.getRole() == User.Role.SuperAdmin || user.getRole() == User.Role.Admin)
+            response.addCookie(new Cookie("admin", "true"));
+
+        response.addCookie(new Cookie("name", user.getName()));
+        response.addCookie(new Cookie("nick_name", user.getNickname()));
+        response.addCookie(new Cookie("user_id", ""+user.getUserId()));
     }
 }

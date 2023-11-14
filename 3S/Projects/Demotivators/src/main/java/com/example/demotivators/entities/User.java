@@ -58,6 +58,17 @@ public class User {
         this.userId = userId;
     }
 
+    public User(String name, String nickname, String telephoneNumber) {
+        this.name = name;
+        this.nickname = nickname;
+
+        this.date_registration = new Date(System.currentTimeMillis());
+
+        this.role = fromInteger(0);
+        telephone_number = telephoneNumber;
+        this.userId = userId;
+    }
+
     public String getName() {
         return name;
     }

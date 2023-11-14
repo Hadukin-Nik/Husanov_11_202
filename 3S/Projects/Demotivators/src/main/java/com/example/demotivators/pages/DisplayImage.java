@@ -11,6 +11,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLConnection;
 
 public class DisplayImage extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -22,7 +23,8 @@ public class DisplayImage extends HttpServlet {
         String relativeImagePath = MyHelper.getAStringAfterPattern(URLAfterWebDomain, "images/");
 
         System.out.println("\nFetching image from " + Config.sourceImagePath + relativeImagePath);
-        response.setContentType("image/jpeg");
+        String str = (URLConnection.guessContentTypeFromName(relativeImagePath));
+        response.setContentType(str);
 
         ServletOutputStream outStream;
         outStream = response.getOutputStream();
