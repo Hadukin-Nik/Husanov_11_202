@@ -33,6 +33,11 @@ public class MemUpload extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws  IOException{
+        Template temp;
+        PrintWriter out = response.getWriter();
+        Map<String, Object> vars = new HashMap<>();
+
+
         Boolean isCommentsAllowed = request.getParameter("isCommentsAllowed") != null;
         String description = request.getParameter("description");
         String tags = request.getParameter("tags");
@@ -44,21 +49,22 @@ public class MemUpload extends HttpServlet {
 
         try {
             filePart = request.getPart("file");
-
+            if(filePart == null) {
+                response.sendRedirect(request.getContextPath());
+            }
             extension = "." + MyHelper.getAStringAfterPattern(filePart.getContentType(), "image/");
             filePart.write(Config.sourceImagePath + fileName + extension);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         }
 
-        PrintWriter out = response.getWriter();
+
+        temp = TemplatesLoader.getConfiguration().getTemplate("afterMemUpload.ftl");
 
         response.setContentType("text/html");
 
-        Map<String, Object> vars = new HashMap<>();
         vars.put("img_src", "images/" + fileName + extension);
 
-        Template temp = TemplatesLoader.getConfiguration().getTemplate("afterMemUpload.ftl");
 
         try {
             temp.process(vars, out);

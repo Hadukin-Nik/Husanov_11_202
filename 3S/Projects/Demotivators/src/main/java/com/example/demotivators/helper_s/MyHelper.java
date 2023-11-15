@@ -9,6 +9,8 @@ import java.util.List;
 
 public class MyHelper {
     public static Cookie getSpecificCookie(Cookie[] cookies, String name) {
+        if(cookies == null) return null;
+
         for (int i = 0; i < cookies.length; i++) {
             if (cookies[i].getName().equals(name))
                 return cookies[i];

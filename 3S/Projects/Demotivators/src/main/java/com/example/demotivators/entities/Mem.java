@@ -60,10 +60,6 @@ public class Mem {
 
     public String getPath() {return "images/" + picture;}
 
-    public String getURL() {
-        return "memes/" + mem_id;
-    }
-
 
     public int getUser_id() {
         return user_id;

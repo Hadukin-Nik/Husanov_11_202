@@ -14,8 +14,14 @@
             <img src="${item.user.avatar}" alt="creator">
 
             <div class="img-text">
-                <a href = "${item.URL}"> ${item.description}</a>
+                <a href = "/app/memes/${item.mem_id}/comments"> ${item.description}</a>
             </div>
+
+            <#if user_id == item.user_id || isAdmin>
+                <div class="img-button">
+                    <a href="/app/memes/${item.mem_id}/edit">Edit</a>
+                </div>
+            </#if>
         </div>
     </tr>
 </#foreach>

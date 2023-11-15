@@ -8,6 +8,7 @@ import com.example.demotivators.helper_s.TemplatesLoader;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +29,22 @@ public class ScrollServlet extends HttpServlet {
         List<Mem> memes = MemesDAO.getMemes();
 
         root.put("memes", MyHelper.toAltMem(memes));
+
+        Cookie cookie = MyHelper.getSpecificCookie(request.getCookies(), "admin");
+
+
+        root.put("isAdmin", cookie != null);
+
+        cookie = MyHelper.getSpecificCookie(request.getCookies(), "user_id");
+
+        if(cookie == null) {
+            response.sendError(404);
+            return;
+        }
+
+        int user_id = Integer.parseInt(cookie.getValue());
+
+        root.put("user_id", user_id);
 
         Template temp = TemplatesLoader.getConfiguration().getTemplate("scroll.ftl");
 

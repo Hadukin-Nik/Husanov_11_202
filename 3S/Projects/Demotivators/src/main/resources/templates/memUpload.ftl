@@ -4,7 +4,12 @@
     <input type="checkbox"  name="isCommentsAllowed">
     <label for="isCommentsAllowed"> Are comments allowed?</label><br>
 
+    <a>Description</a>
     <textarea name="description" rows="4" cols="50"> </textarea>
+
+    <br />
+
+    <a>Tags</a>
     <textarea name="tags" rows="4" cols="50"> </textarea>
 
 
@@ -12,3 +17,4 @@
 
 
 </form>
+

@@ -80,7 +80,7 @@ public class User {
         if(avatar == null) {
             return "images/" + Config.DEFAULT_PNG;
         } else {
-            return "images/" + avatar;
+            return avatar;
         }
     }
 

@@ -14,14 +14,14 @@ public class UsersDAO {
     public static boolean addUser(User user, String login, String password) {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
-            if(checkUser(login, password) != null) {
+            if(checkUser(login) != null) {
                 return false;
             }
             Statement st = conn.createStatement();
 
             int numberOfUsers = howManyUsers("users");
 
-            st.executeQuery("INSERT INTO public.users(" +
+            st.executeUpdate("INSERT INTO public.users(" +
                     "\"Name\", \"Nickname\", \"Telephone\", \"RegistrationDate\", \"Role\", \"Login\", \"Password\", \"User_id\", \"Image\")\n" +
                     "VALUES (\'"+user.getName()+"\', \'"+user.getNickname()+"\', \'"+
                     user.getTelephone_number()+"\', \'"+
@@ -53,7 +53,33 @@ public class UsersDAO {
 
         return null;
     }
+    public static User checkUser(String login) {
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
+            if(howManyUsers("users") <= 0) return null;
 
+
+            Statement st = conn.createStatement();
+
+            String execute = "SELECT * FROM users WHERE \"Login\" = \'" + login + "\';";
+
+            ResultSet resultSet;
+
+            if(HelperForDAO_s.sizeoOfResultSet(execute) == 0) return null;
+
+            resultSet = st.executeQuery(execute);
+
+            resultSet.next();
+            if(resultSet != null) {
+                return new User(resultSet.getString(9), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getDate(5), resultSet.getInt(6), resultSet.getInt(1));
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
     public static User checkUser(String login, String password) {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
@@ -62,9 +88,9 @@ public class UsersDAO {
 
             Statement st = conn.createStatement();
 
-            String execute = "SELECT  * FROM users WHERE \"Login\" = '" + login + "' " + " AND \"Password\" = '" + hashString(password) + "'";
+            String execute = "SELECT * FROM users WHERE \"Login\" = \'" + login + "\' " + " AND \"Password\" = \'" + hashString(password) + "\';";
 
-            ResultSet resultSet = st.executeQuery(execute);
+            ResultSet resultSet;
 
             if(HelperForDAO_s.sizeoOfResultSet(execute) == 0) return null;
 

@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MemRedact extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -29,15 +31,19 @@ public class MemRedact extends HttpServlet {
 
         String URLAfterWebDomain = request.getRequestURI();
 
-        if(URLAfterWebDomain.contains("/memes/") == false)
-            return;
+        Pattern p = Pattern.compile("[0-9]+");
 
-        int mem_id = Integer.parseInt(MyHelper.getAStringAfterPattern(URLAfterWebDomain, "memes/"));
+        Matcher m = p.matcher(URLAfterWebDomain);
+
+        int mem_id = -1;
+
+        if(m.find()) {
+            mem_id = Integer.parseInt(m.group());
+        }
+
         Mem mem = MemesDAO.findMemInDB(mem_id);
 
-        if(mem != null) {
-            temp = TemplatesLoader.getConfiguration().getTemplate("memRedactor.ftl");
-
+        if(mem != null && URLAfterWebDomain.endsWith("/edit")) {
             Cookie admin = MyHelper.getSpecificCookie(request.getCookies(), "admin");
             Cookie userId = MyHelper.getSpecificCookie(request.getCookies(), "user_id");
 
@@ -54,11 +60,17 @@ public class MemRedact extends HttpServlet {
             }
 
             root.put("mem", mem);
-            root.put("isHaveRights", isHaveRights);
-        } else {
-            temp = TemplatesLoader.getConfiguration().getTemplate("error.ftl");
 
-            root.put("error_message", "Wrong mem id");
+            if(isHaveRights) {
+                temp = TemplatesLoader.getConfiguration().getTemplate("memRedactor.ftl");
+            } else {
+                temp = TemplatesLoader.getConfiguration().getTemplate("mempage.ftl");
+            }
+
+        } else if (URLAfterWebDomain.endsWith("/comments")){
+            temp = TemplatesLoader.getConfiguration().getTemplate("mempage.ftl");
+
+            root.put("mem", mem);
         }
 
         try {
@@ -70,24 +82,28 @@ public class MemRedact extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         String URLAfterWebDomain = request.getRequestURI();
 
-        int mem_id = Integer.parseInt(MyHelper.getAStringAfterPattern(URLAfterWebDomain, "memes/"));
-        
-        Boolean deleteMem = request.getParameter("deleteMem") != null;
+        if(URLAfterWebDomain.endsWith("edit")) {
+            int mem_id = Integer.parseInt(MyHelper.getAStringAfterPattern(URLAfterWebDomain, "memes/"));
 
-        if(deleteMem) {
-            MemesDAO.delete(mem_id);
-        }
+            Boolean deleteMem = request.getParameter("deleteMem") != null;
 
-        Boolean isCommentsAllowed = request.getParameter("isCommentsAllowed") != null;
-        String description = request.getParameter("description");
-        String tags = request.getParameter("tags");
+            if(deleteMem) {
+                MemesDAO.delete(mem_id);
+            }
 
-        MemesDAO.update(mem_id, isCommentsAllowed, description, tags);
+            Boolean isCommentsAllowed = request.getParameter("isCommentsAllowed") != null;
+            String description = request.getParameter("description");
+            String tags = request.getParameter("tags");
 
-        try {
-            response.sendRedirect(request.getContextPath() + "/scroll");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            MemesDAO.update(mem_id, isCommentsAllowed, description, tags);
+
+            try {
+                response.sendRedirect(request.getContextPath() + "/scroll");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if(URLAfterWebDomain.endsWith("comments"))  {
+
         }
     }
 }

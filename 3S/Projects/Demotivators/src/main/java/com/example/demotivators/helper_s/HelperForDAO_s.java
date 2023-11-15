@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import org.apache.commons.codec.binary.Hex;
 
 public class HelperForDAO_s {
     public static int howManyUsers(String table_name) {
@@ -30,10 +31,10 @@ public class HelperForDAO_s {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-        byte[] hashbytes = digest.digest(
-                originalString.getBytes(StandardCharsets.UTF_8));
 
-        return new String(hashbytes, StandardCharsets.UTF_8);
+        byte[] hashbytes = digest.digest(originalString.getBytes(StandardCharsets.UTF_8));
+
+        return Hex.encodeHexString(hashbytes);
     }
 
     public static int sizeoOfResultSet(String executeQuerry) {
@@ -42,15 +43,12 @@ public class HelperForDAO_s {
             Statement st = conn.createStatement();
 
             ResultSet resultSet = st.executeQuery(executeQuerry);
-
             int rowCount = 0;
-            try {
-                while (resultSet.next()) {
-                    rowCount++;
-                }
 
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            if(resultSet == null || !resultSet.isBeforeFirst()) return 0;
+
+            while (resultSet.next()) {
+                rowCount++;
             }
 
             return rowCount;

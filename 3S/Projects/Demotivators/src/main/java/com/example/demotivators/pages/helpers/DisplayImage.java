@@ -17,9 +17,6 @@ public class DisplayImage extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String URLAfterWebDomain = request.getRequestURI();
 
-        if(URLAfterWebDomain.contains("/images/") == false)
-            return;
-
         String relativeImagePath = MyHelper.getAStringAfterPattern(URLAfterWebDomain, "images/");
 
         String str = (URLConnection.guessContentTypeFromName(relativeImagePath));

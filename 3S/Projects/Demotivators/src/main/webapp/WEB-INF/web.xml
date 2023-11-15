@@ -41,10 +41,6 @@
         <url-pattern>/images/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>displayImage</servlet-name>
-        <url-pattern>/memes/images/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>redact</servlet-name>
         <url-pattern>/memes/*</url-pattern>
     </servlet-mapping>
