@@ -68,13 +68,19 @@ public class MemRedact extends HttpServlet {
         }
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-        Boolean isCommentsAllowed = request.getParameter("isCommentsAllowed") != null;
-        String description = request.getParameter("description");
-        String tags = request.getParameter("tags");
-
         String URLAfterWebDomain = request.getRequestURI();
 
         int mem_id = Integer.parseInt(MyHelper.getAStringAfterPattern(URLAfterWebDomain, "memes/"));
+        
+        Boolean deleteMem = request.getParameter("deleteMem") != null;
+
+        if(deleteMem) {
+            MemesDAO.delete(mem_id);
+        }
+
+        Boolean isCommentsAllowed = request.getParameter("isCommentsAllowed") != null;
+        String description = request.getParameter("description");
+        String tags = request.getParameter("tags");
 
         MemesDAO.update(mem_id, isCommentsAllowed, description, tags);
 

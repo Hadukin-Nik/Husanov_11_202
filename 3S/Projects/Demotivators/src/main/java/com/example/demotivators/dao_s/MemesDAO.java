@@ -86,4 +86,17 @@ public class MemesDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public static void delete(int memId) {
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
+            Statement st = conn.createStatement();
+
+            st.executeUpdate("DELETE FROM public.memes" +
+                    " WHERE \"Mem_id\"=\'"+memId+"\';");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
