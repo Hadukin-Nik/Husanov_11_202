@@ -1,6 +1,11 @@
 package com.example.demotivators.helper_s;
 
+import com.example.demotivators.entities.Mem;
+import com.example.demotivators.entities.MemWithUser;
+
 import javax.servlet.http.Cookie;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyHelper {
     public static Cookie getSpecificCookie(Cookie[] cookies, String name) {
@@ -64,5 +69,15 @@ public class MyHelper {
         }
 
         return root;
+    }
+
+
+    public static List<MemWithUser> toAltMem(List<Mem> mems) {
+        List<MemWithUser> ans = new ArrayList<>();
+
+        for (var i : mems) {
+            ans.add(new MemWithUser(i));
+        }
+        return ans;
     }
 }

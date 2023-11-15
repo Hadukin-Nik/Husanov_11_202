@@ -1,9 +1,8 @@
 package com.example.demotivators.entities;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import com.example.demotivators.Config;
+
 import java.util.Date;
-import java.util.Locale;
 
 import static com.example.demotivators.entities.User.Role.fromInteger;
 
@@ -35,6 +34,8 @@ public class User {
         }
     }
 
+    private String avatar;
+
     private String name;
     private String nickname;
 
@@ -47,7 +48,8 @@ public class User {
 
     private long userId;
 
-    public User(String name, String nickname, String telephoneNumber, Date dateRegistration, int role, long userId) {
+    public User(String avatar, String name, String nickname, String telephoneNumber, Date dateRegistration, int role, long userId) {
+        this.avatar = avatar;
         this.name = name;
         this.nickname = nickname;
 
@@ -58,7 +60,8 @@ public class User {
         this.userId = userId;
     }
 
-    public User(String name, String nickname, String telephoneNumber) {
+    public User(String avatar, String name, String nickname, String telephoneNumber) {
+        this.avatar = avatar;
         this.name = name;
         this.nickname = nickname;
 
@@ -73,6 +76,13 @@ public class User {
         return name;
     }
 
+    public String getAvatar() {
+        if(avatar == null) {
+            return "images/" + Config.DEFAULT_PNG;
+        } else {
+            return "images/" + avatar;
+        }
+    }
 
     public String getNickname() {
         return nickname;

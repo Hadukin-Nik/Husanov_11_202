@@ -37,8 +37,6 @@ public class MemUpload extends HttpServlet {
         String description = request.getParameter("description");
         String tags = request.getParameter("tags");
 
-        String root_buf = getServletContext().getRealPath("/");
-
 
         Part filePart = null;
         String fileName = UUID.randomUUID().toString();

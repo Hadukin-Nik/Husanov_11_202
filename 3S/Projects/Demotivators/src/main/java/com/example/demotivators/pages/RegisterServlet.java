@@ -38,9 +38,10 @@ public class RegisterServlet extends HttpServlet {
         String name = request.getParameter("name");
         String nickname = request.getParameter("nickname");
         String phone = request.getParameter("phone");
+        String avatar = request.getParameter("avatar");
 
         if(name != null && nickname != null && phone != null && login != null && password != null) {
-            User user = new User(name, nickname, phone);
+            User user = new User(avatar, name, nickname, phone);
 
             UsersDAO.addUser(user, login, password);
         }

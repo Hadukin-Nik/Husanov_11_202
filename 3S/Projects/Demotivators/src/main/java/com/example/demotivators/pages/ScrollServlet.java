@@ -1,7 +1,9 @@
 package com.example.demotivators.pages;
 
 import com.example.demotivators.dao_s.MemesDAO;
+import com.example.demotivators.dao_s.UsersDAO;
 import com.example.demotivators.entities.Mem;
+import com.example.demotivators.helper_s.MyHelper;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -25,7 +27,7 @@ public class ScrollServlet extends HttpServlet {
 
         List<Mem> memes = MemesDAO.getMemes();
 
-        root.put("memes", memes);
+        root.put("memes", MyHelper.toAltMem(memes));
 
         Template temp = TemplatesLoader.getConfiguration().getTemplate("scroll.ftl");
 
