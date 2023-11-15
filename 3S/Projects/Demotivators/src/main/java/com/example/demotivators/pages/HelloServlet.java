@@ -1,4 +1,5 @@
 package com.example.demotivators.pages;
+import com.example.demotivators.helper_s.MyHelper;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import com.example.demotivators.entities.User;
 import com.example.demotivators.dao_s.UsersDAO;
@@ -19,14 +20,21 @@ public class HelloServlet extends HttpServlet {
 
         response.setContentType("text/html");
         Map<String, Object> root = new HashMap<>();
-        root.put("address", request.getContextPath());
+        Template temp = null;
 
-        Template temp = TemplatesLoader.getConfiguration().getTemplate("/hello.ftl");
+        Cookie userId = MyHelper.getSpecificCookie(request.getCookies(), "user_id");
 
-        try {
-            temp.process(root, out);
-        } catch (TemplateException e) {
-            throw new RuntimeException(e);
+        if(userId == null) {
+            temp = TemplatesLoader.getConfiguration().getTemplate("/hello.ftl");
+            root.put("address", request.getContextPath());
+
+            try {
+                temp.process(root, out);
+            } catch (TemplateException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            response.sendRedirect(request.getContextPath() + "/menu");
         }
     }
 

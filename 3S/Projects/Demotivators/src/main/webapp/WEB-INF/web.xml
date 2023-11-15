@@ -24,14 +24,29 @@
         <servlet-class>com.example.demotivators.pages.MemUpload</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DisplayImage</servlet-name>
-        <servlet-class>com.example.demotivators.pages.DisplayImage</servlet-class>
+        <servlet-name>displayImage</servlet-name>
+        <servlet-class>com.example.demotivators.pages.helpers.DisplayImage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>redact</servlet-name>
+        <servlet-class>com.example.demotivators.pages.MemRedact</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>scroll</servlet-name>
+        <servlet-class>com.example.demotivators.pages.ScrollServlet</servlet-class>
     </servlet>
 
-
     <servlet-mapping>
-        <servlet-name>DisplayImage</servlet-name>
+        <servlet-name>displayImage</servlet-name>
         <url-pattern>/images/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>displayImage</servlet-name>
+        <url-pattern>/memes/images/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>redact</servlet-name>
+        <url-pattern>/memes/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
@@ -53,6 +68,9 @@
         <servlet-name>memUpload</servlet-name>
         <url-pattern>/mem_upload</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>scroll</servlet-name>
+        <url-pattern>/scroll</url-pattern>
+    </servlet-mapping>
 
 </web-app>

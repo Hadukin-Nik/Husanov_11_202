@@ -1,7 +1,9 @@
 <html><body>
 
 <form method="Post" action="">
+    <a>Your Login</a>
     <input name = "login" value="">
+    <a>Your Password</a>
     <input name = "password" value="">
     <br />
     <a>Your name</a>

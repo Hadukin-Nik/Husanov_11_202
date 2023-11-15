@@ -1,4 +1,4 @@
-package com.example.demotivators.pages;
+package com.example.demotivators.pages.helpers;
 
 import com.example.demotivators.Config;
 import com.example.demotivators.helper_s.MyHelper;
@@ -22,7 +22,6 @@ public class DisplayImage extends HttpServlet {
 
         String relativeImagePath = MyHelper.getAStringAfterPattern(URLAfterWebDomain, "images/");
 
-        System.out.println("\nFetching image from " + Config.sourceImagePath + relativeImagePath);
         String str = (URLConnection.guessContentTypeFromName(relativeImagePath));
         response.setContentType(str);
 

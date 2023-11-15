@@ -6,28 +6,31 @@ public class Mem {
     private int mem_id;
     private int user_id;
 
-    private String Picture;
+    private String picture;
     private String description;
+    private String tags;
 
     private Date creationDate;
     private Date updateDate;
 
     private boolean commentsAllowed;
 
-    public Mem(int memId, int userId, String picture, String decription, Date creationDate, Date updateDate, boolean commentsAllowed) {
+    public Mem(int memId, int userId, String picture, String decription, String tags, Date creationDate, Date updateDate, boolean commentsAllowed) {
         mem_id = memId;
         user_id = userId;
-        Picture = picture;
+        this.tags = tags;
+        this.picture = picture;
         this.description = decription;
         this.creationDate = creationDate;
         this.updateDate = updateDate;
         this.commentsAllowed = commentsAllowed;
     }
 
-    public Mem(int userId, String picture, String decription, Date creationDate, Date updateDate, boolean commentsAllowed) {
+    public Mem(int userId, String picture, String decription, String tags, Date creationDate, Date updateDate, boolean commentsAllowed) {
         mem_id = -1;
         user_id = userId;
-        Picture = picture;
+        this.tags = tags;
+        this.picture = picture;
         this.description = decription;
         this.creationDate = creationDate;
         this.updateDate = updateDate;
@@ -47,12 +50,20 @@ public class Mem {
     }
 
     public String getDescription() {
+        if(description == null) description = "";
         return description;
     }
 
     public String getPicture() {
-        return Picture;
+        return picture;
     }
+
+    public String getPath() {return "images/" + picture;}
+
+    public String getURL() {
+        return "memes/" + mem_id;
+    }
+
 
     public int getUser_id() {
         return user_id;
@@ -60,5 +71,10 @@ public class Mem {
 
     public int getMem_id() {
         return mem_id;
+    }
+
+    public String getTags() {
+        if(tags == null) tags = "";
+        return tags;
     }
 }

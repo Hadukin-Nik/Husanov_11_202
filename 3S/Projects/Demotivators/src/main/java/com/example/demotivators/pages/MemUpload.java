@@ -35,7 +35,7 @@ public class MemUpload extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws  IOException{
         Boolean isCommentsAllowed = request.getParameter("isCommentsAllowed") != null;
         String description = request.getParameter("description");
-
+        String tags = request.getParameter("tags");
 
         String root_buf = getServletContext().getRealPath("/");
 
@@ -72,7 +72,7 @@ public class MemUpload extends HttpServlet {
         int user_id = Integer.parseInt(MyHelper.getSpecificCookie(cookies, "user_id").getValue());
 
 
-        MemesDAO.InsertMem(new Mem(user_id, fileName + extension, description, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), isCommentsAllowed));
+        MemesDAO.InsertMem(new Mem(user_id, fileName + extension, description, tags, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), isCommentsAllowed));
     }
 
 
