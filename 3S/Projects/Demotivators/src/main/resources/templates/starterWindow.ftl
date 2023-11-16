@@ -8,6 +8,9 @@
 
 <a href="${toScroll}">To Scroll</a>
 <br />
+<a href="${toFriendsScroll}">To Friends Scroll</a>
+<br />
+
 
 <#if x = 1>
     <a href="${toUsers}">to users</a>

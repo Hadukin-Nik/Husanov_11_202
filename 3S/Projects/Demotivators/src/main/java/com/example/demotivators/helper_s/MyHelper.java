@@ -1,11 +1,17 @@
 package com.example.demotivators.helper_s;
 
+import com.example.demotivators.dao_s.FriendshipRequestsDAO;
+import com.example.demotivators.dao_s.MemesDAO;
 import com.example.demotivators.entities.Mem;
+import com.example.demotivators.entities.Request;
 import com.example.demotivators.entities.forPages.MemWithUser;
+import com.example.demotivators.entities.forPages.RequestWithUser;
 
 import javax.servlet.http.Cookie;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -82,6 +88,27 @@ public class MyHelper {
         for (var i : mems) {
             ans.add(new MemWithUser(i));
         }
+        return ans;
+    }
+
+    public static List<MemWithUser> friendsScroll(int userId) {
+        Set<Integer> friendsSet = new HashSet<>();
+
+        List<MemWithUser> mems = toAltMem(MemesDAO.getMemes());
+
+        List<RequestWithUser> friends = FriendshipRequestsDAO.getApprovedRequestsWithUser(userId);
+
+        for(var i : friends) {
+            friendsSet.add(i.getFromUserId());
+            friendsSet.add(i.getToUserId());
+        }
+
+        List<MemWithUser> ans = new ArrayList<>();
+
+        for(var i : mems) {
+            if(friendsSet.contains(i.getUserId())) ans.add(i);
+        }
+
         return ans;
     }
 

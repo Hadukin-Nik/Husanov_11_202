@@ -55,6 +55,10 @@
         <servlet-name>addToCollection</servlet-name>
         <servlet-class>com.example.demotivators.pages.AddToCollectionServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>friendsScroll</servlet-name>
+        <servlet-class>com.example.demotivators.pages.FriendsScrollServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>displayImage</servlet-name>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>collections</servlet-name>
         <url-pattern>/collections</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>friendsScroll</servlet-name>
+        <url-pattern>/friendsScroll</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>addToCollection</servlet-name>

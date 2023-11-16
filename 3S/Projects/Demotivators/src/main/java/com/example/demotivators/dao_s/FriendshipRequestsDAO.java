@@ -134,6 +134,11 @@ public class FriendshipRequestsDAO {
             Statement st = conn.createStatement();
             java.sql.Date sqlDate = new java.sql.Date(System.currentTimeMillis());
 
+            if(request.isApproved()) {
+                insert(new Request(request.getRequestId(), request.getFromUserId(), request.getToUserId(),
+                        request.getText(), request.getCreationDate(), sqlDate, request.isWatched(), request.isApproved()));
+            }
+
             st.executeUpdate("UPDATE public.\"friendshipRequests\"" +
                     "SET \"ToUserId\"=\'"+request.getToUserId()+"\', \"FromUserId\"=\'"+request.getFromUserId()+"\', " +
                     "\"RequestId\"=\'"+request.getRequestId()+"\', \"Text\"=\'"+request.getText()+"\', \"Create_date\"=\'"+request.getCreationDate()+"\', " +

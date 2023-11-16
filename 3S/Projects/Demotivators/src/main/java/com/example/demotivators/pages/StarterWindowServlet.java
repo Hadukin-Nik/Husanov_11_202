@@ -23,12 +23,15 @@ public class StarterWindowServlet extends HttpServlet {
         root.put("backToAuthorisation", request.getContextPath());
         root.put("toAccount", request.getContextPath() + "/pc");
         root.put("toScroll", request.getContextPath() + "/scroll");
+        root.put("toFriendsScroll", request.getContextPath() + "/friendsScroll");
+
         root.put("toUsers", request.getContextPath() + "/users");
         root.put("toMemUpload", request.getContextPath() + "/mem_upload");
         root.put("toRequest", request.getContextPath() + "/requests");
         root.put("toFriends", request.getContextPath() + "/friends");
         root.put("toAddCollections", request.getContextPath() + "/addToCollection");
         root.put("toCollections", request.getContextPath() + "/collections");
+
 
 
         root.put("x", Arrays.stream(request.getCookies()).filter(t -> t.getName().equals("admin")).count());
