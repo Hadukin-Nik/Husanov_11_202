@@ -1,5 +1,6 @@
 package com.example.demotivators.pages;
 
+import com.example.demotivators.dao_s.UsersDAO;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import com.example.demotivators.entities.User;
 import freemarker.template.Template;
@@ -21,18 +22,7 @@ public class UsersServlet extends HttpServlet {
         response.setContentType("text/html");
         Map<String, Object> root = new HashMap<>();
 
-        List<User> users = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection(
-                "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
-            Statement st = conn.createStatement();
-            ResultSet resultSet = st.executeQuery("SELECT  * FROM users");
-            resultSet.next();
-            do {
-                users.add(new User(resultSet.getString(9), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getDate(5), resultSet.getInt(6), resultSet.getInt(1)));
-            } while(resultSet.next());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        List<User> users = UsersDAO.getAll();
 
         root.put("users", users);
 

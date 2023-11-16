@@ -5,6 +5,8 @@ import com.example.demotivators.entities.User;
 import com.example.demotivators.helper_s.HelperForDAO_s;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.demotivators.helper_s.HelperForDAO_s.hashString;
 import static com.example.demotivators.helper_s.HelperForDAO_s.howManyUsers;
@@ -80,6 +82,24 @@ public class UsersDAO {
         }
 
     }
+
+    public static List<User> getAll() {
+        List<User> users = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
+            Statement st = conn.createStatement();
+            ResultSet resultSet = st.executeQuery("SELECT  * FROM users");
+            resultSet.next();
+            do {
+                users.add(new User(resultSet.getString(9), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getDate(5), resultSet.getInt(6), resultSet.getInt(1)));
+            } while(resultSet.next());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return users;
+    }
+
     public static User checkUser(String login, String password) {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {

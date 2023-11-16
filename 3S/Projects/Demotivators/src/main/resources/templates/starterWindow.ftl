@@ -18,7 +18,12 @@
 <br />
 
 <a href="${toRequest}">To requests</a>
+<br />
 
+<a href="${toCollections}">To collection</a>
+<br />
+
+<a href="${toAddCollections}">To add to collection</a>
 <br />
 
 <a href="${toFriends}">To friends</a>
