@@ -15,6 +15,12 @@
 <br />
 
 <a href="${toMemUpload}">To Mem upload</a>
+<br />
 
+<a href="${toRequest}">To requests</a>
+
+<br />
+
+<a href="${toFriends}">To friends</a>
 
 </body></html>

@@ -1,8 +1,10 @@
-package com.example.demotivators.entities;
+package com.example.demotivators.entities.forPages;
 
 import com.example.demotivators.dao_s.UsersDAO;
+import com.example.demotivators.entities.Mem;
+import com.example.demotivators.entities.User;
 
-public class MemWithUser extends Mem{
+public class MemWithUser extends Mem {
     private User user;
 
     public MemWithUser(Mem mem) {

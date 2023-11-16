@@ -1,14 +1,17 @@
 package com.example.demotivators.entities;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Mem {
-    private int mem_id;
-    private int user_id;
+    private int memId;
+    private int userId;
 
     private String picture;
     private String description;
     private String tags;
+
 
     private Date creationDate;
     private Date updateDate;
@@ -16,9 +19,9 @@ public class Mem {
     private boolean commentsAllowed;
 
     public Mem(int memId, int userId, String picture, String decription, String tags, Date creationDate, Date updateDate, boolean commentsAllowed) {
-        mem_id = memId;
-        user_id = userId;
-        this.tags = tags;
+        this.memId = memId;
+        this.userId = userId;
+        this.tags = tagsCleanUp(tags);
         this.picture = picture;
         this.description = decription;
         this.creationDate = creationDate;
@@ -27,14 +30,31 @@ public class Mem {
     }
 
     public Mem(int userId, String picture, String decription, String tags, Date creationDate, Date updateDate, boolean commentsAllowed) {
-        mem_id = -1;
-        user_id = userId;
-        this.tags = tags;
+        memId = -1;
+        this.userId = userId;
+        this.tags = tagsCleanUp(tags);
         this.picture = picture;
         this.description = decription;
         this.creationDate = creationDate;
         this.updateDate = updateDate;
         this.commentsAllowed = commentsAllowed;
+    }
+
+    private String tagsCleanUp(String tags) {
+        String[] strings = tags.toLowerCase().split(" ");
+
+        Arrays.sort(strings);
+
+        StringBuilder ans = new StringBuilder();
+        boolean n = false;
+        for(var j : strings) {
+            if(n) ans.append(" ");
+
+            ans.append(j);
+            n = true;
+        }
+
+        return ans.toString();
     }
 
     public boolean isCommentsAllowed() {
@@ -62,15 +82,31 @@ public class Mem {
 
 
     public int getUserId() {
-        return user_id;
+        return userId;
     }
 
     public int getMemId() {
-        return mem_id;
+        return memId;
     }
 
     public String getTags() {
         if(tags == null) tags = "";
         return tags;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tagsCleanUp(tags);
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public void setCommentsAllowed(boolean commentsAllowed) {
+        this.commentsAllowed = commentsAllowed;
     }
 }

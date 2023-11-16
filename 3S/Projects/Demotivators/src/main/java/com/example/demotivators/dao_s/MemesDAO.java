@@ -70,7 +70,7 @@ public class MemesDAO {
         return null;
     }
 
-    public static void update(int mem_id, boolean isCommentsAllowed, String description, String tags) {
+    public static void update(Mem mem) {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
 
@@ -78,8 +78,8 @@ public class MemesDAO {
             java.sql.Date sqlDate = new java.sql.Date(System.currentTimeMillis());
 
             st.executeUpdate("UPDATE public.memes" +
-                    " SET \"UpdateDate\"=\'" +sqlDate + "\', \"CommentsAllowed\"=\'"+isCommentsAllowed+"\', \"Description\" = \'"+description+"\', \"Tags\" = \'" + tags + "\'" +
-                    " WHERE \"Mem_id\"=\'"+mem_id+"\';");
+                    " SET \"UpdateDate\"=\'" +sqlDate + "\', \"CommentsAllowed\"=\'"+mem.isCommentsAllowed()+"\', \"Description\" = \'"+mem.getDescription()+"\', \"Tags\" = \'" + mem.getTags() + "\'" +
+                    " WHERE \"Mem_id\"=\'"+mem.getMemId()+"\';");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

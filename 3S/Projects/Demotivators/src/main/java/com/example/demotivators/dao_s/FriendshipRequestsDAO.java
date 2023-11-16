@@ -2,6 +2,7 @@ package com.example.demotivators.dao_s;
 
 import com.example.demotivators.entities.Request;
 import com.example.demotivators.entities.User;
+import com.example.demotivators.entities.forPages.RequestWithUser;
 import com.example.demotivators.helper_s.HelperForDAO_s;
 
 import java.sql.*;
@@ -11,14 +12,27 @@ import java.util.List;
 import static com.example.demotivators.helper_s.HelperForDAO_s.howManyUsers;
 
 public class FriendshipRequestsDAO {
-    public static List<User> getFriends(int id) {
+    public static List<RequestWithUser> getApprovedRequestsWithUser(int id) {
         List<Request> req = getRequestsToUser(id);
-        List<User> ans = new ArrayList<>();
+        List<RequestWithUser> ans = new ArrayList<>();
 
         for (var r : req) {
             if (r.isApproved()) {
-                ans.add(UsersDAO.findUser(r.getFromUserId()));
+                ans.add(new RequestWithUser(r));
             }
+        }
+
+        return ans;
+    }
+
+
+    public static List<RequestWithUser> getRequestsWithUser(int id) {
+        List<Request> req = getRequestsToUser(id);
+        List<RequestWithUser> ans = new ArrayList<>();
+
+        for (var r : req) {
+            if(!r.isApproved())
+            ans.add(new RequestWithUser(r));
         }
 
         return ans;
@@ -32,7 +46,7 @@ public class FriendshipRequestsDAO {
 
             Statement st = conn.createStatement();
 
-            ResultSet rs = st.executeQuery("SELECT * FROM friendshipRequests WHERE \"ToUserId\" = \'" + id + "\' ;");
+            ResultSet rs = st.executeQuery("SELECT * FROM \"friendshipRequests\" WHERE \"ToUserId\" = \'" + id + "\' ;");
 
             while (rs.next()) {
                 requests.add(new Request(rs.getInt(1), rs.getInt(2), rs.getInt(3),
@@ -54,7 +68,7 @@ public class FriendshipRequestsDAO {
 
             Statement st = conn.createStatement();
 
-            String query = "SELECT * FROM friendshipRequests WHERE \"ToUserId\" = \'" + firstId + "\' AND \"FromUserId\" = \'"+secondId+"\' AND \"Status_isApproved\" = \'"+true+"\';";
+            String query = "SELECT * FROM \"friendshipRequests\" WHERE \"ToUserId\" = \'" + firstId + "\' AND \"FromUserId\" = \'"+secondId+"\' AND \"Status_isApproved\" = \'"+true+"\';";
             ans = HelperForDAO_s.sizeoOfResultSet(query) > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -64,7 +78,7 @@ public class FriendshipRequestsDAO {
     }
 
     public static void insert(Request request) {
-        int id = howManyUsers("friendshipRequests");
+        int id = howManyUsers("\"friendshipRequests\"");
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
 
@@ -86,6 +100,28 @@ public class FriendshipRequestsDAO {
 
             st.executeUpdate("DELETE FROM public.\"friendshipRequests\"" +
                     " WHERE \"RequestId\"=\'"+request.getRequestId()+"\';");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Request find(int id) {
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
+            Statement st = conn.createStatement();
+
+            ResultSet rs = st.executeQuery("SELECT * FROM public.\"friendshipRequests\"" +
+                    " WHERE \"RequestId\"=\'"+id+"\';");
+
+            if(rs.isBeforeFirst()) {
+                rs.next();
+
+                return new Request(rs.getInt(1), rs.getInt(2), rs.getInt(3),
+                        rs.getString(4), rs.getDate(5), rs.getDate(6),
+                        rs.getBoolean(7), rs.getBoolean(8));
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

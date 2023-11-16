@@ -25,6 +25,9 @@ public class StarterWindowServlet extends HttpServlet {
         root.put("toScroll", request.getContextPath() + "/scroll");
         root.put("toUsers", request.getContextPath() + "/users");
         root.put("toMemUpload", request.getContextPath() + "/mem_upload");
+        root.put("toRequest", request.getContextPath() + "/requests");
+        root.put("toFriends", request.getContextPath() + "/friends");
+
 
         root.put("x", Arrays.stream(request.getCookies()).filter(t -> t.getName().equals("admin")).count());
 

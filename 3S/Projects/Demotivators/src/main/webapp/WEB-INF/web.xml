@@ -35,6 +35,18 @@
         <servlet-name>scroll</servlet-name>
         <servlet-class>com.example.demotivators.pages.ScrollServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>request</servlet-name>
+        <servlet-class>com.example.demotivators.pages.RequestServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>createRequest</servlet-name>
+        <servlet-class>com.example.demotivators.pages.RequestCreatorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>friends</servlet-name>
+        <servlet-class>com.example.demotivators.pages.FriendsServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>displayImage</servlet-name>
@@ -43,6 +55,18 @@
     <servlet-mapping>
         <servlet-name>redact</servlet-name>
         <url-pattern>/memes/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>friends</servlet-name>
+        <url-pattern>/friends</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>request</servlet-name>
+        <url-pattern>/requests/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>createRequest</servlet-name>
+        <url-pattern>/createRequest/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>register</servlet-name>

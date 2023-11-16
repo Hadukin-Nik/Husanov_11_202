@@ -12,10 +12,15 @@
     <img src="/app/${mem.path}" alt="your_mem">
 </div>
 
+<#if isNotFriend>
+    <a href="/app/createRequest/${mem.userId}">addToFriend</a>
+    <br/>
+</#if>
+
+
 <a>${mem.description}</a>
 <br/>
 <a>${mem.tags}</a>
-
 <br />
 
 <#foreach item in comments>

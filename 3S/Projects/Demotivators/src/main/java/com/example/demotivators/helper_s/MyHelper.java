@@ -1,11 +1,13 @@
 package com.example.demotivators.helper_s;
 
 import com.example.demotivators.entities.Mem;
-import com.example.demotivators.entities.MemWithUser;
+import com.example.demotivators.entities.forPages.MemWithUser;
 
 import javax.servlet.http.Cookie;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MyHelper {
     public static Cookie getSpecificCookie(Cookie[] cookies, String name) {
@@ -81,5 +83,18 @@ public class MyHelper {
             ans.add(new MemWithUser(i));
         }
         return ans;
+    }
+
+    public static int getId(String urlAfterWebDomain) {
+        Pattern p = Pattern.compile("[0-9]+");
+
+        Matcher m = p.matcher(urlAfterWebDomain);
+
+        int memId = -1;
+
+        if(m.find()) {
+            memId = Integer.parseInt(m.group());
+        }
+        return memId;
     }
 }
