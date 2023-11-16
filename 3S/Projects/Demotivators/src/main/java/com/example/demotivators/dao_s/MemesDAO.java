@@ -3,7 +3,6 @@ package com.example.demotivators.dao_s;
 import com.example.demotivators.entities.Mem;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class MemesDAO {
 
             st.executeQuery("INSERT INTO public.memes(\n" +
                             "        \"Mem_id\", \"User_id\", \"Picture\", \"CreationDate\", \"UpdateDate\", \"CommentsAllowed\", \"Description\", \"Tags\")" +
-                    "VALUES ("+ id + ", " + mem.getUser_id() + ", \'" +
+                    "VALUES ("+ id + ", " + mem.getUserId() + ", \'" +
                     mem.getPicture() + "\', \'" + (sqlDate) + "\', \'" +
                     (sqlDate)+ "\', \'" +
                     mem.isCommentsAllowed() + "\', \'" + mem.getDescription() + "\',\' " + mem.getTags() +"\')");

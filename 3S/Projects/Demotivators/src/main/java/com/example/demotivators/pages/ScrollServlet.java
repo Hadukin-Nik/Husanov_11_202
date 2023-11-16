@@ -44,7 +44,7 @@ public class ScrollServlet extends HttpServlet {
 
         int user_id = Integer.parseInt(cookie.getValue());
 
-        root.put("user_id", user_id);
+        root.put("userId", user_id);
 
         Template temp = TemplatesLoader.getConfiguration().getTemplate("scroll.ftl");
 

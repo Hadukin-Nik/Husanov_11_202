@@ -1,6 +1,8 @@
 package com.example.demotivators.pages;
 
+import com.example.demotivators.dao_s.CommentsDAO;
 import com.example.demotivators.dao_s.MemesDAO;
+import com.example.demotivators.entities.Comment;
 import com.example.demotivators.entities.Mem;
 import com.example.demotivators.helper_s.MyHelper;
 import com.example.demotivators.helper_s.TemplatesLoader;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -31,17 +34,9 @@ public class MemRedact extends HttpServlet {
 
         String URLAfterWebDomain = request.getRequestURI();
 
-        Pattern p = Pattern.compile("[0-9]+");
+        int memId = getId(URLAfterWebDomain);
 
-        Matcher m = p.matcher(URLAfterWebDomain);
-
-        int mem_id = -1;
-
-        if(m.find()) {
-            mem_id = Integer.parseInt(m.group());
-        }
-
-        Mem mem = MemesDAO.findMemInDB(mem_id);
+        Mem mem = MemesDAO.findMemInDB(memId);
 
         if(mem != null && URLAfterWebDomain.endsWith("/edit")) {
             Cookie admin = MyHelper.getSpecificCookie(request.getCookies(), "admin");
@@ -54,7 +49,7 @@ public class MemRedact extends HttpServlet {
                     isHaveRights = true;
                 }
 
-                if(Integer.parseInt(userId.getValue()) == mem.getUser_id()) {
+                if(Integer.parseInt(userId.getValue()) == mem.getUserId()) {
                     isHaveRights = true;
                 }
             }
@@ -71,6 +66,7 @@ public class MemRedact extends HttpServlet {
             temp = TemplatesLoader.getConfiguration().getTemplate("mempage.ftl");
 
             root.put("mem", mem);
+            root.put("comments", CommentsDAO.getAllComments(memId));
         }
 
         try {
@@ -79,23 +75,38 @@ public class MemRedact extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+
+    private int getId(String urlAfterWebDomain) {
+        Pattern p = Pattern.compile("[0-9]+");
+
+        Matcher m = p.matcher(urlAfterWebDomain);
+
+        int memId = -1;
+
+        if(m.find()) {
+            memId = Integer.parseInt(m.group());
+        }
+        return memId;
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String URLAfterWebDomain = request.getRequestURI();
 
         if(URLAfterWebDomain.endsWith("edit")) {
-            int mem_id = Integer.parseInt(MyHelper.getAStringAfterPattern(URLAfterWebDomain, "memes/"));
-
+            int memId = getId(URLAfterWebDomain);
             Boolean deleteMem = request.getParameter("deleteMem") != null;
 
             if(deleteMem) {
-                MemesDAO.delete(mem_id);
+                MemesDAO.delete(memId);
+
+                return;
             }
 
             Boolean isCommentsAllowed = request.getParameter("isCommentsAllowed") != null;
             String description = request.getParameter("description");
             String tags = request.getParameter("tags");
 
-            MemesDAO.update(mem_id, isCommentsAllowed, description, tags);
+            MemesDAO.update(memId, isCommentsAllowed, description, tags);
 
             try {
                 response.sendRedirect(request.getContextPath() + "/scroll");
@@ -103,7 +114,27 @@ public class MemRedact extends HttpServlet {
                 throw new RuntimeException(e);
             }
         } else if(URLAfterWebDomain.endsWith("comments"))  {
+            String comment = request.getParameter("comment");
 
+            int memId = getId(URLAfterWebDomain);
+
+            Cookie cookie = MyHelper.getSpecificCookie(request.getCookies(), "user_id");
+
+            if(cookie == null) {
+                response.sendError(404);
+                return;
+            }
+
+            int userId = Integer.parseInt(cookie.getValue());
+            Date date = new Date(System.currentTimeMillis());
+
+            CommentsDAO.insert(new Comment(memId, userId, date, comment, 0, 0));
+
+            try {
+                response.sendRedirect(request.getContextPath() + "/memes/" + memId + "/comments");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

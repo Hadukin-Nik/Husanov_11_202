@@ -61,11 +61,11 @@ public class Mem {
     public String getPath() {return "images/" + picture;}
 
 
-    public int getUser_id() {
+    public int getUserId() {
         return user_id;
     }
 
-    public int getMem_id() {
+    public int getMemId() {
         return mem_id;
     }
 
