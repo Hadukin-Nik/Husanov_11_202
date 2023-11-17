@@ -22,3 +22,11 @@ img {
 .regform {
     max-width: 200px;
 }
+
+.comment {
+    max-width: 600px;
+}
+
+.author {
+    font-style: italic;
+}

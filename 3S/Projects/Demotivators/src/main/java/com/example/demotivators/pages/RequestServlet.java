@@ -63,11 +63,6 @@ public class RequestServlet extends HttpServlet {
 
             FriendshipRequestsDAO.update(req);
 
-            try {
-                response.sendRedirect("/app/friends");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         } else if(URLAfterWebDomain.endsWith("reject"))  {
             Request req = FriendshipRequestsDAO.find(requestId);
 
@@ -76,12 +71,10 @@ public class RequestServlet extends HttpServlet {
                 return;
             }
             FriendshipRequestsDAO.delete(req);
-
-            try {
-                response.sendRedirect("/app/requests");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
+
+        response.setContentType("text/plain");
+        response.getWriter().write("ok");
+        response.getWriter().flush();
     }
 }

@@ -2,25 +2,22 @@
 <#include "menu.ftl">
 
 <#foreach item in requests>
-    <tr class="RequestsWithUser">
+    <div class="RequestsWithUser">
         <div class="img-container">
             <img src="${item.sender.avatar}" alt="sender">
             <a>${item.text}</a>
-            <br />
-            <form method="post" action="/app/requests/${item.requestId}/approve">
-                <button type="submit">
+            <br/>
+                <button type="submit" class="approve-request">
                     Approve
                 </button>
-            </form>
-            <br />
-            <form method="post" action="/app/requests/${item.requestId}/reject">
-                <button type="submit">
+            <br/>
+                <button type="submit" class="reject-request">
                     Reject
                 </button>
-            </form>
+            <hr class="mt-2 mb-3"/>
 
         </div>
-    </tr>
+    </div>
 </#foreach>
 
-<a href = "/app/menu"> Back</a>
+<a href="/app/menu"> Back</a>

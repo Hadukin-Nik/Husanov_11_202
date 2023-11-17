@@ -5,7 +5,9 @@ import com.example.demotivators.dao_s.FriendshipRequestsDAO;
 import com.example.demotivators.dao_s.MemesDAO;
 import com.example.demotivators.entities.Comment;
 import com.example.demotivators.entities.Mem;
+import com.example.demotivators.entities.forPages.MemWithUser;
 import com.example.demotivators.helper_s.MyHelper;
+import com.example.demotivators.helper_s.TemplateUtil;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -28,18 +30,14 @@ public class MemRedact extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
 
-        
-
         Map<String, Object> root = new HashMap<>();
-        Template temp = null;
-        //description, tags, commentAllowed
-
+        TemplateUtil temp = null;
 
         String URLAfterWebDomain = request.getRequestURI();
 
         int memId = getId(URLAfterWebDomain);
 
-        Mem mem = MemesDAO.findMemInDB(memId);
+        MemWithUser mem = MyHelper.toAltMem(MemesDAO.findMemInDB(memId));
 
         if (mem != null && URLAfterWebDomain.endsWith("/edit")) {
             Cookie admin = MyHelper.getSpecificCookie(request.getCookies(), "admin");
@@ -60,13 +58,13 @@ public class MemRedact extends HttpServlet {
             root.put("mem", mem);
 
             if (isHaveRights) {
-                temp = TemplatesLoader.getConfiguration().getTemplate("memRedactor.ftl");
+                temp = new TemplateUtil(request, response, "memRedactor.ftl");
             } else {
-                temp = TemplatesLoader.getConfiguration().getTemplate("mempage.ftl");
+                temp = new TemplateUtil(request, response, "mempage.ftl");
             }
 
         } else if (URLAfterWebDomain.endsWith("/comments")) {
-            temp = TemplatesLoader.getConfiguration().getTemplate("mempage.ftl");
+            temp = new TemplateUtil(request, response, "mempage.ftl");
 
             Cookie[] cookies = request.getCookies();
             Cookie cookie = MyHelper.getSpecificCookie(cookies, "user_id");
@@ -81,7 +79,7 @@ public class MemRedact extends HttpServlet {
 
             root.put("isNotFriend", !FriendshipRequestsDAO.isInFriends(user_id, mem.getUserId()) || !FriendshipRequestsDAO.isInFriends(mem.getUserId(), user_id));
             root.put("mem", mem);
-            root.put("comments", CommentsDAO.getAllComments(memId));
+            root.put("comments", MyHelper.toAltComments(CommentsDAO.getAllComments(memId)));
         }
 
         try {

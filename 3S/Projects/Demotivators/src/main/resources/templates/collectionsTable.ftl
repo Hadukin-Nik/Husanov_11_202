@@ -8,18 +8,26 @@
 </style>
 
 <form method="POST">
-    <a>Name</a>
-    <textarea name="name" rows="4" cols="50"> </textarea>
+    <div class = "row comment">
+        <a>Name</a>
+        <textarea name="name" rows="4" cols="50"> </textarea>
+    </div>
 
-    <br/>
-    <a>Description</a>
-    <textarea name="description" rows="4" cols="50"> </textarea>
+    <div class="row comment">
+        <a>Description</a>
+        <textarea name="description" rows="4" cols="50"> </textarea>
+    </div>
 
-    <br/>
-    <input type="checkbox"  name="isPrivate">
-    <label for="isPrivate"> is it private?</label><br>
+    <div class="row comment">
+        <div class="col">
+            <label class="form-check-label" for="exampleCheck1">is it private?</label>
+            <input type="checkbox" class="form-check-input" id="exampleCheck1"  name="isPrivate">
+        </div>
+        <div class="col">
+            <input type="submit" value="Upload" />
+        </div>
+    </div>
 
-    <input type="submit" value="Upload" />
 </form>
 
 <table>

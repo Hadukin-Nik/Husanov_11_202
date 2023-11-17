@@ -2,8 +2,9 @@ package com.example.demotivators.helper_s;
 
 import com.example.demotivators.dao_s.FriendshipRequestsDAO;
 import com.example.demotivators.dao_s.MemesDAO;
+import com.example.demotivators.entities.Comment;
 import com.example.demotivators.entities.Mem;
-import com.example.demotivators.entities.Request;
+import com.example.demotivators.entities.forPages.CommentWithUser;
 import com.example.demotivators.entities.forPages.MemWithUser;
 import com.example.demotivators.entities.forPages.RequestWithUser;
 
@@ -82,7 +83,7 @@ public class MyHelper {
     }
 
 
-    public static List<MemWithUser> toAltMem(List<Mem> mems) {
+    public static List<MemWithUser> toAltMemes(List<Mem> mems) {
         List<MemWithUser> ans = new ArrayList<>();
 
         for (var i : mems) {
@@ -91,10 +92,24 @@ public class MyHelper {
         return ans;
     }
 
+    public static MemWithUser toAltMem(Mem meme)  {
+        return new MemWithUser(meme);
+    }
+
+    public static List<CommentWithUser> toAltComments(List<Comment> comments) {
+        List<CommentWithUser> ans = new ArrayList<>();
+
+        for(var i : comments){
+            ans.add(new CommentWithUser(i));
+        }
+
+        return ans;
+    }
+
     public static List<MemWithUser> friendsScroll(int userId) {
         Set<Integer> friendsSet = new HashSet<>();
 
-        List<MemWithUser> mems = toAltMem(MemesDAO.getMemes());
+        List<MemWithUser> mems = toAltMemes(MemesDAO.getMemes());
 
         List<RequestWithUser> friends = FriendshipRequestsDAO.getApprovedRequestsWithUser(userId);
 

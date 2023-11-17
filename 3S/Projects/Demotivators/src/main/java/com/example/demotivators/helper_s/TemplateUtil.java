@@ -24,6 +24,7 @@ public class TemplateUtil {
 
         defaults = new HashMap<>();
 
+        defaults.put("URL", request.getRequestURI());
         defaults.put("backToAuthorisation", request.getContextPath());
         defaults.put("toScroll", request.getContextPath() + "/scroll");
         defaults.put("toFriendsScroll", request.getContextPath() + "/friendsScroll");
@@ -41,8 +42,6 @@ public class TemplateUtil {
     }
 
     public void process(Map<String, Object> args, PrintWriter out) throws TemplateException, IOException {
-        
-
         args.putAll(defaults);
 
         template.process(args, out);

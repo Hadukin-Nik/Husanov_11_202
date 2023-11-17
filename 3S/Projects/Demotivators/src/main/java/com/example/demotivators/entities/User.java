@@ -7,10 +7,11 @@ import java.util.Date;
 import static com.example.demotivators.entities.User.Role.fromInteger;
 
 public class User {
-    public enum Role{
+    public enum Role {
         Commoner, Admin, SuperAdmin;
+
         public static Role fromInteger(int x) {
-            switch(x) {
+            switch (x) {
                 case 0:
                     return Commoner;
                 case 1:
@@ -22,7 +23,7 @@ public class User {
         }
 
         public static Integer toInt(Role x) {
-            switch (x){
+            switch (x) {
                 case Commoner:
                     return 0;
                 case Admin:
@@ -69,7 +70,6 @@ public class User {
 
         this.role = fromInteger(0);
         telephone_number = telephoneNumber;
-        this.userId = userId;
     }
 
     public String getName() {
@@ -77,8 +77,10 @@ public class User {
     }
 
     public String getAvatar() {
-        if(avatar == null) {
+        if (avatar == null) {
             return "images/" + Config.DEFAULT_PNG;
+        } else if (!avatar.startsWith("images")) {
+            return "images/" + avatar;
         } else {
             return avatar;
         }

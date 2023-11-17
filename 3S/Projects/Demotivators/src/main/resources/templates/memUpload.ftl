@@ -2,22 +2,30 @@
 <#include "menu.ftl">
 
 <form method="POST" enctype='multipart/form-data'>
-    <input type="file" name="file" />
+    <div class="row">
+        <input type="file" name="file" />
+    </div>
+    <div class="row">
+        <input type="checkbox"  name="isCommentsAllowed">
+        <label for="isCommentsAllowed"> Are comments allowed?</label><br>
+    </div>
 
-    <input type="checkbox"  name="isCommentsAllowed">
-    <label for="isCommentsAllowed"> Are comments allowed?</label><br>
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                <textarea  name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Tags</label>
+                <textarea name="tags" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
 
-    <a>Description</a>
-    <textarea name="description" rows="4" cols="50"> </textarea>
+        </div>
+    </div>
 
-    <br />
-
-    <a>Tags</a>
-    <textarea name="tags" rows="4" cols="50"> </textarea>
-
-
-    <input type="submit" value="Upload" />
-
-
+    <button type="submit" class="btn btn-primary">submit</button>
 </form>
 
