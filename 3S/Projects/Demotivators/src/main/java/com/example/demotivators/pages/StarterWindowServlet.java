@@ -1,5 +1,6 @@
 package com.example.demotivators.pages;
 
+import com.example.demotivators.helper_s.TemplateUtil;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -18,25 +19,10 @@ public class StarterWindowServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
 
-        response.setContentType("text/html");
+        
         Map<String, Object> root = new HashMap<>();
-        root.put("backToAuthorisation", request.getContextPath());
-        root.put("toAccount", request.getContextPath() + "/pc");
-        root.put("toScroll", request.getContextPath() + "/scroll");
-        root.put("toFriendsScroll", request.getContextPath() + "/friendsScroll");
 
-        root.put("toUsers", request.getContextPath() + "/users");
-        root.put("toMemUpload", request.getContextPath() + "/mem_upload");
-        root.put("toRequest", request.getContextPath() + "/requests");
-        root.put("toFriends", request.getContextPath() + "/friends");
-        root.put("toAddCollections", request.getContextPath() + "/addToCollection");
-        root.put("toCollections", request.getContextPath() + "/collections");
-
-
-
-        root.put("x", Arrays.stream(request.getCookies()).filter(t -> t.getName().equals("admin")).count());
-
-        Template temp = TemplatesLoader.getConfiguration().getTemplate("/starterWindow.ftl");
+        TemplateUtil temp = new TemplateUtil(request, response, "/starterWindow.ftl");
 
         try {
             temp.process(root, out);

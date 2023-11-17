@@ -18,7 +18,7 @@ public class HelloServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
 
-        response.setContentType("text/html");
+        
         Map<String, Object> root = new HashMap<>();
         Template temp = null;
 

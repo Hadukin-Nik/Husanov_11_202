@@ -6,6 +6,7 @@ import com.example.demotivators.dao_s.MemesDAO;
 import com.example.demotivators.entities.Mem;
 import com.example.demotivators.entities.Request;
 import com.example.demotivators.helper_s.MyHelper;
+import com.example.demotivators.helper_s.TemplateUtil;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -23,10 +24,10 @@ public class RequestCreatorServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
 
-        response.setContentType("text/html");
+        
 
         Map<String, Object> root = new HashMap<>();
-        Template temp = TemplatesLoader.getConfiguration().getTemplate("requestCreation.ftl");
+        TemplateUtil temp = new TemplateUtil(request, response, "requestCreation.ftl");
 
         try {
             temp.process(root, out);

@@ -4,6 +4,7 @@ import com.example.demotivators.Config;
 import com.example.demotivators.dao_s.UsersDAO;
 import com.example.demotivators.entities.User;
 import com.example.demotivators.helper_s.MyHelper;
+import com.example.demotivators.helper_s.TemplateUtil;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -25,11 +26,11 @@ public class RegisterServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
 
-        response.setContentType("text/html");
+        
         Map<String, Object> root = new HashMap<>();
         root.put("address", request.getContextPath());
 
-        Template temp = TemplatesLoader.getConfiguration().getTemplate("register.ftl");
+        TemplateUtil temp = new TemplateUtil(request, response, "register.ftl");
 
         try {
             temp.process(root, out);

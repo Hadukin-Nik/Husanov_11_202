@@ -1,6 +1,7 @@
 package com.example.demotivators.pages;
 
 import com.example.demotivators.helper_s.MyHelper;
+import com.example.demotivators.helper_s.TemplateUtil;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -18,7 +19,7 @@ public class FriendsScrollServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
 
-        response.setContentType("text/html");
+        
         Map<String, Object> root = new HashMap<>();
 
 
@@ -41,7 +42,7 @@ public class FriendsScrollServlet extends HttpServlet {
 
         root.put("memes", MyHelper.friendsScroll(user_id));
 
-        Template temp = TemplatesLoader.getConfiguration().getTemplate("scroll.ftl");
+        TemplateUtil temp = new TemplateUtil(request, response, "scroll.ftl");
 
         try {
             temp.process(root, out);

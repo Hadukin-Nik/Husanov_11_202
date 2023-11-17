@@ -1,6 +1,7 @@
 package com.example.demotivators.pages;
 
 import com.example.demotivators.dao_s.FriendshipRequestsDAO;
+import com.example.demotivators.helper_s.TemplateUtil;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -20,10 +21,10 @@ public class FriendsServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
 
-        response.setContentType("text/html");
+        
 
         Map<String, Object> root = new HashMap<>();
-        Template temp = TemplatesLoader.getConfiguration().getTemplate("friends.ftl");
+        TemplateUtil temp = new TemplateUtil(request, response, "friends.ftl");
 
         Cookie userId = getSpecificCookie(request.getCookies(), "user_id");
 

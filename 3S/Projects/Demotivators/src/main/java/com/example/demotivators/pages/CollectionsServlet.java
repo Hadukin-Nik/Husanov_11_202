@@ -7,6 +7,7 @@ import com.example.demotivators.entities.Collection;
 import com.example.demotivators.entities.Download;
 import com.example.demotivators.entities.User;
 import com.example.demotivators.helper_s.MyHelper;
+import com.example.demotivators.helper_s.TemplateUtil;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -26,14 +27,14 @@ public class CollectionsServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
 
-        response.setContentType("text/html");
+        
         Map<String, Object> root = new HashMap<>();
 
         List<Collection> collections = CollectionDAO.getCollections();
 
         root.put("collections", collections);
 
-        Template temp = TemplatesLoader.getConfiguration().getTemplate("/collectionsTable.ftl");
+        TemplateUtil temp = new TemplateUtil(request, response, "/collectionsTable.ftl");
 
         try {
             temp.process(root, out);

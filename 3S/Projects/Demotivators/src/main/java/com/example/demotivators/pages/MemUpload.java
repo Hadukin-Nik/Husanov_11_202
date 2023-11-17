@@ -4,6 +4,7 @@ import com.example.demotivators.Config;
 import com.example.demotivators.dao_s.MemesDAO;
 import com.example.demotivators.entities.Mem;
 import com.example.demotivators.helper_s.MyHelper;
+import com.example.demotivators.helper_s.TemplateUtil;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -20,10 +21,10 @@ public class MemUpload extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
 
-        response.setContentType("text/html");
+        
 
         Map<String, Object> root = new HashMap<>();
-        Template temp = TemplatesLoader.getConfiguration().getTemplate("memUpload.ftl");
+        TemplateUtil temp = new TemplateUtil(request, response, "memUpload.ftl");
 
         try {
             temp.process(root, out);
@@ -61,7 +62,7 @@ public class MemUpload extends HttpServlet {
 
         temp = TemplatesLoader.getConfiguration().getTemplate("afterMemUpload.ftl");
 
-        response.setContentType("text/html");
+        
 
         vars.put("img_src", "images/" + fileName + extension);
 

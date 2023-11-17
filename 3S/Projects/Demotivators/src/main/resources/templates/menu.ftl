@@ -6,15 +6,15 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="${backToAuthorisation}">Home</a>
-            <a class="nav-item nav-link" href="${toScroll}">To Scroll</a>
-            <a class="nav-item nav-link" href="${toFriendsScroll}">To Friends Scroll</a>
-            <a class="nav-item nav-link" href="${toMemUpload}">To Mem upload</a>
-            <a class="nav-item nav-link" href="${toRequest}">To requests</a>
-            <a class="nav-item nav-link" href="${toCollections}">To collection</a>
-            <a class="nav-item nav-link" href="${toAddCollections}">To add to collection</a>
-            <a class="nav-item nav-link" href="${toFriends}">To friends</a>
-            <#if x = 1>
-                <a class="nav-item nav-link" href="${toUsers}">To users</a>
+            <a class="nav-item nav-link" href="${toScroll}">Scroll</a>
+            <a class="nav-item nav-link" href="${toFriendsScroll}">Friends Scroll</a>
+            <a class="nav-item nav-link" href="${toMemUpload}">Meme upload</a>
+            <a class="nav-item nav-link" href="${toRequest}">Requests</a>
+            <a class="nav-item nav-link" href="${toCollections}">Collection</a>
+            <a class="nav-item nav-link" href="${toAddCollections}">Add to collection</a>
+            <a class="nav-item nav-link" href="${toFriends}">Friends</a>
+            <#if isAdmin>
+                <a class="nav-item nav-link" href="${toUsers}">Users</a>
             </#if>
         </div>
     </div>

@@ -1,6 +1,7 @@
 package com.example.demotivators.pages;
 
 import com.example.demotivators.dao_s.UsersDAO;
+import com.example.demotivators.helper_s.TemplateUtil;
 import com.example.demotivators.helper_s.TemplatesLoader;
 import com.example.demotivators.entities.User;
 import freemarker.template.Template;
@@ -19,7 +20,7 @@ public class UsersServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
 
-        response.setContentType("text/html");
+        
         Map<String, Object> root = new HashMap<>();
 
         List<User> users = UsersDAO.getAll();
@@ -27,7 +28,7 @@ public class UsersServlet extends HttpServlet {
         root.put("users", users);
 
 
-        Template temp = TemplatesLoader.getConfiguration().getTemplate("/usersTable.ftl");
+        TemplateUtil temp = new TemplateUtil(request, response, "/usersTable.ftl");
 
         try {
             temp.process(root, out);
