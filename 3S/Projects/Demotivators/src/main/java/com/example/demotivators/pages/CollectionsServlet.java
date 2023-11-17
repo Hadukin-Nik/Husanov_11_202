@@ -1,8 +1,10 @@
 package com.example.demotivators.pages;
 
 import com.example.demotivators.dao_s.CollectionDAO;
+import com.example.demotivators.dao_s.DownloadDAO;
 import com.example.demotivators.dao_s.UsersDAO;
 import com.example.demotivators.entities.Collection;
+import com.example.demotivators.entities.Download;
 import com.example.demotivators.entities.User;
 import com.example.demotivators.helper_s.MyHelper;
 import com.example.demotivators.helper_s.TemplatesLoader;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +57,7 @@ public class CollectionsServlet extends HttpServlet {
 
         CollectionDAO.insertNewCollection(new Collection(Integer.parseInt(userId.getValue()), name, description, isPrivate));
 
+        DownloadDAO.insert(new Download(Integer.parseInt(userId.getValue()), CollectionDAO.getLasttId(), new Date(System.currentTimeMillis())));
         response.sendRedirect("/app/collections");
     }
 }

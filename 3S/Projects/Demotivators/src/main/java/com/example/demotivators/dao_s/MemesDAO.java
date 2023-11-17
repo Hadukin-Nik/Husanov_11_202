@@ -17,7 +17,7 @@ public class MemesDAO {
             Statement st = conn.createStatement();
             java.sql.Date sqlDate = new java.sql.Date(mem.getCreationDate().getTime());
 
-            st.executeQuery("INSERT INTO public.memes(\n" +
+            st.executeUpdate("INSERT INTO public.memes(\n" +
                             "        \"Mem_id\", \"User_id\", \"Picture\", \"CreationDate\", \"UpdateDate\", \"CommentsAllowed\", \"Description\", \"Tags\")" +
                     "VALUES ("+ id + ", " + mem.getUserId() + ", \'" +
                     mem.getPicture() + "\', \'" + (sqlDate) + "\', \'" +

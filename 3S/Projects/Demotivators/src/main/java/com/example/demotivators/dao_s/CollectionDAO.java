@@ -11,6 +11,12 @@ import java.util.List;
 import static com.example.demotivators.helper_s.HelperForDAO_s.howManyUsers;
 
 public class CollectionDAO {
+    private static int lastId;
+
+    public static int getLasttId() {
+        return lastId;
+    }
+
     public static List<Collection> getCollections() {
         List<Collection> collections = new ArrayList<>();
 
@@ -51,6 +57,7 @@ public class CollectionDAO {
     }
     public static void insertNewCollection(Collection collection) {
         int id = howManyUsers("\"collections\"");
+        lastId = id;
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "postgres")) {
 
