@@ -44,7 +44,6 @@ public class RegisterServlet extends HttpServlet {
 
         String name = request.getParameter("name");
         String nickname = request.getParameter("nickname");
-        String phone = request.getParameter("phone");
 
 
         Part filePart = null;
@@ -65,8 +64,8 @@ public class RegisterServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        if(name != null && nickname != null && phone != null && login != null && password != null) {
-            User user = new User(fileName + extension, name, nickname, phone);
+        if(name != null && nickname != null  && login != null && password != null) {
+            User user = new User(fileName + extension, name, nickname, "000");
 
             UsersDAO.addUser(user, login, password);
         }

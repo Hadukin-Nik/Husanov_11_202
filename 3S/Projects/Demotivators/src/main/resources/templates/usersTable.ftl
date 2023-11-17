@@ -1,3 +1,6 @@
+<#include "common.ftl">
+<#include "menu.ftl">
+
 <style>
     table, th, td {
         border:1px solid black;

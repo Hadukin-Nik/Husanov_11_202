@@ -14,3 +14,11 @@ img {
     flex-direction: column;
     align-items: center;
 }
+
+.row {
+    padding: 2px 0px;
+}
+
+.regform {
+    max-width: 200px;
+}

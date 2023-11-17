@@ -1,3 +1,6 @@
+<#include "common.ftl">
+<#include "menu.ftl">
+
 <#foreach item in friends>
     <tr class="RequestsWithUser">
         <div class="img-container">

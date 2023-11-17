@@ -1,3 +1,6 @@
+<#include "common.ftl">
+<#include "menu.ftl">
+
 <form method="POST" enctype='multipart/form-data'>
     <input type="file" name="file" />
 

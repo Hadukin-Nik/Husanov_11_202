@@ -1,3 +1,5 @@
+<#include "common.ftl">
+<#include "menu.ftl">
 
 <#foreach item in requests>
     <tr class="RequestsWithUser">

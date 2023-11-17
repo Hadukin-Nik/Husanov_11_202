@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <style>
-        <#include "css/mystyle.css">
-    </style>
-</head>
+<#include "common.ftl">
+<#include "menu.ftl">
 <body>
 
 

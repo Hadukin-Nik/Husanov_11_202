@@ -1,10 +1,8 @@
+
 <!DOCTYPE html>
 <html>
-<head>
-    <style>
-        <#include "css/mystyle.css">
-    </style>
-</head>
+<#include "common.ftl">
+<#include "menu.ftl">
 
 <div class="img-container">
     <img src="/app/images/${mem.picture}" alt="your_mem">

@@ -1,3 +1,6 @@
+<#include "common.ftl">
+<#include "menu.ftl">
+
 <form method="Post" action="">
     <a>Text</a>
     <textarea name="text" rows="4" cols="50"> </textarea>

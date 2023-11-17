@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <style>
-        <#include "css/mystyle.css">
-    </style>
-</head>
+<#include "common.ftl">
+<#include "menu.ftl">
+
 <body>
 
 <#foreach item in memes>
@@ -14,7 +12,7 @@
             <img src="${item.user.avatar}" alt="creator">
 
             <div class="img-text">
-                <a href = "/app/memes/${item.memId}/comments"> ${item.description}</a>
+                <a href="/app/memes/${item.memId}/comments"> ${item.description}</a>
             </div>
 
             <#if userId == item.userId || isAdmin>

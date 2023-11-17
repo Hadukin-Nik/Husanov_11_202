@@ -1,3 +1,6 @@
+<#include "common.ftl">
+<#include "menu.ftl">
+
 <form method="Post">
     <a>Your mem_id</a>
     <input name = "memId" value="">
