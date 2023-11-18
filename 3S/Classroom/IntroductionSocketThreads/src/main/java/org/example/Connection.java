@@ -41,6 +41,11 @@ public class Connection extends Thread {
             //turn of first
             String firstMessage;
             try {
+                bfWriterList.get(1).write("command-wait" + '\n');
+                bfWriterList.get(1).flush();
+                bfWriterList.get(0).write("command-say" + '\n');
+                bfWriterList.get(0).flush();
+
                 firstMessage = bfReaderList.get(0).readLine();
 
                 if (firstMessage.contains("exit")) {
@@ -55,6 +60,11 @@ public class Connection extends Thread {
 
             //turn of second
             try {
+                bfWriterList.get(0).write("command-wait" + '\n');
+                bfWriterList.get(0).flush();
+                bfWriterList.get(1).write("command-say" + '\n');
+                bfWriterList.get(1).flush();
+
                 firstMessage = bfReaderList.get(1).readLine();
 
                 if (firstMessage.contains("exit")) {

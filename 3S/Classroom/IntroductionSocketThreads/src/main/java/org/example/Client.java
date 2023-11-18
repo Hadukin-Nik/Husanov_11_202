@@ -20,17 +20,25 @@ public class Client {
                 clientSocket = new Socket("localhost", 4004);
 
                 reader = new BufferedReader(new InputStreamReader(System.in));
+
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 
                 while (true) {
-                    String word = sc.nextLine() + '\n';
-
-                    out.write(word);
-                    out.flush();
-
                     String ans = in.readLine();
-                    System.out.println("He is saying:\n" + ans);
+
+                    if(ans.startsWith("command-wait")) {
+                        ans = in.readLine();
+
+                        System.out.println("He is saying:\n" + ans);
+
+                    } else if (ans.startsWith("command-say")) {
+                        System.out.println("Your message: \n");
+                        String word = sc.nextLine() + '\n';
+
+                        out.write(word);
+                        out.flush();
+                    }
                 }
 
             } finally {
