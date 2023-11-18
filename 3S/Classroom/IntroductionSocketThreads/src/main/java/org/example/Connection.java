@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Connection extends Thread {
@@ -11,6 +12,13 @@ public class Connection extends Thread {
     private List<BufferedReader> bfReaderList;
 
     private List<ServerSocket> serverSockets;
+
+    public Connection() {
+        bfWriterList = new ArrayList<>();
+        bfReaderList = new ArrayList<>();
+
+        serverSockets = new ArrayList<>();
+    }
 
     public boolean addTo(ServerSocket serverSocket, BufferedWriter bfW, BufferedReader bfR) {
         if (bfReaderList.size() < 2) {

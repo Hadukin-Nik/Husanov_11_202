@@ -38,9 +38,6 @@ public class Server {
 
                 System.out.println("Thread assigned");
 
-                out.write(UUID.randomUUID().toString() + '\n');
-                out.flush();
-
                 if(!connectionList.get(i).addTo(myserverSocket, out, in)) {
                     connectionList.get(i).start();
 
