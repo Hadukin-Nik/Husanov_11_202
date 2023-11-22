@@ -25,12 +25,12 @@ public class MessagesDB {
 
         int messagesCount = size - usersReadedMessagesCount.get(userId);
 
-        System.out.println("Messages: " + size + "\n" + "I read: " + messagesCount + "\n");
+        System.out.println("Messages: " + size + "\n" + "I will read: " + messagesCount + "\n");
 
         StringBuilder ans = new StringBuilder();
 
         for(int i = 0; i < messagesCount; i++) {
-            ans.append(messages.get(size - i - 1) + '\n');
+            ans.append(messages.get(size - messagesCount - 1 + i) + " ");
         }
 
         usersReadedMessagesCount.set(userId, size);

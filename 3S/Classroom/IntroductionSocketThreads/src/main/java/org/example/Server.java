@@ -30,6 +30,10 @@ public class Server {
 
                 System.out.println("Thread assigned");
 
+
+
+
+                
                 (new Connection(in, out, myserverSocket, mDB, i)).start();
 
                 mDB.addANewUser();
