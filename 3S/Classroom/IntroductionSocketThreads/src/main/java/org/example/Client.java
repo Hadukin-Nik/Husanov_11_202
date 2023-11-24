@@ -21,9 +21,16 @@ public class Client {
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 
+                ReadingThread readingThread = new ReadingThread();
+                WritingThread writingThread = new WritingThread();
+
+                readingThread.start();
+                writingThread.start();
+
                 while (true) {
                     System.out.println("Your message:");
-                    String word = sc.nextLine() + '\n';
+
+                    String word = writingThread.getMessage();
 
                     out.write(word);
                     out.flush();
@@ -32,6 +39,11 @@ public class Client {
                     ans = in.readLine();
 
                     System.out.println("He is saying:\n" + ans);
+
+                    word = readingThread.getMessage();
+
+                    out.write(word);
+                    out.flush();
                 }
 
             } finally {

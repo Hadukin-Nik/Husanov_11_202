@@ -11,7 +11,7 @@ public class Connection extends Thread {
 
     private ServerSocket serverSocket;
 
-    private MessagesDB mDB;
+    private final MessagesDB mDB;
     private int userId;
 
     public Connection(BufferedReader br, BufferedWriter bw, ServerSocket sv, MessagesDB mDB, int userId) {
@@ -31,23 +31,29 @@ public class Connection extends Thread {
 
             try {
                 message = bufferedReader.readLine();
-                System.out.println(message);
-                if(message.contains("exit")) {
+
+                if(message.equals("msg exit")) {
                     break;
                 }
-                synchronized (mDB) {
-                    mDB.addNewMessage(message);
-                }
-                synchronized (mDB) {
-                    bufferedWriter.write(mDB.getLastMessages(userId) + "\n");
+
+                if(message.startsWith("msg ")) {
+                    message = message.substring(4);
+
+                    synchronized (mDB) {
+                        mDB.addNewMessage(message);
+                    }
                 }
 
+                if(message.equals("list")){
+                    synchronized (mDB) {
+                        bufferedWriter.write(mDB.getLastMessages(userId) + "\n");
+                    }
 
-                bufferedWriter.flush();
+                    bufferedWriter.flush();
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
 
         }
         try {
@@ -55,7 +61,6 @@ public class Connection extends Thread {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
 
         try {
             bufferedWriter.close();

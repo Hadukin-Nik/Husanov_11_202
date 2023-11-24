@@ -10,38 +10,35 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
         MessagesDB mDB = new MessagesDB();
-        ServerSocket myserverSocket = new ServerSocket(4004);
+        ServerSocket server = new ServerSocket(4004);
 
-        int i = 0;
+        int connectionsCount = 0;
         // getting client request
         while (true)
         // running infinite loop
         {
-            Socket mynewSocket = null;
+            Socket socket = null;
 
             try
             {
-                mynewSocket = myserverSocket.accept();
+                socket = server.accept();
 
-                System.out.println("A new connection identified : " + mynewSocket);
+                System.out.println("A new connection identified : " + socket);
 
-                in = new BufferedReader(new InputStreamReader(mynewSocket.getInputStream()));
-                out = new BufferedWriter(new OutputStreamWriter(mynewSocket.getOutputStream()));
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
                 System.out.println("Thread assigned");
 
-
-
-
                 
-                (new Connection(in, out, myserverSocket, mDB, i)).start();
+                (new Connection(in, out, server, mDB, connectionsCount)).start();
 
                 mDB.addANewUser();
 
-                i++;
+                connectionsCount++;
             }
             catch (Exception e){
-                mynewSocket.close();
+                socket.close();
                 e.printStackTrace();
             }
         }

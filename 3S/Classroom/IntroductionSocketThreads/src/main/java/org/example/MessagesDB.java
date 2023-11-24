@@ -23,14 +23,14 @@ public class MessagesDB {
     public String getLastMessages(int userId) {
         int size = messages.size();
 
-        int messagesCount = size - usersReadedMessagesCount.get(userId);
+        int messagesCount = usersReadedMessagesCount.get(userId);
 
         System.out.println("Messages: " + size + "\n" + "I will read: " + messagesCount + "\n");
 
         StringBuilder ans = new StringBuilder();
 
-        for(int i = 0; i < messagesCount; i++) {
-            ans.append(messages.get(size - messagesCount - 1 + i) + " ");
+        for(int i = Math.max(messagesCount - 1, 0); i < size; i++) {
+            ans.append(messages.get(i) + " ");
         }
 
         usersReadedMessagesCount.set(userId, size);
