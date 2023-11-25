@@ -35,15 +35,15 @@ public class Client {
                     out.write(word);
                     out.flush();
 
-                    String ans;
-                    ans = in.readLine();
-
-                    System.out.println("He is saying:\n" + ans);
-
                     word = readingThread.getMessage();
 
                     out.write(word);
                     out.flush();
+
+                    String ans;
+                    ans = in.readLine();
+
+                    System.out.println("He is saying:\n" + ans);
                 }
 
             } finally {
