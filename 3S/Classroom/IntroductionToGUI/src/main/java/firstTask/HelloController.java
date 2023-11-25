@@ -1,4 +1,4 @@
-package com.example.introductiontogui;
+package firstTask;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
