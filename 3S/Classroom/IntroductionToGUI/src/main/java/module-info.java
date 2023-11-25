@@ -1,10 +1,10 @@
-module secondTask {
+module thirdTask {
     requires javafx.controls;
     requires javafx.fxml;
 
     requires com.dlsc.formsfx;
 
-    opens secondTask to javafx.fxml;
-    exports secondTask;
+    opens thirdTask to javafx.fxml;
+    exports thirdTask;
 }
 
