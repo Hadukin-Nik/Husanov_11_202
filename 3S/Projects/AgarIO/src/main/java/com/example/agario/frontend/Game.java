@@ -1,6 +1,7 @@
 package com.example.agario.frontend;
 
 import com.example.agario.frontend.game.Entity;
+import com.example.agario.frontend.game.Player;
 import com.example.agario.frontend.game.helpers.Vector2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
@@ -12,14 +13,14 @@ import java.util.Set;
 
 public class Game {
     private Scene scene;
-    private Entity circle;
+    private Player circle;
 
     private Set<String> input;
 
     public Game() {
         Pane gameBox = new Pane();
 
-        circle = new Entity(new Vector2D(100, 100), 10);
+        circle = new Player(new Vector2D(100, 100), 10);
 
         gameBox.getChildren().add(circle.getBody());
 

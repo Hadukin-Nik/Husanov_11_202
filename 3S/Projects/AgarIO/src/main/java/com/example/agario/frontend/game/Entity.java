@@ -6,9 +6,9 @@ import javafx.scene.shape.Circle;
 import java.util.Set;
 
 public class Entity {
-    private Circle circle;
-    private Vector2D location;
-    private double radius;
+    protected Circle circle;
+    protected Vector2D location;
+    protected double radius;
 
     public Entity() {
         circle = new Circle();
@@ -26,33 +26,19 @@ public class Entity {
         this(location);
         this.radius = radius;
     }
-
-    public void fixedUpdate(Set<String> input) {
-        move(input);
+    public void setLocation(Vector2D location) {
+        this.location = location;
     }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+
+    public void fixedUpdate(Set<String> input) {}
     public void render() {
         draw();
     }
-    private void move(Set<String> input) {
-        double v = 1.4;
-
-        if(input.contains("W")) {
-            location.setY(location.getY() - v);
-        }
-
-        if(input.contains("S")) {
-            location.setY(location.getY() + v);
-        }
-
-        if(input.contains("D")) {
-            location.setX(location.getX() + v);
-        }
-
-        if(input.contains("A")) {
-            location.setX(location.getX() - v);
-        }
-    }
-
 
     private void draw() {
         circle.setCenterX(location.getX());

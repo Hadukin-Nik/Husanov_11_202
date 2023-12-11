@@ -1,0 +1,35 @@
+package com.example.agario.frontend.game;
+
+import com.example.agario.frontend.game.helpers.Vector2D;
+
+import java.util.Set;
+
+public class Player extends Entity{
+    public Player(Vector2D location, double radius) {
+        super(location, radius);
+    }
+    @Override
+    public void fixedUpdate(Set<String> input) {
+        move(input);
+    }
+
+    private void move(Set<String> input) {
+        double v = 1.4;
+
+        if(input.contains("W")) {
+            location.setY(location.getY() - v);
+        }
+
+        if(input.contains("S")) {
+            location.setY(location.getY() + v);
+        }
+
+        if(input.contains("D")) {
+            location.setX(location.getX() + v);
+        }
+
+        if(input.contains("A")) {
+            location.setX(location.getX() - v);
+        }
+    }
+}
