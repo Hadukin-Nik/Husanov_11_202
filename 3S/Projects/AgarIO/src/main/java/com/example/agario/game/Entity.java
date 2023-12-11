@@ -1,6 +1,6 @@
 package com.example.agario.game;
 
-import com.example.agario.helpers.Vector2D;
+import com.example.agario.game.helpers.Vector2D;
 
 public class Entity {
     private Vector2D location;
@@ -20,8 +20,7 @@ public class Entity {
         this(location);
         this.radius = radius;
     }
-
-
+    
 
     public Vector2D getLocation() {
         return location;

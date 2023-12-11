@@ -1,4 +1,4 @@
-package com.example.agario.helpers;
+package com.example.agario.game.helpers;
 
 public class Vector2D {
     private double x;

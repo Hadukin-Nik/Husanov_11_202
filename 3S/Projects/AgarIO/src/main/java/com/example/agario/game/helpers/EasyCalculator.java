@@ -1,4 +1,4 @@
-package com.example.agario.helpers;
+package com.example.agario.game.helpers;
 
 public class EasyCalculator {
     private static final double EPS = 0.0001;
