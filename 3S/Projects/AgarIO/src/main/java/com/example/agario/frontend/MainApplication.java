@@ -18,10 +18,14 @@ public class MainApplication extends Application {
                 if(lastUpdate == 0) {
                     lastUpdate = now;
                 }
-                long deltaTime = (now - lastUpdate);
+                long deltaTime = (now - lastUpdate)/1000000;
 
-                game.update(deltaTime);
-                lastUpdate = now;
+                if(deltaTime >= 1000 / updateRate) {
+                    game.fixedUpdate(deltaTime);
+
+                    game.render();
+                    lastUpdate = now;
+                }
             }
         }.start();
 
