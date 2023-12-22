@@ -66,30 +66,19 @@ public class ClientAPI extends Thread{
 
                     String[] ans = bufAns.split(" ");
 
-                    int lastId = -1;
-                    for(int i = 0; i < ans.length; i += 4) {
+                    for(int i = 0; i < ans.length; i += 5) {
                         int idE = Integer.parseInt(ans[i]);
 
                         Vector2D locE = new Vector2D(Double.parseDouble(ans[i + 1]), Double.parseDouble(ans[i + 2]));
                         double radE = Double.parseDouble(ans[i + 3]);
-
-                        if(idE - lastId > 1) {
-                            for(int j = lastId + 1; j < idE; j++) {
-                                Entity entityBuf = new Entity(i);
-                                entityBuf.setDead(true);
-                                bufEntities.add(entityBuf);
-                                entityBuf.setRadius(0);
-                            }
-                        }
+                        boolean isDead = Integer.parseInt(ans[i + 4]) == 1;
 
                         Entity entity = new Entity(idE);
 
                         entity.setLocation(locE);
                         entity.setRadius(radE);
-
+                        entity.setDead(isDead);
                         bufEntities.add(entity);
-
-                        lastId = idE;
                     }
                     entities = bufEntities;
                 } catch (IOException e) {

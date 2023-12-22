@@ -3,9 +3,11 @@ package com.example.agario.frontend;
 import com.example.agario.frontend.game.entities.Entity;
 import com.example.agario.frontend.game.entities.Player;
 import com.example.agario.frontend.serverCommunication.ClientAPI;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,11 +28,18 @@ public class Game {
     private Player player;
     private int count = 0;
     public Game() {
+        FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("GameWindow.fxml"));
+
         entities = new ArrayList<>();
-        gameBox = new Pane();
+        try {
+            gameBox = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         rendered = new HashSet<>();
 
         scene = new Scene(gameBox, 1000, 1000);
+
 
         input = new HashSet<>();
 
@@ -57,16 +66,19 @@ public class Game {
 
     public void fixedUpdate(long deltaTime) {
         if(entities.isEmpty()) return;
-        if(!entities.get(player.getId()).isDead()) {
-            entities.get(player.getId()).setLocation(player.getLocation());
+        Entity selfP = entities.get(player.getId());
+        if(!selfP.isDead()) {
+            selfP.setLocation(player.getLocation());
+
             player.fixedUpdate(input);
             clientAPI.setPosition(player.getLocation());
         } else {
-            //Close application?
+            selfP.setRadius(0);
         }
     }
 
     public void render() {
+        if(clientAPI == null) return;
         List<Entity> clientAPIEntities = clientAPI.getEntities();
 
         for(int i = 0; i < clientAPIEntities.size(); i++) {
@@ -87,7 +99,9 @@ public class Game {
                 rendered.add(i.getId());
             }
 
-            i.render();
+            if(!i.isDead()) {
+                i.render();
+            }
         }
     }
     public Scene getScene() {

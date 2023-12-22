@@ -11,15 +11,20 @@ public class ClientLauncher extends Thread{
     private BufferedWriter out;
     private ClientAPI clientAPI;
     private Game game;
-    public ClientLauncher(Game game) {
+
+    private String host;
+
+    public ClientLauncher(String host, Game game) {
         this.game = game;
+
+        this.host = host;
     }
 
     @Override
     public void run(){
         try {
             try {
-                clientSocket = new Socket("localhost", 4004);
+                clientSocket = new Socket(host, 4004);
 
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));

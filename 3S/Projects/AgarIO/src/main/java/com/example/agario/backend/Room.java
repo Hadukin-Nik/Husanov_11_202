@@ -60,18 +60,20 @@ public class Room {
             Entity second = entities.get(pairs.get(i).getValue().getId());
 
             first.addRadius(second.getRadius());
+            second.setRadius(0);
             second.setDead(true);
         }
 
         StringBuilder sb = new StringBuilder();
 
         for(var i : entities) {
-            if(!i.isDead())
-            sb.append(String.format("%d %.2f %.2f %.2f ",
+            sb.append(String.format("%d %.2f %.2f %.2f %d ",
                     i.getId(),
                     i.getLocation().getX(),
                     i.getLocation().getY(),
-                    i.getRadius()));
+                    i.getRadius(),
+                    i.isDead() ? 1 : 0
+                    ));
         }
 
         return sb.toString();
