@@ -8,6 +8,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class MainApplication extends Application {
+    @FXML
+    private TextField messageField;
+
     private long lastUpdate;
     private static Game game;
     @Override
@@ -38,8 +41,6 @@ public class MainApplication extends Application {
         stage.show();
     }
 
-    @FXML
-    private TextField messageField;
     @FXML
     public void onAction() {
         System.out.println(messageField.getText());

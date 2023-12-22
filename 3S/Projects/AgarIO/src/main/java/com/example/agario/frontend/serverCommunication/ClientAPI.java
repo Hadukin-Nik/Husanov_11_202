@@ -1,6 +1,8 @@
 package com.example.agario.frontend.serverCommunication;
 
+import com.example.agario.frontend.Game;
 import com.example.agario.frontend.game.entities.Entity;
+import com.example.agario.frontend.game.entities.Player;
 import com.example.agario.frontend.game.helpers.Vector2D;
 import com.example.agario.protocol.Constants;
 
@@ -14,19 +16,25 @@ public class ClientAPI extends Thread{
     private final long maxTimeGetState = 10;
     private final BufferedWriter bufferedWriter;
     private final BufferedReader bufferedReader;
+    private Game game;
+    private final List<Entity> entities;
 
-    private List<Entity> entities;
-
-    private Vector2D location;
+    private final Vector2D location;
     private long lastTimeRecord = 0;
 
-    private int id;
+    private int userId;
+
+    private boolean sended;
+
+    private int counter;
 
     public ClientAPI(BufferedWriter bufferedWriter, BufferedReader bufferedReader) {
         location = new Vector2D();
         entities = new ArrayList<>();
         this.bufferedWriter = bufferedWriter;
         this.bufferedReader = bufferedReader;
+
+        sended = false;
     }
 
     public int regNew() {
@@ -41,17 +49,41 @@ public class ClientAPI extends Thread{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
+        userId = Integer.parseInt(ans);
         return Integer.parseInt(ans);
     }
 
     @Override
     public void run() {
-        id = regNew();
+        userId = regNew();
 
         while(true) {
-
+            if(game!=null && !sended) {
+                sended = true;
+                game.setPlayerId(userId);
+            }
             if(System.currentTimeMillis() - lastTimeRecord > maxTimeGetState) {
+                synchronized (location) {
+                    try {
+                        if(!(location.getX() == 0 && location.getY() == 0)) {
+                            String s = Constants.setPosPrefix + String.format(" %.2f %.2f",
+                                    location.getX(),
+                                    location.getY()
+                            ).replaceAll(",", ".");
+
+                            System.out.println(counter + " " + s);
+                            counter ++;
+
+                            bufferedWriter.write(s + "\n");
+                            bufferedWriter.flush();
+                        }
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+
                 List<Entity> bufEntities = new ArrayList<>();
                 lastTimeRecord = System.currentTimeMillis();
                 try {
@@ -59,8 +91,6 @@ public class ClientAPI extends Thread{
                     bufferedWriter.flush();
 
                     String bufAns = bufferedReader.readLine();
-
-                    System.out.println(bufAns);
 
                     bufAns = bufAns.replaceAll(",", ".");
 
@@ -73,25 +103,25 @@ public class ClientAPI extends Thread{
                         double radE = Double.parseDouble(ans[i + 3]);
                         boolean isDead = Integer.parseInt(ans[i + 4]) == 1;
 
-                        Entity entity = new Entity(idE);
+                        Entity entity;
+
+                        if(userId != idE) {
+                            entity = new Entity(idE);
+                        } else {
+                            entity = new Player(idE);
+                        }
+
 
                         entity.setLocation(locE);
                         entity.setRadius(radE);
                         entity.setDead(isDead);
                         bufEntities.add(entity);
                     }
-                    entities = bufEntities;
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                    synchronized (entities) {
+                        entities.clear();
+                        entities.addAll(bufEntities);
+                    }
 
-
-                try {
-                    bufferedWriter.write(Constants.setPosPrefix + String.format(" %.2f %.2f",
-                            location.getX(),
-                            location.getY()
-                    ).replaceAll(",", ".") + "\n");
-                    bufferedWriter.flush();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -100,14 +130,19 @@ public class ClientAPI extends Thread{
     }
 
     public synchronized List<Entity> getEntities() {
-        return entities;
+        synchronized (entities) {
+            return entities;
+        }
     }
 
-    public synchronized void setPosition(Vector2D location) {
-        this.location = location;
+    public void setPosition(Vector2D location) {
+        synchronized (this.location) {
+            this.location.setX(location.getX());
+            this.location.setY(location.getY());
+        }
     }
 
-    public synchronized int getPlayerId() {
-        return id;
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.agario.frontend.game.entities;
 
 import com.example.agario.frontend.game.helpers.Vector2D;
+import javafx.scene.paint.Color;
 
 import java.util.Set;
 
@@ -11,6 +12,8 @@ public class Player extends Entity{
 
     public Player(int id) {
         super(id);
+
+        circle.setFill(Color.BLUE);
     }
 
     @Override
@@ -19,7 +22,7 @@ public class Player extends Entity{
     }
 
     private void move(Set<String> input) {
-        double v = 1.4;
+        double v = 1.4 * 2;
 
         if(input.contains("W")) {
             location.setY(location.getY() - v);

@@ -53,7 +53,7 @@ public class Connection extends Thread {
                 } else if (message.startsWith(Constants.setPosPrefix)) {
                     String[] buf = message.split(" ");
 
-                    room.setEntity(userId, new Vector2D(Double.parseDouble(buf[1]), Double.parseDouble(buf[2])));
+                    room.setEntity(userId, new Vector2D(Double.parseDouble(buf[2]), Double.parseDouble(buf[3])));
                 }
 
                 bufferedWriter.flush();

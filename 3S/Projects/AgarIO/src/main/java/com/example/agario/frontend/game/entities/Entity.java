@@ -17,7 +17,7 @@ public class Entity {
 
     public Entity() {
         circle = new Circle();
-        location = new Vector2D();
+        location = new Vector2D(100, 100);
         radius = 10;
         id = 0;
         isDead = false;
@@ -103,4 +103,5 @@ public class Entity {
         }
         return false;
     }
+
 }

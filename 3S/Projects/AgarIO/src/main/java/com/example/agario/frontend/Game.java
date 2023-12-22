@@ -25,8 +25,9 @@ public class Game {
 
     private List<Entity> entities;
 
-    private Player player;
     private int count = 0;
+
+    private int playerId;
     public Game() {
         FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("GameWindow.fxml"));
 
@@ -57,27 +58,27 @@ public class Game {
     public void start(ClientAPI clientAPI) {
         this.clientAPI = clientAPI;
 
-        player = new Player(this.clientAPI.getPlayerId());
+        clientAPI.setGame(this);
+    }
+
+    public void setPlayerId(int id) {
+        playerId = id;
     }
 
     public void setEntities(List<Entity> entities) {
         this.entities = entities;
     }
 
-    public void fixedUpdate(long deltaTime) {
+    public synchronized void fixedUpdate(long deltaTime) {
         if(entities.isEmpty()) return;
-        Entity selfP = entities.get(player.getId());
+        Entity selfP = entities.get(playerId);
         if(!selfP.isDead()) {
-            selfP.setLocation(player.getLocation());
-
-            player.fixedUpdate(input);
-            clientAPI.setPosition(player.getLocation());
-        } else {
-            selfP.setRadius(0);
+            selfP.fixedUpdate(input);
+            clientAPI.setPosition(selfP.getLocation());
         }
     }
 
-    public void render() {
+    public synchronized void render() {
         if(clientAPI == null) return;
         List<Entity> clientAPIEntities = clientAPI.getEntities();
 
