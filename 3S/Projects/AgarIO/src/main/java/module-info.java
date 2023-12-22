@@ -7,4 +7,5 @@ module com.example.agario.frontend {
 
     opens com.example.agario.frontend to javafx.fxml;
     exports com.example.agario.frontend;
+    exports com.example.agario.frontend.serverCommunication;
 }

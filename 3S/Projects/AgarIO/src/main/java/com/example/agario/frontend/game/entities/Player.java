@@ -1,15 +1,15 @@
-package com.example.agario.frontend.game;
+package com.example.agario.frontend.game.entities;
 
 import com.example.agario.frontend.game.helpers.Vector2D;
 
 import java.util.Set;
 
 public class Player extends Entity{
-    public Player(Vector2D location, double radius) {
-        super(location, radius);
+    public Player(Vector2D location, double radius, int id) {
+        super(location, radius, id);
     }
     @Override
-    public void fixedUpdate(Set<String> input) {
+    public void doLogic(Set<String> input) {
         move(input);
     }
 

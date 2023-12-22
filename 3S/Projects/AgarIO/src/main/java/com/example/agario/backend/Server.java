@@ -9,10 +9,13 @@ public class Server {
     private static BufferedWriter out;
 
     public static void main(String[] args) throws IOException {
-        DataBase dataBase = new DataBase();
         ServerSocket server = new ServerSocket(4004);
 
-        int connectionsCount = 0;
+        int maxCapacity = 10;
+        Room room = new Room(maxCapacity);
+
+        int index = 0;
+
         // getting client request
         while (true)
         // running infinite loop
@@ -30,10 +33,17 @@ public class Server {
 
                 System.out.println("Thread assigned");
 
-                
-                (new Connection(in, out, server, dataBase, connectionsCount)).start();
+                Connection connection = new Connection(in, out, server, index);
 
-                connectionsCount++;
+                if(!room.tryToAddConnection(connection)) {
+                    room = new Room(maxCapacity);
+                    room.tryToAddConnection(connection);
+                }
+
+                connection.setRoom(room);
+                connection.start();
+
+                index++;
             }
             catch (Exception e){
                 socket.close();
