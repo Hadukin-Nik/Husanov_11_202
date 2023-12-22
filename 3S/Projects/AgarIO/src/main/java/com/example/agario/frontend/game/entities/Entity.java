@@ -24,7 +24,7 @@ public class Entity {
     }
 
     public Entity(int id) {
-        super();
+        this();
         this.id = id;
     }
 
@@ -72,11 +72,11 @@ public class Entity {
 
     public void doLogic(Set<String> input){}
 
-    public void render() {
+    public synchronized void render() {
         draw();
     }
 
-    private void draw() {
+    private synchronized void draw() {
         circle.setCenterX(location.getX());
         circle.setCenterY(location.getY());
 

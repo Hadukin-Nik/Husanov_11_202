@@ -51,10 +51,9 @@ public class Connection extends Thread {
                 } else if (message.equals(Constants.getState)) {
                     bufferedWriter.write(room.getAllData() + "\n");
                 } else if (message.startsWith(Constants.setPosPrefix)) {
-                    String[] buf = bufferedReader.readLine().split(" ");
+                    String[] buf = message.split(" ");
 
-                    entity.setLocation(new Vector2D(Integer.parseInt(buf[1]), Integer.parseInt(buf[2])));
-                    entity.setRadius(Integer.parseInt(buf[2]));
+                    room.setEntity(userId, new Vector2D(Double.parseDouble(buf[1]), Double.parseDouble(buf[2])));
                 }
 
                 bufferedWriter.flush();

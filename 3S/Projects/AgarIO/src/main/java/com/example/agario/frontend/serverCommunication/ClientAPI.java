@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientAPI extends Thread{
-    private final long maxTime = 10;
+    private final long maxTimeGetState = 10;
     private final BufferedWriter bufferedWriter;
     private final BufferedReader bufferedReader;
 
@@ -23,6 +23,7 @@ public class ClientAPI extends Thread{
     private int id;
 
     public ClientAPI(BufferedWriter bufferedWriter, BufferedReader bufferedReader) {
+        location = new Vector2D();
         entities = new ArrayList<>();
         this.bufferedWriter = bufferedWriter;
         this.bufferedReader = bufferedReader;
@@ -50,7 +51,7 @@ public class ClientAPI extends Thread{
 
         while(true) {
 
-            if(System.currentTimeMillis() - lastTimeRecord > maxTime) {
+            if(System.currentTimeMillis() - lastTimeRecord > maxTimeGetState) {
                 List<Entity> bufEntities = new ArrayList<>();
                 lastTimeRecord = System.currentTimeMillis();
                 try {
@@ -58,6 +59,8 @@ public class ClientAPI extends Thread{
                     bufferedWriter.flush();
 
                     String bufAns = bufferedReader.readLine();
+
+                    System.out.println(bufAns);
 
                     bufAns = bufAns.replaceAll(",", ".");
 
@@ -72,13 +75,14 @@ public class ClientAPI extends Thread{
 
                         if(idE - lastId > 1) {
                             for(int j = lastId + 1; j < idE; j++) {
-                                Entity entityBuf = new Entity();
+                                Entity entityBuf = new Entity(i);
                                 entityBuf.setDead(true);
                                 bufEntities.add(entityBuf);
+                                entityBuf.setRadius(0);
                             }
                         }
 
-                        Entity entity = new Entity();
+                        Entity entity = new Entity(idE);
 
                         entity.setLocation(locE);
                         entity.setRadius(radE);
@@ -87,11 +91,21 @@ public class ClientAPI extends Thread{
 
                         lastId = idE;
                     }
+                    entities = bufEntities;
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
 
-                entities = bufEntities;
+
+                try {
+                    bufferedWriter.write(Constants.setPosPrefix + String.format(" %.2f %.2f",
+                            location.getX(),
+                            location.getY()
+                    ).replaceAll(",", ".") + "\n");
+                    bufferedWriter.flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

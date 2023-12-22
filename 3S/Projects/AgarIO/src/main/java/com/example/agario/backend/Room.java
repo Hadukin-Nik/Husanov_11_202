@@ -1,6 +1,7 @@
 package com.example.agario.backend;
 
 import com.example.agario.frontend.game.entities.Entity;
+import com.example.agario.frontend.game.helpers.Vector2D;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -66,5 +67,9 @@ public class Room {
     }
     public synchronized List<Entity> getEntities() {
         return entities;
+    }
+
+    public synchronized void setEntity(int userId, Vector2D vector2D) {
+        entities.get(userId).setLocation(vector2D);
     }
 }

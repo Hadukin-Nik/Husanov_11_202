@@ -14,6 +14,7 @@ public class EventWorker{
 
         for(int i = 0; i < entities.size() - 1; i++) {
             for(int j = 0; j < entities.size(); j++) {
+                if(entities.get(i).isDead() || entities.get(j).isDead()) continue;
                 if(entities.get(i).overloop(entities.get(j))) {
                     collisions.add(new Pair<>(entities.get(i), entities.get(j)));
                 }

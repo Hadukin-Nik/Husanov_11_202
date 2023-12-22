@@ -19,6 +19,7 @@ public class Game {
     private final Pane gameBox;
 
     private Set<String> input;
+    private Set<Integer> rendered;
 
     private List<Entity> entities;
 
@@ -27,6 +28,7 @@ public class Game {
     public Game() {
         entities = new ArrayList<>();
         gameBox = new Pane();
+        rendered = new HashSet<>();
 
         scene = new Scene(gameBox, 1000, 1000);
 
@@ -56,6 +58,7 @@ public class Game {
     public void fixedUpdate(long deltaTime) {
         if(entities.isEmpty()) return;
         if(!entities.get(player.getId()).isDead()) {
+            entities.get(player.getId()).setLocation(player.getLocation());
             player.fixedUpdate(input);
             clientAPI.setPosition(player.getLocation());
         } else {
@@ -64,14 +67,27 @@ public class Game {
     }
 
     public void render() {
-        setEntities(clientAPI.getEntities());
+        List<Entity> clientAPIEntities = clientAPI.getEntities();
 
-        gameBox.getChildren().removeAll();
-        for(Entity i : entities) {
-            if(!i.isDead()) {
-                gameBox.getChildren().add(i.getBody());
-                i.render();
+        for(int i = 0; i < clientAPIEntities.size(); i++) {
+            if(i < entities.size()) {
+                Entity entity = entities.get(i);
+                Entity entity1 = clientAPIEntities.get(i);
+
+                entity.setRadius(entity1.getRadius());
+                entity.setLocation(entity1.getLocation());
+            } else {
+                entities.add(clientAPIEntities.get(i));
             }
+        }
+
+        for(Entity i : entities) {
+            if(!rendered.contains(i.getId())) {
+                gameBox.getChildren().add(i.getBody());
+                rendered.add(i.getId());
+            }
+
+            i.render();
         }
     }
     public Scene getScene() {
