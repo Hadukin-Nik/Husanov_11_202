@@ -1,28 +1,32 @@
 package com.example.agario.frontend;
 
-import com.example.agario.frontend.game.Entity;
-import com.example.agario.frontend.game.Player;
-import com.example.agario.frontend.game.helpers.Vector2D;
+import com.example.agario.frontend.game.entities.Entity;
+import com.example.agario.frontend.game.entities.Player;
+import com.example.agario.frontend.serverCommunication.ClientAPI;
 import javafx.scene.Scene;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Game {
-    private Scene scene;
-    private Player circle;
+    private final Scene scene;
+
+    private ClientAPI clientAPI;
+
+    private final Pane gameBox;
 
     private Set<String> input;
 
+    private List<Entity> entities;
+
+    private Player player;
+    private int count = 0;
     public Game() {
-        Pane gameBox = new Pane();
-
-        circle = new Player(new Vector2D(100, 100), 10);
-
-        gameBox.getChildren().add(circle.getBody());
+        entities = new ArrayList<>();
+        gameBox = new Pane();
 
         scene = new Scene(gameBox, 1000, 1000);
 
@@ -39,12 +43,36 @@ public class Game {
         });
     }
 
+    public void start(ClientAPI clientAPI) {
+        this.clientAPI = clientAPI;
+
+        player = new Player(this.clientAPI.getPlayerId());
+    }
+
+    public void setEntities(List<Entity> entities) {
+        this.entities = entities;
+    }
+
     public void fixedUpdate(long deltaTime) {
-        circle.fixedUpdate(input);
+        if(entities.isEmpty()) return;
+        if(!entities.get(player.getId()).isDead()) {
+            player.fixedUpdate(input);
+            clientAPI.setPosition(player.getLocation());
+        } else {
+            //Close application?
+        }
     }
 
     public void render() {
-        circle.render();
+        setEntities(clientAPI.getEntities());
+
+        gameBox.getChildren().removeAll();
+        for(Entity i : entities) {
+            if(!i.isDead()) {
+                gameBox.getChildren().add(i.getBody());
+                i.render();
+            }
+        }
     }
     public Scene getScene() {
         return scene;

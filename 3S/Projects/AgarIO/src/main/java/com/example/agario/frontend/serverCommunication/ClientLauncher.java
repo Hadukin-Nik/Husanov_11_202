@@ -1,15 +1,19 @@
 package com.example.agario.frontend.serverCommunication;
-
-import com.example.agario.frontend.GameController;
+import com.example.agario.frontend.Game;
 
 import java.io.*;
 import java.net.Socket;
 
-public class ClientBuffer extends Thread{
+public class ClientLauncher extends Thread{
 
     private Socket clientSocket;
     private BufferedReader in;
     private BufferedWriter out;
+    private ClientAPI clientAPI;
+    private Game game;
+    public ClientLauncher(Game game) {
+        this.game = game;
+    }
 
     @Override
     public void run(){
@@ -20,19 +24,19 @@ public class ClientBuffer extends Thread{
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 
-                WritingThread writingThread = new WritingThread(out);
-                ReadingThread readingThread = new ReadingThread(in);
+                clientAPI = new ClientAPI(out, in);
 
-                GameController.ReadingThread(readingThread);
-                GameController.WritingThread(writingThread);
+                clientAPI.start();
 
-                writingThread.start();
-                readingThread.start();
+                game.start(clientAPI);
 
-                GameController.init();
                 System.out.println("Initializing process ended!");
-                while(true){}
 
+                clientAPI.join();
+
+                System.out.println("Game Launcher Closing");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             } finally {
                 System.out.println("Клиент был закрыт...");
                 clientSocket.close();
@@ -42,5 +46,9 @@ public class ClientBuffer extends Thread{
         } catch (IOException e) {
             System.err.println(e);
         }
+    }
+
+    public ClientAPI getClientAPI() {
+        return clientAPI;
     }
 }

@@ -8,6 +8,11 @@ public class Player extends Entity{
     public Player(Vector2D location, double radius, int id) {
         super(location, radius, id);
     }
+
+    public Player(int id) {
+        super(id);
+    }
+
     @Override
     public void doLogic(Set<String> input) {
         move(input);

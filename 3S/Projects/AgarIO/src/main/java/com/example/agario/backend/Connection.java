@@ -40,6 +40,8 @@ public class Connection extends Thread {
             try {
                 message = bufferedReader.readLine();
 
+                System.out.println("got message: " + message);
+
                 if(message.equals(Constants.regNew)) {
                     entity = new Entity(new Vector2D(100, 100), 10, userId);
                     bufferedWriter.write(String.format("%d",

@@ -6,45 +6,23 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventWorker extends Thread{
-    private List<Entity> entities;
-    private List<Pair<Entity, Entity>> collisions;
+public class EventWorker{
 
-    private Room room;
+    public void checkCollisions(Room room) {
+        List<Pair<Entity, Entity>> collisions = new ArrayList<>();
+        List<Entity> entities = room.getEntities();
 
-    public EventWorker(List<Entity> entities, Room room) {
-        this.entities = entities;
-        this.room = room;
-    }
-
-    @Override
-    public void run() {
-        collisions = new ArrayList<>();
-
-        while(true) {
-            for(int i = 0; i < entities.size() - 1; i++) {
-                for(int j = 0; j < entities.size(); j++) {
-                    if(entities.get(i).overloop(entities.get(j))) {
-                        collisions.add(new Pair<>(entities.get(i), entities.get(j)));
-                    }
+        for(int i = 0; i < entities.size() - 1; i++) {
+            for(int j = 0; j < entities.size(); j++) {
+                if(entities.get(i).overloop(entities.get(j))) {
+                    collisions.add(new Pair<>(entities.get(i), entities.get(j)));
                 }
             }
+        }
 
-            if(collisions.size() > 0) {
-                room.sendCollisions(getCollisions());
-            }
+        if(collisions.size() > 0) {
+            room.processCollisions(collisions);
         }
     }
 
-    public void addToEntities(Entity entity) {
-        entities.add(entity);
-    }
-
-    public List<Pair<Entity, Entity>> getCollisions() {
-        List<Pair<Entity, Entity>> result = collisions;
-
-        collisions = new ArrayList<>();
-
-        return result;
-    }
 }

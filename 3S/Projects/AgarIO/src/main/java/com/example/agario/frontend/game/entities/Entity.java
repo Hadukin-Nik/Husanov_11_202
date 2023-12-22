@@ -23,6 +23,11 @@ public class Entity {
         isDead = false;
     }
 
+    public Entity(int id) {
+        super();
+        this.id = id;
+    }
+
     public Entity(Vector2D location, int id) {
         circle = new Circle();
         this.location = location;

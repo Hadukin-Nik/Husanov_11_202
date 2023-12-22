@@ -18,19 +18,19 @@ public class Room {
     public Room(int maxCapacity) {
         connections = new ArrayList<>();
         entities = new ArrayList<>();
-        eventWorker = new EventWorker(entities, this);
+        eventWorker = new EventWorker();
         this.maxCapacity = maxCapacity;
     }
 
-    public void tryToAddEntity(Entity entity) {
+    public synchronized void tryToAddEntity(Entity entity) {
+
         if(entity.getId() != entities.size()) {
             throw new RuntimeException("Wrong entity ID");
         }
         entities.add(entity);
-        eventWorker.addToEntities(entity);
     }
 
-    public boolean tryToAddConnection(Connection newConnection) {
+    public synchronized boolean tryToAddConnection(Connection newConnection) {
         if(connections.size() < maxCapacity) {
             connections.add(newConnection);
             return true;
@@ -39,24 +39,23 @@ public class Room {
         }
     }
 
-    public String getAllData() {
+    public synchronized String getAllData() {
+        eventWorker.checkCollisions(this);
         StringBuilder sb = new StringBuilder();
 
         for(var i : entities) {
             if(!i.isDead())
-            sb.append(String.format("%d %.2f %.2f %.2f",
+            sb.append(String.format("%d %.2f %.2f %.2f ",
                     i.getId(),
                     i.getLocation().getX(),
                     i.getLocation().getY(),
                     i.getRadius()));
         }
 
-        sb.append("\n");
-
         return sb.toString();
     }
 
-    public void sendCollisions(List<Pair<Entity, Entity>> pairs) {
+    public void processCollisions(List<Pair<Entity, Entity>> pairs) {
         for(int i = 0; i < pairs.size(); i++) {
             Entity first = pairs.get(i).getKey();
             Entity second = pairs.get(i).getValue();
@@ -64,5 +63,8 @@ public class Room {
             first.addRadius(second.getRadius());
             second.setDead(true);
         }
+    }
+    public synchronized List<Entity> getEntities() {
+        return entities;
     }
 }
