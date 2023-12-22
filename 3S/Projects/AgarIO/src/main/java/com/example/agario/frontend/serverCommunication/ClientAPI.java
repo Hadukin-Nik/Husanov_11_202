@@ -28,7 +28,10 @@ public class ClientAPI extends Thread{
 
     private int counter;
 
+    private boolean sentLocation;
+
     public ClientAPI(BufferedWriter bufferedWriter, BufferedReader bufferedReader) {
+        sended = true;
         location = new Vector2D();
         entities = new ArrayList<>();
         this.bufferedWriter = bufferedWriter;
@@ -56,6 +59,7 @@ public class ClientAPI extends Thread{
     @Override
     public void run() {
         userId = regNew();
+        int frame = 0;
 
         while(true) {
             if(game!=null && !sended) {
@@ -63,27 +67,6 @@ public class ClientAPI extends Thread{
                 game.setPlayerId(userId);
             }
             if(System.currentTimeMillis() - lastTimeRecord > maxTimeGetState) {
-                synchronized (location) {
-                    try {
-                        if(!(location.getX() == 0 && location.getY() == 0)) {
-                            String s = Constants.setPosPrefix + String.format(" %.2f %.2f",
-                                    location.getX(),
-                                    location.getY()
-                            ).replaceAll(",", ".");
-
-                            System.out.println(counter + " " + s);
-                            counter ++;
-
-                            bufferedWriter.write(s + "\n");
-                            bufferedWriter.flush();
-                        }
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-
-
                 List<Entity> bufEntities = new ArrayList<>();
                 lastTimeRecord = System.currentTimeMillis();
                 try {
@@ -125,6 +108,25 @@ public class ClientAPI extends Thread{
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            } else if (!sentLocation) {
+                synchronized (location) {
+                    try {
+                        String s = Constants.setPosPrefix + String.format(" %.2f %.2f",
+                                location.getX(),
+                                location.getY()
+                        ).replaceAll(",", ".");
+
+                        System.out.println(counter + " " + s);
+                        counter ++;
+
+
+                        bufferedWriter.write(s + "\n");
+                        bufferedWriter.flush();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                sentLocation = true;
             }
         }
     }
@@ -136,6 +138,7 @@ public class ClientAPI extends Thread{
     }
 
     public void setPosition(Vector2D location) {
+        sentLocation = false;
         synchronized (this.location) {
             this.location.setX(location.getX());
             this.location.setY(location.getY());

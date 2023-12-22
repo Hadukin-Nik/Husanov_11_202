@@ -20,11 +20,13 @@ public class Connection extends Thread {
     private Room room;
 
     private Entity entity;
-
+    private int frame;
 
     public Connection(BufferedReader br, BufferedWriter bw, ServerSocket sv, int userId) {
         bufferedWriter = bw;
         bufferedReader = br;
+
+        frame = 0;
 
         serverSocket = sv;
 
@@ -53,7 +55,8 @@ public class Connection extends Thread {
                 } else if (message.startsWith(Constants.setPosPrefix)) {
                     String[] buf = message.split(" ");
 
-                    room.setEntity(userId, new Vector2D(Double.parseDouble(buf[2]), Double.parseDouble(buf[3])));
+                    room.setEntity(userId, new Vector2D(Double.parseDouble(buf[1]), Double.parseDouble(buf[2])));
+
                 }
 
                 bufferedWriter.flush();
