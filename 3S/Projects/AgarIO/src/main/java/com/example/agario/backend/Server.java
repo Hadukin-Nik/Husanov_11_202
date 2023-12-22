@@ -14,7 +14,10 @@ public class Server {
         int maxCapacity = 10;
         Room room = new Room(maxCapacity);
 
-        int index = 0;
+        int index = 20;
+        int foodCount = index;
+
+        room.createFoodOnMap(foodCount);
 
         // getting client request
         while (true)
@@ -37,6 +40,7 @@ public class Server {
 
                 if(!room.tryToAddConnection(connection)) {
                     room = new Room(maxCapacity);
+                    room.createFoodOnMap(foodCount);
                     room.tryToAddConnection(connection);
                 }
 

@@ -6,6 +6,7 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Room {
     private EventWorker eventWorker;
@@ -40,8 +41,28 @@ public class Room {
         }
     }
 
+    public synchronized void createFoodOnMap(int count) {
+        Random random = new Random();
+        int created = 0;
+        while(created < count) {
+            Vector2D location = new Vector2D(100 + random.nextDouble(800), 100 + random.nextDouble(800));
+
+            entities.add(new Entity(location, 7.5, created));
+            created ++;
+        }
+    }
+
     public synchronized String getAllData() {
-        eventWorker.checkCollisions(this);
+        List<Pair<Entity, Entity>> pairs = eventWorker.checkCollisions(this);
+
+        for(int i = 0; i < pairs.size(); i++) {
+            Entity first = entities.get(pairs.get(i).getKey().getId());
+            Entity second = entities.get(pairs.get(i).getValue().getId());
+
+            first.addRadius(second.getRadius());
+            second.setDead(true);
+        }
+
         StringBuilder sb = new StringBuilder();
 
         for(var i : entities) {
@@ -56,15 +77,6 @@ public class Room {
         return sb.toString();
     }
 
-    public void processCollisions(List<Pair<Entity, Entity>> pairs) {
-        for(int i = 0; i < pairs.size(); i++) {
-            Entity first = pairs.get(i).getKey();
-            Entity second = pairs.get(i).getValue();
-
-            first.addRadius(second.getRadius());
-            second.setDead(true);
-        }
-    }
     public synchronized List<Entity> getEntities() {
         return entities;
     }
