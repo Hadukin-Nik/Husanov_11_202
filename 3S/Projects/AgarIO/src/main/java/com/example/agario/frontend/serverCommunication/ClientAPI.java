@@ -24,20 +24,19 @@ public class ClientAPI extends Thread{
 
     private int userId;
 
-    private boolean sended;
+    private boolean sentUserId;
 
     private int counter;
 
     private boolean sentLocation;
 
     public ClientAPI(BufferedWriter bufferedWriter, BufferedReader bufferedReader) {
-        sended = true;
         location = new Vector2D();
         entities = new ArrayList<>();
         this.bufferedWriter = bufferedWriter;
         this.bufferedReader = bufferedReader;
 
-        sended = false;
+        sentUserId = false;
     }
 
     public int regNew() {
@@ -62,8 +61,8 @@ public class ClientAPI extends Thread{
         int frame = 0;
 
         while(true) {
-            if(game!=null && !sended) {
-                sended = true;
+            if(game!=null && !sentUserId) {
+                sentUserId = true;
                 game.setPlayerId(userId);
             }
             if(System.currentTimeMillis() - lastTimeRecord > maxTimeGetState) {
