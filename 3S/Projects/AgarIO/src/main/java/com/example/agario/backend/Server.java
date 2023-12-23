@@ -40,6 +40,9 @@ public class Server {
                 Connection connection = new Connection(in, out, server, index);
 
                 if(!room.tryToAddConnection(connection)) {
+                    index = 20;
+                    connection = new Connection(in, out, server, index);
+
                     room = new Room(maxCapacity);
                     room.createFoodOnMap(foodCount);
                     room.tryToAddConnection(connection);

@@ -28,9 +28,12 @@ public class Game {
     private int count = 0;
 
     private int playerId;
+
+    private long lastInputUpdate;
     public Game() {
         FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("GameWindow.fxml"));
 
+        lastInputUpdate = 0;
         entities = new ArrayList<>();
         try {
             gameBox = fxmlLoader.load();
@@ -69,11 +72,13 @@ public class Game {
         this.entities = entities;
     }
 
-    public synchronized void fixedUpdate(long deltaTime) {
+    public synchronized void fixedUpdate(long now) {
+        lastInputUpdate = now;
+
         if(entities.isEmpty()) return;
         Entity selfP = entities.get(playerId);
         if(!selfP.isDead()) {
-            selfP.fixedUpdate(input);
+            if(selfP.fixedUpdate(input))
             clientAPI.setPosition(selfP.getLocation());
         }
     }

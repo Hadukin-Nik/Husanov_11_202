@@ -16,7 +16,7 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         lastUpdate = 0;
-        long updateRate = 120;
+        long updateRate = 60;
 
         game = new Game();
 
@@ -28,7 +28,7 @@ public class MainApplication extends Application {
                 long deltaTime = (now - lastUpdate)/1000000;
 
                 if(deltaTime >= 1000 / updateRate) {
-                    game.fixedUpdate(deltaTime);
+                    game.fixedUpdate(now);
 
                     game.render();
                     lastUpdate = now;

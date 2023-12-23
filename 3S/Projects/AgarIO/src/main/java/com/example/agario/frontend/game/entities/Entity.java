@@ -66,11 +66,13 @@ public class Entity {
     }
 
 
-    public void fixedUpdate(Set<String> input) {
-        doLogic(input);
+    public boolean fixedUpdate(Set<String> input) {
+        return doLogic(input);
     }
 
-    public void doLogic(Set<String> input){}
+    public boolean doLogic(Set<String> input){
+        return false;
+    }
 
     public synchronized void render() {
         draw();

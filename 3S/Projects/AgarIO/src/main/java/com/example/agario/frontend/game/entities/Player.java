@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import java.util.Set;
 
 public class Player extends Entity{
+
     public Player(Vector2D location, double radius, int id) {
         super(location, radius, id);
     }
@@ -17,27 +18,32 @@ public class Player extends Entity{
     }
 
     @Override
-    public void doLogic(Set<String> input) {
-        move(input);
+    public boolean doLogic(Set<String> input) {
+        return move(input);
     }
 
-    private void move(Set<String> input) {
-        double v = 1.4 * 2;
-
+    private boolean move(Set<String> input) {
+        double v = 1.4 * 5;
+        boolean isMoved = false;
         if(input.contains("W")) {
             location.setY(location.getY() - v);
+            isMoved = true;
         }
 
         if(input.contains("S")) {
             location.setY(location.getY() + v);
+            isMoved = true;
         }
 
         if(input.contains("D")) {
             location.setX(location.getX() + v);
+            isMoved = true;
         }
 
         if(input.contains("A")) {
             location.setX(location.getX() - v);
+            isMoved = true;
         }
+        return isMoved;
     }
 }

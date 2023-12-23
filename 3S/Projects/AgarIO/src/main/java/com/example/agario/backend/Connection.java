@@ -56,7 +56,7 @@ public class Connection extends Thread {
                     String[] buf = message.split(" ");
 
                     room.setEntity(userId, new Vector2D(Double.parseDouble(buf[1]), Double.parseDouble(buf[2])));
-
+                    bufferedWriter.write("\n");
                 }
 
                 bufferedWriter.flush();
